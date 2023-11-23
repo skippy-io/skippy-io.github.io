@@ -10,4 +10,4 @@ It’s about working smarter, not harder—let Skippy streamline your builds, so
 be: a fast track to production. Built upon robust frameworks like [Gradle](https://gradle.org), [JaCoCo](https://github.com/jacoco/jacoco) and [ASM](https://asm.ow2.io/), Skippy lets you deliver quality code
 faster without compromising the integrity of your builds.
 
-Starting points: [GitHub](https://github.com/skippy-io/skippy-docs/blob/main/roadmap.md#roadmap) | [Getting Started with Skippy, Gradle & JUnit 5](https://github.com/skippy-io/skippy-docs/blob/main/tutorials/getting-started-with-gradle-and-junit5/README.md#getting-started-with-skippy-gradle--junit-5) | [Roadmap](https://github.com/skippy-io/skippy-docs/blob/main/roadmap.md#roadmap)
+[GitHub](https://github.com/skippy-io) | [Getting Started with Skippy, Gradle & JUnit 5](https://github.com/skippy-io/skippy-docs/blob/main/tutorials/getting-started-with-gradle-and-junit5/README.md#getting-started-with-skippy-gradle--junit-5) | [Roadmap](https://github.com/skippy-io/skippy-docs/blob/main/roadmap.md#roadmap)
