@@ -1,5 +1,5 @@
 
-![Skippy Logo](https://avatars.githubusercontent.com/u/150977247?s=200&v=4)
+![Skippy Logo](https://avatars.githubusercontent.com/u/150977247?s=100&v=4)
 
 Skippy is designed for the modern pace of software development, where Continuous Integration (CI) should be a boon, not
 a burden. Unlike traditional CI tools that run all tests regardless of necessity, Skippy's intelligent test impact
