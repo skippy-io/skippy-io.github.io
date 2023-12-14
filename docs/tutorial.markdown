@@ -6,7 +6,7 @@ permalink: /tutorial/
 
 ## Getting Started with Skippy, Gradle & JUnit 5
 
-Tutorial that takes you on a quick tour how to use Skippy with Grade and JUnit 5.
+A quick tour how to use Skippy with Grade and JUnit 5.
 
 __What You Need__
 - About 15 minutes 
@@ -18,12 +18,12 @@ __What You Need__
 
 Begin by cloning the skippy-docs repository:
 ```
-git clone git@github.com:skippy-io/skippy-docs.git
+git clone git@github.com:skippy-io/skippy-tutorials.git
 ```
 
 Then, move into the tutorial directory:
 ```
-cd skippy-docs/tutorials/getting-started-with-gradle-and-junit5/
+cd skippy-tutorials/getting-started-with-gradle-and-junit5/
 ```
 
 Ensure that the project builds successfully:
@@ -231,9 +231,7 @@ __Note__: You can skip to the next section if you don't care about how Skippy wo
 
 ```
 ls -l skippy
-```
-Output:
-```
+
 com.example.LeftPadderTest.csv
 com.example.RightPadderTest.csv
 analyzedFiles.txt
@@ -396,7 +394,8 @@ Undo the changes from the previous experiment:
 git stash
 ```
 
-Now, let's see what happens if you change the expected value in `LeftPadderTest` from ` hello` to `HELLO`:
+Now, let's see what happens if you change the expected value in `LeftPadderTest` from
+`" hello"` to `" HELLO"`:
 ```java
 @ExtendWith(Skippy.class)
 public class LeftPadderTest {

@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "New Project Site Online"
-date:   2023-12-11 19:32:10 -0600
+date:   2023-12-11 00:00:00 -0600
 categories: skippy update
 ---
 
