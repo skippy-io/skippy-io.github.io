@@ -10,6 +10,8 @@ Skippy improves test efficiency with a two-pronged approach:
 
 This article provides a high-level overview how both components work together.
 
+Documentation version: `0.0.6`
+
 ## The Build Plugin: Overview
 
 Let's start by discussing what happens when you run `./gradlew skippyAnalyze`.

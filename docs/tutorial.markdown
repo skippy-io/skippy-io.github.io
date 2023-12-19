@@ -14,6 +14,8 @@ __What You Need__
 - Java 17 or later 
 - Gradle 7.5+
 
+Documentation version: `0.0.7-SNAPSHOT`
+
 ## Setting Up Your Environment
 
 Begin by cloning the skippy-docs repository:
@@ -27,13 +29,19 @@ cd skippy-tutorials/getting-started-with-gradle-and-junit5/
 ```
 
 Ensure that the project builds successfully:
-```
-./gradlew build clean
-```
+```````
+./gradlew build
+```````
 
 A successful build will display:
 ```
 BUILD SUCCESSFUL
+```
+
+Execute the `clean` task before proceeding with the rest of the tutorial:
+
+```
+./gradlew clean
 ```
 
 ## Exploring the Codebase
@@ -45,16 +53,24 @@ Let's take a quick look at the codebase.
 `build.gradle` applies the `io.skippy` plugin and adds a dependency to `skippy-junit5`:
 
 ```groovy
-plugins {
-    id 'io.skippy' version '0.0.6'
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    }
+    dependencies {
+        classpath 'io.skippy:skippy-gradle:0.0.7-SNAPSHOT'
+    }
 }
 
+apply plugin: io.skippy.gradle.SkippyPlugin
+
 repositories {
-    mavenCentral()
+    maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
 }
 
 dependencies {
-    testImplementation 'io.skippy:skippy-junit5:0.0.6'
+    testImplementation 'io.skippy:skippy-junit5:0.0.7-SNAPSHOT'
 }
 ```
 
@@ -75,11 +91,11 @@ skippyClean
 ...
 ```
 
-Note: You can play around with those tasks. If you do so, execute
+Note: You can play around with those tasks. If you do so, execute `skippyClean` before proceeding with the resst of the 
+tutorial:
 ```
 ./gradlew clean skippyClean
 ```
-before proceeding with the tutorial.
 
 ### src/main/java
 
@@ -142,9 +158,9 @@ com
 `LeftPadderTest` and `RightPadderTest` are unit tests for their respective classes:
 
 ```java
-import io.skippy.junit5.Skippy;
+import io.skippy.junit5.Skippified;
 
-@ExtendWith(Skippy.class)
+@Skippified
 public class LeftPadderTest {
 
     @Test
@@ -155,7 +171,7 @@ public class LeftPadderTest {
 
 }
 ```
-Note: We will refer to tests that are annotated with `@ExtendWith(Skippy.class)` as skippified tests.
+Note: We will refer to tests that are annotated with `@Skippified` as skippified tests.
 
 `StringUtilsTest` tests the `StringUtil` class and is a standard (e.g., non-skippified) JUnit test:
 ```java
@@ -183,7 +199,6 @@ class TestConstants {
 }
 ```
 
-
 ## Run The Tests
 
 Run the tests:
@@ -194,18 +209,18 @@ Run the tests:
 The output should resemble:
 
 ```
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: No analysis found. Execution required.
+DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: No coverage data found: Execution required
 LeftPadderTest > testPadLeft() PASSED
 
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: No analysis found. Execution required.
+DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: No coverage data found: Execution required
 RightPadderTest > testPadRight() PASSED
 
 StringUtilsTest > testPadLeft() PASSED
 StringUtilsTest > testPadRight() PASSED
 ```
 
-Skippy did not find analysis data to decide whether `LeftPadderTest` or `RightPadderTest` need to be executed.
-In this case, Skippy will always execute skippified tests.
+Skippy did not find data in the skippy folder to decide whether `LeftPadderTest` or `RightPadderTest` need to be 
+executed. In this case, Skippy will always execute skippified tests.
 
 Also note that there is no Skippy-specific logging for `StringUtilsTest`: It's a non-skippified test.
 
@@ -220,9 +235,9 @@ Run the `skippyAnalyze` task to trigger a Skippy analysis:
 You should see something like this:
 ```
 > Task :skippyAnalyze
-Capturing coverage data for com.example.LeftPadderTest in skippy/com.example.LeftPadderTest.csv
-Capturing coverage data for com.example.RightPadderTest in skippy/com.example.RightPadderTest.csv
-Creating the Skippy analysis file skippy/analyzedFiles.txt.
+Writing skippy/classes.md5
+Writing skippy/com.example.LeftPadderTest.cov
+Writing skippy/com.example.RightPadderTest.cov
 ```
 
 __Note__: You can skip to the next section if you don't care about how Skippy works under the hood.
@@ -232,44 +247,40 @@ __Note__: You can skip to the next section if you don't care about how Skippy wo
 ```
 ls -l skippy
 
-com.example.LeftPadderTest.csv
-com.example.RightPadderTest.csv
-analyzedFiles.txt
+classes.md5
+com.example.LeftPadderTest.cov
+com.example.RightPadderTest.cov
 ```
 
-Let's take a look at `LeftPadderTest.csv`:
+Let's take a look at `com.example.LeftPadderTest.cov`:
 ```
-...     PACKAGE,        CLASS,              ...     LINES_COVERED,    ...
-...     com.example,    TestConstants,      ...     0,                ...
-...     com.example,    StringUtils,        ...     3,                ...
-...     com.example,    RightPadder,        ...     0,                ...
-...     com.example,    LeftPadder,         ...     1,                ...
-...     com.example,    RightPadderTest,    ...     0,                ...
-...     com.example,    LeftPadderTest,     ...     4,                ...
-...     com.example,    StringUtilsTest,    ...     0,                ...
+cat skippy/com.example.LeftPadderTest.cov
+
+com.example.LeftPadder
+com.example.LeftPadderTest
+com.example.StringUtils
 ```
 
-The file contains a [JaCoCo](https://www.jacoco.org/) coverage report for `LeftPadderTest`. According to JaCoCo,
-`LeftPadderTest` covers lines in the following classes:
-- `StringUtils`
-- `LeftPadder`
-- `LeftPadderTest`
+The file contains a list of classes that are covered by `com.example.LeftPadderTest` according to 
+[JaCoCo](https://www.jacoco.org/).
 
-You might wonder: Shouldn't there be line coverage for the `TestConstants` class? Yes. But: JaCoCo's analysis is based
-on the  execution of instrumented bytecode. Since the Java compiler inlines the value of `TestConstants.HELLO` into
+You might wonder: Shouldn't there be coverage for `com.example.TestConstants`? Yes. But: JaCoCo's analysis is based
+on the execution of instrumented bytecode. Since the Java compiler inlines the value of `TestConstants.HELLO` into
 `LeftPadderTest`'s class file, JaCoCo has no way to detect this.
 
 Don't worry - Skippy got you covered! Skippy combines JaCoCo's dynamic bytecode analysis with  a custom, static bytecode
-analysis to detect relevant changes. To do this, it needs additional information that is stored in  `analyzedFiles.txt`:
+analysis to detect relevant changes. To do this, it needs additional information that is stored in  `classes.md5`:
 
 ```
-build/classes/java/main/com/example/LeftPadder.class:9U3+WYit7uiiNqA9jplN2A==
-build/classes/java/test/com/example/LeftPadderTest.class:3KxzE+CKm6BJ3KetctvnNA==
-build/classes/java/main/com/example/RightPadder.class:ZT0GoiWG8Az5TevH9/JwBg==
-build/classes/java/test/com/example/RightPadderTest.class:naR4eGh3LU+eDNSQXvsIyw==
-build/classes/java/main/com/example/StringUtils.class:4VP9fWGFUJHKIBG47OXZTQ==
-build/classes/java/test/com/example/StringUtilsTest.class:p+N8biKVOm6BltcZkKcC/g==
-build/classes/java/test/com/example/TestConstants.class:3qNbG+sSd1S1OGe0EZ9GPA==
+cat skippy/classes.md5
+
+build/classes/java/main:com/example/LeftPadder.class:9U3+WYit7uiiNqA9jplN2A==
+build/classes/java/main:com/example/RightPadder.class:ZT0GoiWG8Az5TevH9/JwBg==
+build/classes/java/main:com/example/StringUtils.class:4VP9fWGFUJHKIBG47OXZTQ==
+build/classes/java/test:com/example/LeftPadderTest.class:sGLJTZJw4beE9m2Kg6chUg==
+build/classes/java/test:com/example/RightPadderTest.class:E/ObvuQTODFFqU6gxjbxTQ==
+build/classes/java/test:com/example/StringUtilsTest.class:p+N8biKVOm6BltcZkKcC/g==
+build/classes/java/test:com/example/TestConstants.class:3qNbG+sSd1S1OGe0EZ9GPA==
 ```
 The file contains hashes for all classes in the project.
 
@@ -284,10 +295,10 @@ Re-run the tests:
 
 You should see something like this:
 ```
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: No changes in test or covered classes detected. Execution skipped.
+DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: No changes in test or covered classes detected: Execution skipped
 LeftPadderTest > testPadLeft() SKIPPED
 
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: No changes in test or covered classes detected. Execution skipped.
+DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: No changes in test or covered classes detected: Execution skipped
 RightPadderTest > testPadRight() SKIPPED
 
 ... output for non-skippified tests ...
@@ -329,16 +340,14 @@ Re-run the tests:
 ./gradlew test
 ```
 
-Despite the newly added comment, Skippy detects no significant changes. `LeftPadderTest` and
+Skippy detects that the newly added comment can not break any of the existing tests. `LeftPadderTest` and
 `RightPadderTest` will be skipped:
 ```
-DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: No changes in test or covered classes detected. Execution skipped.
+DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: No changes in test or covered classes detected: Execution skipped
 LeftPadderTest > testPadLeft() SKIPPED
 
-DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: No changes in test or covered classes detected. Execution skipped.
+DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: No changes in test or covered classes detected: Execution skipped
 RightPadderTest > testPadRight() SKIPPED
-
-...
 ```
 
 ### Experiment 2
@@ -370,13 +379,11 @@ Re-run the tests:
 Skippy detects the change and runs the skippified tests again:
 ```
 DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected. Execution required.
-expected: < hello> but was: <hello>
 LeftPadderTest > testPadLeft() FAILED
+    org.opentest4j.AssertionFailedError: expected: < hello> but was: <hello>
 
 DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected. Execution required.
 RightPadderTest > testPadRight() PASSED
-
-...
 ```
 
 Note that at this point in time, Skippy executes a test if the covered class contains a significant bytecode change
@@ -397,7 +404,7 @@ git stash
 Now, let's see what happens if you change the expected value in `LeftPadderTest` from
 `" hello"` to `" HELLO"`:
 ```java
-@ExtendWith(Skippy.class)
+@Skippified
 public class LeftPadderTest {
 
     @Test
@@ -417,11 +424,11 @@ Re-run the tests:
 
 Skippy detects the change and runs `LeftPadderTest`again:
 ```
-DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: Bytecode change detected. Execution required.
+DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: Bytecode change detected: Execution required
 expected: < HELLO> but was: < hello>
 LeftPadderTest > testPadLeft() FAILED
 
-DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: No changes in test or covered classes detected. Execution skipped.
+DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest:  No changes in test or covered classes detected: Execution skipped
 RightPadderTest > testPadRight() SKIPPED
 
 ...
@@ -453,11 +460,11 @@ Re-run the tests:
 
 Skippy detected the change and re-runs both skippified tests:
 ```
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: Bytecode change detected. Execution required.
+DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: Bytecode change detected: Execution required
 expected: < hello> but was: <bonjour>
 LeftPadderTest > testPadLeft() FAILED
 
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: Bytecode change detected. Execution required.
+DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest:  Bytecode change detected: Execution required
 expected: <hello > but was: <bonjour>
 RightPadderTest > testPadRight() FAILED
 
