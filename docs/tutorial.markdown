@@ -368,6 +368,14 @@ class StringUtils {
 //        }
         return input;
     }
+
+    static String padRight(String input, int size) {
+        if (input.length() < size) {
+            return padRight(input + " ", size);
+        }
+        return input;
+    }
+    
 }
 ```
 
@@ -378,11 +386,11 @@ Re-run the tests:
 
 Skippy detects the change and runs the skippified tests again:
 ```
-DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected. Execution required.
+DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected: Execution required
 LeftPadderTest > testPadLeft() FAILED
     org.opentest4j.AssertionFailedError: expected: < hello> but was: <hello>
 
-DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected. Execution required.
+DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected: Execution required
 RightPadderTest > testPadRight() PASSED
 ```
 
