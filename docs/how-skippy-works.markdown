@@ -3,14 +3,13 @@ layout: page
 title: How Skippy Works
 permalink: /how-skippy-works/
 ---
+Documentation for Skippy version `0.0.6`.
 
 Skippy improves test efficiency with a two-pronged approach:
 - [a powerful build plugin](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java#L71) and
 - [a smart JUnit extension](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-junit5/src/main/java/io/skippy/junit5/Skippy.java#L29).
 
 This article provides a high-level overview how both components work together.
-
-Documentation version: `0.0.6`
 
 ## The Build Plugin: Overview
 

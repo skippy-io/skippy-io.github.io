@@ -4,6 +4,8 @@ title: Tutorial
 permalink: /tutorial/
 ---
 
+Documentation for Skippy version `0.0.7-SNAPSHOT`.
+
 ## Getting Started with Skippy, Gradle & JUnit 5
 
 A quick tour how to use Skippy with Grade and JUnit 5.
@@ -14,7 +16,6 @@ __What You Need__
 - Java 17 or later 
 - Gradle 7.5+
 
-Documentation version: `0.0.7-SNAPSHOT`
 
 ## Setting Up Your Environment
 
