@@ -4,7 +4,7 @@ title: Tutorial
 permalink: /tutorial/
 ---
 
-Documentation for Skippy version `0.0.7-SNAPSHOT`.
+Documentation for Skippy version `0.0.7`.
 
 ## Getting Started with Skippy, Gradle & JUnit 5
 
@@ -54,20 +54,12 @@ Let's take a quick look at the codebase.
 `build.gradle` applies the `io.skippy` plugin and adds a dependency to `skippy-junit5`:
 
 ```groovy
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
-    }
-    dependencies {
-        classpath 'io.skippy:skippy-gradle:0.0.7-SNAPSHOT'
-    }
+plugins {
+    id 'io.skippy' version '0.0.7'
 }
 
-apply plugin: io.skippy.gradle.SkippyPlugin
-
 repositories {
-    maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    mavenCentral()
 }
 
 dependencies {

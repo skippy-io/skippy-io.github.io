@@ -3,94 +3,116 @@ layout: page
 title: How Skippy Works
 permalink: /how-skippy-works/
 ---
-Documentation for Skippy version `0.0.6`.
+Documentation for Skippy version `0.0.7`.
 
 Skippy improves test efficiency with a two-pronged approach:
-- [a powerful build plugin](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java#L71) and
-- [a smart JUnit extension](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-junit5/src/main/java/io/skippy/junit5/Skippy.java#L29).
+- [A Powerful Build Plugin](https://github.com/skippy-io/skippy/blob/65a168e892cf40a81bf1536bd841b9e0173d08cd/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java#L38) and
+- [A Smart JUnit Extension](https://github.com/skippy-io/skippy/blob/65a168e892cf40a81bf1536bd841b9e0173d08cd/skippy-junit5/src/main/java/io/skippy/junit5/Skippified.java#L53).
 
-This article provides a high-level overview how both components work together.
+In the following sections, we'll explore how these components interact and function together.
 
-## The Build Plugin: Overview
+## The Skippy Gradle Plugin
 
-Let's start by discussing what happens when you run `./gradlew skippyAnalyze`.
+The Skippy Gradle Plugin integrates the `skippyAnalyze` task into your project, which operates in two primary steps:
 
-Code: [SkippyPlugin.java](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java#L71) / [AnalyzeTask.java](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-gradle/src/main/java/io/skippy/gradle/AnalyzeTask.java#L42)
+### Step 1: Generation of `.cov` Files
 
-### Step 1: Collect All Class Files
-
-The plugin traverses the output directories of each source set and collects all class files it finds.
-
-Code: [ClassFileCollector.java](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-gradle/src/main/java/io/skippy/gradle/collector/ClassFileCollector.java#L36)
-
-### Step 2: Identify Skippified Tests
-
-Using [ASM](https://asm.ow2.io/)'s bytecode analysis capabilities, it then selects the skippified tests among
-the class files collected in Step 1. This is accomplished by checking for classes annotated with
-`@ExtendsWith(Skippy.class)`.
-
-Code: [SkippyJUnit5Detector](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-gradle/src/main/java/io/skippy/gradle/asm/SkippyJUnit5Detector.java#L33)
-
-### Step 3: Create JaCoCo Coverage Report For Each Skippified Test
-
-Using Gradle's [Tooling API](https://docs.gradle.org/current/userguide/third_party_integration.html#embedding),
-the task then creates individual [JaCoCo](https://www.jacoco.org/) coverage reports for the skippified test identified
-in Step 2. Think of it as the programmatic counterpart to the following shell script:
+The `skippyAnalyze` task depends on the `check` lifecycle task to execute all tests in your project:
 
 ```
-./gradlew test jacocoTestReport --tests "com.example.Test1"
-./gradlew test jacocoTestReport --tests "com.example.Test2"
-...
-./gradlew test jacocoTestReport --tests "com.example.Test8"
-./gradlew test jacocoTestReport --tests "com.example.Test9"
+class SkippyAnalyzeTask extends DefaultTask {
+
+    public SkippyAnalyzeTask(...) {
+        ...
+        dependsOn(..., "check");
+        ...
+    }
+    
+}
 ```
 
-Code: [AnalyzeTask.java#createCoverageReportsForSkippifiedTests](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-gradle/src/main/java/io/skippy/gradle/AnalyzeTask.java#L68)
+Code: [AnalyzeTask.java](https://github.com/skippy-io/skippy/blob/65a168e892cf40a81bf1536bd841b9e0173d08cd/skippy-gradle/src/main/java/io/skippy/gradle/SkippyAnalyzeTask.java#L57)
 
-The individual coverage reports are stored in the `skippy` directory:
+`skippyAnalysis` wouldn't be particularly useful if the only thing it does is to run tests: It's main purpose is to 
+capture coverage data for each test. To do so, it applies the JaCoCo plugin and sets the `skippyEmitCovFiles` property 
+for all test tasks:
+```
+class SkippyAnalyzeTask extends DefaultTask {
+
+    public SkippyAnalyzeTask(...) {
+        ...
+        getProject().getPlugins().apply(JacocoPlugin.class);
+        getProject().getExtensions().getByType(JacocoPluginExtension.class).setToolVersion(SkippyProperties.getJacocoVersion());
+        getProject().getTasks().withType(Test.class, test -> test.environment("skippyEmitCovFiles", true));
+        ...
+    }
+    
+}
+```
+
+This allows Skippy's JUnit libraries to emit coverages files during the execution of the test suite:
+
+```
+import org.jacoco.agent.rt.IAgent;
+import org.jacoco.agent.rt.RT;
+
+class SkippyCoverageFileGenerator implements TestInstancePreConstructCallback, TestInstancePreDestroyCallback {
+
+    ...
+
+    @Override
+    public void preDestroyTestInstance(ExtensionContext context) {
+        if ( ! Boolean.valueOf(System.getenv().get("skippyEmitCovFiles"))) {
+            return;
+        }
+        IAgent agent = RT.getAgent();
+        emitCovFile(context, agent);
+    }
+
+            
+    private static void emitCovFile(ExtensionContext context, IAgent agent) {
+        // read execution data from JaCoCo agent and write it to .cov file
+        ...                
+    }
+    
+}
+```
+
+Code: [SkippyCoverageFileGenerator.java](https://github.com/skippy-io/skippy/blob/65a168e892cf40a81bf1536bd841b9e0173d08cd/skippy-junit5/src/main/java/io/skippy/junit5/SkippyCoverageFileGenerator.java#L44)
+
+The individual coverage files are stored in the `skippy` directory:
 ```
 ls -l skippy
 
-com.example.Test1.csv
-com.example.Test2.csv
+com.example.LeftPadderTest.cov
+com.example.RightPadderTest.cov
 ...
 ```
-Skippy uses those reports to generate a Test Impact Analysis. Test Impact Analysis is a $50 term for a 50 cent
-concept: It's a mapping between tests and the classes they cover:
+
+Each `.cov` file contains the list of classes that are covered by the corresponding test. 
+
+Example of a `.cov` file:
 ```
-{
-    // Test1 covers itself and class Foo
-
-    "com.example.Test1": [
-        "com.example.Test1",
-        "com.example.Foo"
-    ],
-
-    // Test2 covers itself and class Bar
-
-    "com.example.Test2": [
-        "com.example.Test2",
-        "com.example.Bar"
-    ]
-}
-```
-Code: [TestImpactAnalysis.java](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-core/src/main/java/io/skippy/core/TestImpactAnalysis.java#L36)
-
-### Step 4: Create A Hash For Each Class File
-
-In addition to the Test Impact Analysis from Step 3, Skippy creates hashes for all class files collected in Step 1.
-Those hashes are stored in a file called `analyzedFiles.txt`.
-
-Example:
-```
-build/classes/java/main/com/example/Foo.class:9U3+WYit7uiiNqA9jplN2A==
-build/classes/java/test/com/example/Test1.class:3KxzE+CKm6BJ3KetctvnNA==
-build/classes/java/main/com/example/Bar.class:ZT0GoiWG8Az5TevH9/JwBg==
-build/classes/java/test/com/example/Test2.class:naR4eGh3LU+eDNSQXvsIyw==
+com.example.LeftPadder
+com.example.LeftPadderTest
+com.example.StringUtils
 ```
 
-A single failing test case with fail the entire `skippyAnalyze` task. This way, Skippy knows that the
-Test Impact Analysis and content of the `analyzedFiles.txt` corresponds to a successful execution of the test suite.
+### Step 2: Create A Hash For Each Class File
+
+Skippy also creates a hash for each class file in the build's output folders. These hashes are stored in the 
+`classes.md5` file within the skippy folder.
+
+Example `classes.md5` file:
+```
+build/classes/java/main:com/example/LeftPadder.class:9U3+WYit7uiiNqA9jplN2A==
+build/classes/java/main:com/example/RightPadder.class:ZT0GoiWG8Az5TevH9/JwBg==
+build/classes/java/main:com/example/StringUtils.class:4VP9fWGFUJHKIBG47OXZTQ==
+build/classes/java/test:com/example/LeftPadderTest.class:sGLJTZJw4beE9m2Kg6chUg==
+build/classes/java/test:com/example/RightPadderTest.class:E/ObvuQTODFFqU6gxjbxTQ==
+build/classes/java/test:com/example/StringUtilsTest.class:p+N8biKVOm6BltcZkKcC/g==
+build/classes/java/test:com/example/TestConstants.class:3qNbG+sSd1S1OGe0EZ9GPA==
+```
 
 The class files are not hashed as-is. Instead, Skippy uses ASM's bytecode manipulation capabilities to hash a copy of
 the original class file that is stripped of all debug information (like [LineNumberTable attributes](https://docs.oracle.com/javase/specs/jvms/se17/html/jvms-4.html#jvms-4.7.12)).
@@ -102,18 +124,20 @@ This allows Skippy to treat certain changes like
 
 as 'no-ops'.
 
-Code: [AnalyzeTask.java#createAnalyzedFilesTxt](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-gradle/src/main/java/io/skippy/gradle/AnalyzeTask.java#L78)
+Code: [ClassesMd5Writer.java](https://github.com/skippy-io/skippy/blob/65a168e892cf40a81bf1536bd841b9e0173d08cd/skippy-gradle/src/main/java/io/skippy/gradle/io/ClassesMd5Writer.java#L54)
 
 ## Conditional Test Execution: Overview
 
-Now, let's take a look how this data is utilized when tests are executed.
+Skippy utilizes the data from the steps above to make intelligent decisions during test execution.
 
-### The Skippy JUnit5 Extension
+### @Skippified
 
-The Skippy JUnit 5 extension turns a regular JUnit tests into a skippified test:
+Skippy's `@Skippified` annotation turns a regular JUnit tests into a skippified test:
 
 ```java
-@ExtendWith(Skippy.class)
+import io.skippy.junit5.Skippified;
+
+@Skippified
 public class FooTest {
 
     @Test
@@ -123,35 +147,95 @@ public class FooTest {
 
 }
 ```
-Code: [Skippy.java](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-junit5/src/main/java/io/skippy/junit5/Skippy.java#L29C22-L29C22)
 
-At execution time, the extension applies the following algorithm:
+This meta annotation applies two extensions: `SkippyExecutionCondition` and `SkippyCoverageFileGenerator`.
 
 ```
-  Step 1: Does the skippy folder contain a Test Impact Analysis and a file named analyzedFiles.txt?
-
-            Yes: Continue with Step 2.
-            No:  Execute FooTest.
-
-  Step 2: Does analyzedFiles.txt contain a hash for FooTest?
-
-            Yes: Continue with Step 3.
-            No:  Execute FooTest.
-
-  Step 3: Is the current hash of FooTest equal to the hash in analyzedFiles.txt?
-
-            Yes: Continue with Step 4.
-            No:  Execute FooTest.
-
-  Step 4: For all classes that are covered by FooTest:
-
-            Is the current hash of the covered class equal to the hash in analyzedFiles.txt?
-
-                No:  Execute FooTest.
-
-  Step 5: Skip FooTest
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@ExtendWith(SkippyExecutionCondition.class)
+@ExtendWith(SkippyCoverageFileGenerator.class)
+public @interface Skippified {
+}
 ```
 
-Code: [SkippyAnalysis.java#executionRequired](https://github.com/skippy-io/skippy/blob/99a4954c5565baa21d355e653c7a0d509ce32682/skippy-core/src/main/java/io/skippy/core/SkippyAnalysis.java#L77)
+Code: [Skippyfied.java](https://github.com/skippy-io/skippy/blob/65a168e892cf40a81bf1536bd841b9e0173d08cd/skippy-junit5/src/main/java/io/skippy/junit5/Skippified.java#L53)
+
+
+The `SkippyExecutionCondition` extension is used at runtime to make a skip-or-execute decision:
+
+```
+final class SkippyExecutionCondition implements ExecutionCondition {
+
+    private final SkippyAnalysis skippyAnalysis;
+
+    ...
+
+    @Override
+    public ConditionEvaluationResult evaluateExecutionCondition(ExtensionContext context) {
+        ...
+        if (skippyAnalysis.testNeedsToBeExecuted(context.getTestClass().get())) {
+            return ConditionEvaluationResult.enabled("");
+        }
+        return ConditionEvaluationResult.disabled("");
+    }
+
+}
+```
+
+Code: [SkippyExecutionCondition.java](https://github.com/skippy-io/skippy/blob/65a168e892cf40a81bf1536bd841b9e0173d08cd/skippy-junit5/src/main/java/io/skippy/junit5/SkippyExecutionCondition.java#L46)
+
+`SkippyExecutionCondition` internally delegates the skip-or-execute decision to an instance of `SkippyAnalysis`:
+
+```
+public class SkippyAnalysis {
+
+    private final HashedClasses hashedClasses;
+    private final CoverageData coverageData;
+    
+    ...
+
+}
+```
+
+Code: [SkippyAnalysis.java](https://github.com/skippy-io/skippy/blob/65a168e892cf40a81bf1536bd841b9e0173d08cd/skippy-core/src/main/java/io/skippy/core/SkippyAnalysis.java#L35)
+/ [HashedClasses.java](https://github.com/skippy-io/skippy/blob/65a168e892cf40a81bf1536bd841b9e0173d08cd/skippy-core/src/main/java/io/skippy/core/HashedClasses.java#L35)
+/ [CoverageData.java](https://github.com/skippy-io/skippy/blob/65a168e892cf40a81bf1536bd841b9e0173d08cd/skippy-core/src/main/java/io/skippy/core/CoverageData.java#L35)
+
+`SkippyAnalysis` is an in-memory representation of the content of the skippy folder:
+
+- `hashedClasses` is the programmatic representation of the `classes.md5` file
+- `coverageData` is the programmatic representation of the `.cov` files
+
+`SkippyAnalysis` uses this data to make a skip-or-execute decision:
+
+```
+public class SkippyAnalysis {
+   
+    ...
+    
+    public boolean testNeedsToBeExecuted(Class<?> test) {
+        return decide(new FullyQualifiedClassName(test.getName())).decision == Decision.EXECUTE_TEST;
+    }
+
+    DecisionWithReason decide(FullyQualifiedClassName testFqn) {
+        if (coverageData.noDataAvailableFor(testFqn)) {
+            return DecisionWithReason.executeTest(NO_COVERAGE_DATA_FOR_TEST);
+        }
+        if (hashedClasses.noDataFor(testFqn)) {
+            return DecisionWithReason.executeTest(NO_HASH_FOR_TEST);
+        }
+        if (hashedClasses.getChangedClasses().contains(testFqn)) {
+            return DecisionWithReason.executeTest(BYTECODE_CHANGE_IN_TEST);
+        }
+        return decideBasedOnCoveredClasses(testFqn);
+    }
+
+    private DecisionWithReason decideBasedOnCoveredClasses(FullyQualifiedClassName testFqn) {
+        ...
+    }    
+
+}
+```
 
 And voila - that's how Skippy works.
