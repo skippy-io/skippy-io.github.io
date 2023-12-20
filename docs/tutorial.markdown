@@ -63,7 +63,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'io.skippy:skippy-junit5:0.0.7-SNAPSHOT'
+    testImplementation 'io.skippy:skippy-junit5:0.0.7'
 }
 ```
 
@@ -228,9 +228,9 @@ Run the `skippyAnalyze` task to trigger a Skippy analysis:
 You should see something like this:
 ```
 > Task :skippyAnalyze
-Writing skippy/classes.md5
 Writing skippy/com.example.LeftPadderTest.cov
 Writing skippy/com.example.RightPadderTest.cov
+Writing skippy/classes.md5
 ```
 
 __Note__: You can skip to the next section if you don't care about how Skippy works under the hood.

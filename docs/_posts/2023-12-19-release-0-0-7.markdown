@@ -1,0 +1,28 @@
+---
+layout: post
+title:  "Skippy 0.0.7 available now"
+date:   2023-12-19 00:00:00 -0600
+author: Florian McKee
+categories: release
+---
+
+I'm please to announce that Skippy 0.0.7 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+# Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.7](https://github.com/skippy-io/skippy/releases/tag/v0.0.7)
+
+# Highlights
+
+Earlier versions generated coverage data by initiating a separate build for each skippified test,
+utilizing [Gradle’s Tooling API](https://docs.gradle.org/current/userguide/third_party_integration.html#embedding).
+This method significantly slowed down `skippyAnalyze`, making it much slower than Gradle’s `check` task.
+
+Skippy has undergone a complete overhaul in this release. The latest version efficiently generates per-test coverage 
+data for all tests, achieving this with minimal overhead compared to `check`. This improvement is thanks to a new approach
+that utilizes JUnit 5 extensions to capture per-test coverage.
+
+The overhaul, which moves responsibilities from the Gradle plugin into the core Java libraries, paves the way to add
+Maven support in the future. It also marks a significant milestone in Skippy’s evolution from  proof-of-concept into
+practical solution to the challenges faced by developers in complex build environments.
