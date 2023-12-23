@@ -1,0 +1,46 @@
+---
+layout: post
+title:  "Skippy 0.0.8 available now"
+date:   2023-12-23 00:00:00 -0600
+author: Florian McKee
+categories: release
+---
+
+I'm please to announce that Skippy 0.0.8 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+# Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.8](https://github.com/skippy-io/skippy/releases/tag/v0.0.8)
+
+# Highlights
+
+This version introduces the `skippy-junit4` module:
+
+```groovy
+dependencies {
+    testImplementation 'io.skippy:skippy-junit4:0.0.8'
+}    
+```
+
+It provides a `TestRule` to skippify JUnit 4 tests:
+
+```java
+import io.skippy.junit4.Skippy;
+...
+
+public class FooTest {
+
+    @ClassRule
+    public static TestRule skippyRule = Skippy.skippify();
+
+    @Test
+    public void testFoo() {
+        ...
+    }
+
+}
+```
+
+Other noteworthy changes:
+- A failed execution of `skippyAnalyze` will now clear the skippy folder.

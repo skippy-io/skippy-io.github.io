@@ -13,7 +13,7 @@ In the following sections, we'll explore how these components interact and funct
 
 ## The Skippy Gradle Plugin
 
-The Skippy Gradle Plugin integrates the `skippyAnalyze` task into your project, which operates in two primary steps:
+The Skippy Gradle Plugin integrates the `skippyAnalyze` task into your project, which operates in two steps.
 
 ### Step 1: Generation of `.cov` Files
 
@@ -91,7 +91,7 @@ com.example.RightPadderTest.cov
 
 Each `.cov` file contains the list of classes that are covered by the corresponding test. 
 
-Example of a `.cov` file:
+Example:
 ```
 com.example.LeftPadder
 com.example.LeftPadderTest
@@ -103,7 +103,7 @@ com.example.StringUtils
 Skippy also creates a hash for each class file in the build's output folders. These hashes are stored in the 
 `classes.md5` file within the skippy folder.
 
-Example `classes.md5` file:
+Example:
 ```
 build/classes/java/main:com/example/LeftPadder.class:9U3+WYit7uiiNqA9jplN2A==
 build/classes/java/main:com/example/RightPadder.class:ZT0GoiWG8Az5TevH9/JwBg==
