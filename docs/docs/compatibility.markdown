@@ -4,7 +4,8 @@ title: Compatibility
 permalink: /docs/compatibility
 ---
 
-Documentation for Skippy version `0.0.8`.
+Compatibility matrix for Skippys’s integration with Java, JUnit and build tools. Versions not mentioned here might
+work, but there is no guarantee.
 
 # Java
 
