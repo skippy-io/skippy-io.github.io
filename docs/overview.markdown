@@ -13,8 +13,6 @@ Harnessing both dynamic and static bytecode analysis, Skippy lets you iterate fa
 of your builds. It’s about working smarter, not harder—let Skippy streamline your builds, so you can get back to what CI
 was meant to be: a fast track to production.
 
-[https://github.com/skippy-io](https://github.com/skippy-io)
-
 # Features
 
 - Support for JUnit 4 & JUnit 5
