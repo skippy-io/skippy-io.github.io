@@ -4,8 +4,6 @@ title: Overview
 permalink: /overview/
 ---
 
-![Skippy](https://avatars.githubusercontent.com/u/150977247?s=75&u=6f4eb4ad99fb667b1bfaf988d3d396bd892fdf16&v=4)
-
 Skippy is designed for the modern pace of software development, where Continuous Integration (CI) should be a boon, not
 a burden. Unlike traditional CI tools that run all tests regardless of necessity, Skippy's intelligent test impact
 analysis cuts down on unnecessary testing and flakiness, slashing build times to improve developer productivity and
