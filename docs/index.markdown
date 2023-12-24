@@ -5,7 +5,11 @@
 layout: home
 ---
 
-![Skippy](https://avatars.githubusercontent.com/u/150977247?s=75&u=6f4eb4ad99fb667b1bfaf988d3d396bd892fdf16&v=4)
+# What is it? 
 
-[https://github.com/skippy-io](https://github.com/skippy-io) - Test Impact Analysis for the JVM
+Skippy is a Test Impact Analysis framework for the JVM. It cuts down on unnecessary testing and flakiness without 
+compromising the integrity of your builds. You can run it from the command line, your favorite IDE and continuous 
+integration server.
+
+Get Started: [GitHub](https://github.com/skippy-io) \| [Documentation](/docs/) \| [Tutorials](/tutorials/) 
 
