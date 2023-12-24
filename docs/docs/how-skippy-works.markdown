@@ -1,8 +1,9 @@
 ---
 layout: page
 title: How Skippy Works
-permalink: /how-skippy-works/
+permalink: /docs/how-skippy-works
 ---
+
 Documentation for Skippy version `0.0.7`.
 
 Skippy improves test efficiency with a two-pronged approach:

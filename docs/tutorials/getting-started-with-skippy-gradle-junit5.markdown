@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tutorial
-permalink: /tutorial/
+permalink: /tutorials/getting-started-with-skippy-gradle-junit5
 ---
 
 Documentation for Skippy version `0.0.7`.

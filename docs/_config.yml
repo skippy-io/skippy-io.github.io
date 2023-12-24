@@ -33,8 +33,9 @@ plugins:
   - jekyll-feed
 
 header_pages:
-  - tutorial.markdown
-  - how-skippy-works.markdown
+  - overview.markdown
+  - docs/docs.markdown
+  - tutorials/tutorials.markdown
 
 # Exclude from processing.
 # The following items will not be processed, by default.
