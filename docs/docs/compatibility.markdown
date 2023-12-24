@@ -15,9 +15,9 @@ Documentation for Skippy version `0.0.8`.
 
 # JUnit
 
-| Skippy  | JUnit 4              | JUnit 5            |
-|---------|----------------------|--------------------|
-| ≥ 0.0.8 | ✅<br/> 4.0 or later | ✅<br/>5.9 or later |
+| Skippy  | JUnit 4             | JUnit 5            |
+|---------|---------------------|--------------------|
+| ≥ 0.0.8 | ✅<br/> 4.9 or later | ✅<br/>5.9 or later |
 | 0.0.7   | ❌                   | ✅<br/>5.9 or later |
 
 # Build Tool
