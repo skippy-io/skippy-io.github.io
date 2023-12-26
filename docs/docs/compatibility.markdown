@@ -9,9 +9,9 @@ work, but there is no guarantee.
 
 # Java
 
-| Skippy  | Java              |
-|---------|-------------------|
-| ≥ 0.0.7 | 17 or later  |
+| Skippy       | Java              |
+|--------------|-------------------|
+| all versions | 17 or later  |
 
 
 # JUnit
@@ -19,11 +19,10 @@ work, but there is no guarantee.
 | Skippy  | JUnit 4             | JUnit 5            |
 |---------|---------------------|--------------------|
 | ≥ 0.0.8 | ✅<br/> 4.9 or later | ✅<br/>5.9 or later |
-| 0.0.7   | ❌                   | ✅<br/>5.9 or later |
+| ≤ 0.0.7 | ❌                   | ✅<br/>5.9 or later |
 
 # Build Tool
 
-| Skippy | Gradle                                 | Maven |
-|--------|----------------------------------------|-------|
-| 0.0.8  | ✅<br/> 7.3 or later<br/> 8.0 or later | ❌    |
-| 0.0.7  | ✅<br/> 7.3 or later<br/> 8.0 or later | ❌    |
+| Skippy  | Gradle                                 | Maven |
+|---------|----------------------------------------|-------|
+| all versions   | ✅<br/> 7.3 or later<br/> 8.0 or later | ❌    |
