@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tutorial
-permalink: /tutorials/getting-started-with-skippy-maven-junit5
+permalink: /tutorials/skippy-maven-junit5
 ---
 
 Documentation for Skippy version `0.0.9`.

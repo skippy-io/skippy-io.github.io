@@ -103,7 +103,7 @@ class TestConstants {
 ## Run The Tests
 
 Run the tests:
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 ./gradlew test --rerun-tasks
 ```
@@ -115,7 +115,7 @@ mvn test
 
 The output should resemble:
 
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 INFO [..] com.example.LeftPadderTest: No coverage data found: Execution required
 LeftPadderTest > testPadLeft() PASSED
@@ -151,7 +151,7 @@ output for non-skippified tests during the remainder of the tutorial.
 
 Run a Skippy analysis:
 
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 ./gradlew skippyAnalyze
 ```
@@ -217,7 +217,7 @@ Now, let's see what Skippy can do with this data.
 
 Re-run the tests:
 
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 ./gradlew test --rerun-tasks
 ```
@@ -228,7 +228,7 @@ mvn test
 {% endif %}
 
 You should see something like this:
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 INFO [..] com.example.LeftPadderTest: No changes in test or covered classes detected: Execution skipped
 LeftPadderTest > testPadLeft() SKIPPED
@@ -280,7 +280,7 @@ class StringUtils {
 
 Re-run the tests:
 
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 ./gradlew test --rerun-tasks
 ```
@@ -293,7 +293,7 @@ mvn test
 Skippy detects that the newly added comment can not break any of the existing tests. `LeftPadderTest` and
 `RightPadderTest` will be skipped:
 
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 INFO [..] com.example.LeftPadderTest: No changes in test or covered classes detected: Execution skipped
 LeftPadderTest > testPadLeft() SKIPPED
@@ -344,7 +344,7 @@ class StringUtils {
 
 Re-run the tests:
 
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 ./gradlew test --rerun-tasks
 ```
@@ -356,7 +356,7 @@ mvn test
 
 Skippy detects the change and runs the skippified tests again:
 
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 INFO [..] com.example.LeftPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected: Execution required
 LeftPadderTest > testPadLeft() FAILED
@@ -413,7 +413,7 @@ public class LeftPadderTest {
 
 Re-run the tests:
 
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 ./gradlew test --rerun-tasks
 ```
@@ -425,7 +425,7 @@ mvn test
 
 Skippy detects the change and runs `LeftPadderTest` again:
 
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 INFO [..] com.example.LeftPadderTest: Bytecode change detected: Execution required
 expected: < HELLO> but was: < hello>
@@ -471,7 +471,7 @@ class TestConstants {
 
 Re-run the tests:
 
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 ./gradlew test --rerun-tasks
 ```
@@ -483,7 +483,7 @@ mvn test
 
 Skippy detects the change and runs both skippified tests:
 
-{% if page.permalink == "/tutorials/getting-started-with-skippy-gradle-junit5" %}
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 INFO [..] com.example.LeftPadderTest: Bytecode change detected: Execution required
 expected: < hello> but was: <bonjour>

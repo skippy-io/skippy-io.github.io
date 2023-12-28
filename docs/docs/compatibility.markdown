@@ -13,7 +13,6 @@ work, but there is no guarantee.
 |--------------|-------------------|
 | all versions | 17 or later  |
 
-
 # JUnit
 
 | Skippy  | JUnit 4             | JUnit 5            |
@@ -27,3 +26,10 @@ work, but there is no guarantee.
 |---------|----------------------------------------|----------------------|
 | ≥ 0.0.9 | ✅<br/> 7.3 or later<br/> 8.0 or later | ✅<br/> 3.9 or later |
 | ≤ 0.0.8 | ✅<br/> 7.3 or later<br/> 8.0 or later | ❌                   |
+
+# JaCoCo
+
+| Skippy   | JaCoCo           |
+|----------|------------------|
+| ≥ 0.0.9  | 0.8.7 or greater |
+| ≤ 0.0.8  | 0.8.9            |

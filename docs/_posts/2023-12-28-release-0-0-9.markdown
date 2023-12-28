@@ -1,0 +1,47 @@
+---
+layout: post
+title:  "Skippy 0.0.9 available now"
+date:   2023-12-28 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-9
+---
+
+I'm please to announce that Skippy 0.0.9 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+# Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.9](https://github.com/skippy-io/skippy/releases/tag/v0.0.9)
+
+# Highlights
+
+This version introduces Maven support for Skippy: [Getting Started with Skippy, Maven & JUnit 5](../tutorials/skippy-maven-junit5)
+
+Maven support comes in the form of the `skippy-maven` plugin:
+
+```xml
+<plugin>
+<groupId>io.skippy</groupId>
+<artifactId>skippy-maven</artifactId>
+<version>0.0.9</version>
+<executions>
+  <execution>
+    <goals>
+      <goal>analyze</goal>
+      <goal>clean</goal>
+    </goals>
+  </execution>
+</executions>
+</plugin>
+```
+
+The environment variable `skippyAnalyze` enables the Skippy analysis during test execution:
+```shell
+mvn test -DskippyAnalyze=true 
+```
+
+The `clean` goal clears the skippy folder:
+```shell
+mvn skippy:clean
+```
