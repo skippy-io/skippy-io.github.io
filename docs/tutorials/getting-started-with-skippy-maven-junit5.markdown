@@ -26,7 +26,7 @@ git clone git@github.com:skippy-io/skippy-tutorials.git
 
 Then, move into the tutorial directory:
 ```
-cd skippy-tutorials/getting-started-with-gradle-maven-junit5/
+cd skippy-tutorials/getting-started-with-skippy-and-junit5/
 ```
 
 Ensure that the project builds successfully:
