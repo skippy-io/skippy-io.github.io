@@ -37,11 +37,11 @@ Maven support comes in the form of the `skippy-maven` plugin:
 ```
 
 The environment variable `skippyAnalyze` enables the Skippy analysis during test execution:
-```shell
+```
 mvn test -DskippyAnalyze=true 
 ```
 
 The `clean` goal clears the skippy folder:
-```shell
+```
 mvn skippy:clean
 ```
