@@ -15,5 +15,5 @@ was meant to be: a fast track to production.
 
 # Features
 
+- Support for Gradle & Maven
 - Support for JUnit 4 & JUnit 5
-- Support for Gradle
