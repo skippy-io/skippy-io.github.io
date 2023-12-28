@@ -22,17 +22,17 @@ Maven support comes in the form of the `skippy-maven` plugin:
 
 ```xml
 <plugin>
-<groupId>io.skippy</groupId>
-<artifactId>skippy-maven</artifactId>
-<version>0.0.9</version>
-<executions>
-  <execution>
-    <goals>
-      <goal>analyze</goal>
-      <goal>clean</goal>
-    </goals>
-  </execution>
-</executions>
+    <groupId>io.skippy</groupId>
+    <artifactId>skippy-maven</artifactId>
+    <version>0.0.9</version>
+    <executions>
+      <execution>
+        <goals>
+          <goal>analyze</goal>
+          <goal>clean</goal>
+        </goals>
+      </execution>
+    </executions>
 </plugin>
 ```
 
