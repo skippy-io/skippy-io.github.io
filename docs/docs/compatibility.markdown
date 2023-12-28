@@ -23,6 +23,7 @@ work, but there is no guarantee.
 
 # Build Tool
 
-| Skippy  | Gradle                                 | Maven |
-|---------|----------------------------------------|-------|
-| all versions   | ✅<br/> 7.3 or later<br/> 8.0 or later | ❌    |
+| Skippy  | Gradle                                 | Maven                |
+|---------|----------------------------------------|----------------------|
+| ≥       | ✅<br/> 7.3 or later<br/> 8.0 or later | ✅<br/> 3.9 or later |
+| ≤ 0.0.8 | ✅<br/> 7.3 or later<br/> 8.0 or later | ❌                   |
