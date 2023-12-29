@@ -10,7 +10,7 @@ title: What is it?
 
 Skippy is a Test Impact Analysis framework for the JVM. It cuts down on unnecessary testing and flakiness without 
 compromising the integrity of your builds. You can run it from the command line, your favorite IDE and continuous 
-integration server. You can use it with Gradle, Maven, JUnit 4 and JUnit 5.
+integration server. Skippy supports Gradle, Maven, JUnit 4 and JUnit 5.
 
 Get Started: [GitHub](https://github.com/skippy-io) \| [Documentation](/docs/) \| [Tutorials](/tutorials/)
 {: style="font-size: 90%;"}
