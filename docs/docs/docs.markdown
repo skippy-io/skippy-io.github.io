@@ -20,7 +20,7 @@ was meant to be: a fast track to production.
 - Lightweight: Use it from the command line, your favorite IDE and CI server
 - Non-invasive: Use it for a single test, your entire suite and anything in-between
 
-## Table of Content
+## Table of Contents
 
 * [Compatibility](#compatibility)
 * [Build Plugins](#build-plugins)
