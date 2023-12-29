@@ -1,7 +1,7 @@
 ---
 layout: page
 title: How Skippy Works
-permalink: /docs/how-skippy-works
+permalink: /tutorials/how-skippy-works
 ---
 
 Documentation for Skippy version `0.0.7`.
