@@ -161,7 +161,7 @@ The generated files are consumed by Skippy's [testing libraries](#junit) to make
 ### Maven
 
 The [skippy-maven](https://github.com/skippy-io/skippy/tree/main/skippy-maven) sub-project contains the Skippy
-plugin for Gradle.
+plugin for Maven.
 
 #### Install
 
