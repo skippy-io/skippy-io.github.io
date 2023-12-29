@@ -20,7 +20,7 @@ was meant to be: a fast track to production.
 - Support for Gradle & Maven
 - Support for JUnit 4 & JUnit 5
 - Lightweight: Use it from the command line, your favorite IDE and CI server
-- Non-invasive: Use it for a single test our your entire suite
+- Non-invasive: Use it for a single test, your entire suite and anything in-between
 
 ## Table of Content
 
