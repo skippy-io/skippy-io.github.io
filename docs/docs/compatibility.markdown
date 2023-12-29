@@ -4,8 +4,8 @@ title: Compatibility
 permalink: /docs/compatibility
 ---
 
-Compatibility matrix for Skippys’s integration with Java, JUnit and build tools. Versions not mentioned here might
-work, but there is no guarantee.
+Compatibility matrix for Skippys’s integration with Java, JUnit, Gradle, Maven and JaCoCo. Versions not mentioned here
+might work, but there is no guarantee.
 
 # Java
 
@@ -20,7 +20,7 @@ work, but there is no guarantee.
 | ≥ 0.0.8 | 4.9 or later | 5.9 or later |
 | ≤ 0.0.7 | ❌           | 5.9 or later |
 
-# Build Tool
+# Build Tools
 
 | Skippy  | Gradle                         | Maven        |
 |---------|--------------------------------|--------------|
