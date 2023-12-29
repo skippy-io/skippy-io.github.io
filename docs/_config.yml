@@ -33,7 +33,7 @@ plugins:
   - jekyll-feed
 
 header_pages:
-  - overview.markdown
+  - index.markdown
   - docs/docs.markdown
   - tutorials/tutorials.markdown
 

@@ -4,6 +4,7 @@
 
 layout: home
 title: What is it?
+permalink: /
 ---
 
 ![Skippy](https://avatars.githubusercontent.com/u/150977247?s=100&u=6f4eb4ad99fb667b1bfaf988d3d396bd892fdf16&v=4){:style="float: left; margin: 0px 15px 25px 0px; border-radius: 10px;"}
