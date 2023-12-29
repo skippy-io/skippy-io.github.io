@@ -103,6 +103,7 @@ class TestConstants {
 ## Run The Tests
 
 Run the tests:
+
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 ./gradlew test --rerun-tasks
@@ -113,7 +114,7 @@ mvn test
 ```
 {% endif %}
 
-The output should resemble:
+You should see something like this:
 
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
@@ -147,7 +148,7 @@ Skippy did not find data in the skippy folder to make a skip-or-execute decision
 Also note that there is no Skippy-specific logging for `StringUtilsTest`: It's a non-skippified test. We will omit the
 output for non-skippified tests during the remainder of the tutorial.
 
-## Run the skippyAnalyze task
+## Run a Skippy Analysis
 
 Run a Skippy analysis:
 
@@ -228,6 +229,7 @@ mvn test
 {% endif %}
 
 You should see something like this:
+
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 INFO [..] com.example.LeftPadderTest: No changes in test or covered classes detected: Execution skipped
