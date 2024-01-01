@@ -136,7 +136,7 @@ StringUtilsTest > testPadRight() PASSED
 ```
 {% endif %}
 
-Let's inspecSkippy's decision (`skippy/decision.log`):
+Skippy captures skip-or-execute decision in `skippy/decision.log`:
 
 ```
 com.example.LeftPadderTest:EXECUTE:NO_COVERAGE_DATA_FOR_TEST
