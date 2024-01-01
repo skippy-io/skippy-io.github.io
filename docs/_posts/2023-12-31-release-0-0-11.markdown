@@ -1,0 +1,19 @@
+---
+layout: post
+title:  "Skippy 0.0.11 available now"
+date:   2023-12-31 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-11
+---
+
+I'm please to announce that Skippy 0.0.11 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+# Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.11](https://github.com/skippy-io/skippy/releases/tag/v0.0.11)
+
+### Noteworthy Changes
+
+This release fixes an issue where the `test` task/goal fails if the `skippy` folder doesn't exist.
