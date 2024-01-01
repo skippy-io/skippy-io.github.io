@@ -181,7 +181,7 @@ com.example.StringUtils
 ```
 
 The `.cov` file contains a list of classes that are covered by `com.example.LeftPadderTest`. This data was captured
-from [JaCoCo](https://www.jacoco.org/) during the execution of the test suite. You might wonder: Shouldn't there be
+from [JaCoCo](https://www.jacoco.org/) during Skippy's analysis. You might wonder: Shouldn't there be
 coverage for `com.example.TestConstants`? Yes. But: JaCoCo's analysis is based on the execution of instrumented
 bytecode. Since the Java compiler inlines the value of `TestConstants.HELLO` into`LeftPadderTest`'s class file, JaCoCo
 has no way to detect this.
@@ -246,7 +246,7 @@ Skippy compares the current state of the project with the analysis in the `skipp
 - There was no change in either `LeftPadderTest` or `RightPadderTest`.
 - There was no change in any of the covered classes.
 
-Hence, the `SKIP` decision in `skippy/decision.log`.
+Hence, the `SKIP` decisions in `skippy/decision.log`.
 
 ## Testing After Modifications
 
