@@ -292,8 +292,9 @@ class SkippyAnalysis {
 
 Code: [SkippyAnalysis.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-junit-common/src/main/java/io/skippy/junit/SkippyAnalysis.java#L93)
 
-The purpose of most indirections in Skippy's codebase (e.g., the call from `SkippyExecutionCondition` to `SkippyTestApi`) 
-is the ability to support multiple build tools (e.g., Gradle & Maven) and multiple unit testing frameworks 
+The purpose of most indirections in Skippy's codebase (e.g., the call from `SkippyExecutionCondition` to `SkippyTestApi`):
+- The ability to support multiple build tools (e.g., Gradle & Maven) and multiple unit testing frameworks 
 (e.g., JUnit 4 & JUnit 5) while keeping the maintenance effort in check.
+- Information hiding between the subprojects. For example, `SkippyExecutionCondition` is unaware of all classes in `skippy-junit-common` except `SkippyTestApi`.
 
 And voila - that's how Skippy works.
