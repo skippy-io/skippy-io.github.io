@@ -148,9 +148,9 @@ Skippy did not find data in the skippy folder to make a skip-or-execute decision
 `StringUtilsTest`: It's a non-skippified test. We will omit the output for non-skippified tests during the remainder of
 the tutorial.
 
-## Perform A Skippy Analysis
+## Skippy's Test Impact Analysis
 
-Perform a Skippy analysis:
+Execute the following command to trigger Skippy's Test Impact Analysis:
 
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
@@ -202,7 +202,7 @@ The file contains hashes for all classes in the project.
 
 Now, let's see what Skippy can do with this data.
 
-## Re-Run The Tests
+## Skippy's Predictive Test Selection In Action
 
 Re-run the tests:
 
@@ -248,7 +248,7 @@ Skippy compares the current state of the project with the analysis in the `skipp
 
 Hence, the `SKIP` decisions in `skippy/decision.log`.
 
-## Testing After Modifications
+### Testing After Modifications
 
 When changes are made, Skippy reassesses which tests to run based on it's bytecode based change detection. Reasoning
 based on the bytecode is powerful: It allows Skippy to distinguish relevant changes (e.g., new or updated instructions)
@@ -258,7 +258,7 @@ addition of a line break somewhere in the source file).
 
 Let's perform some experiments.
 
-### Experiment 1
+#### Experiment 1
 
 Add a comment to `StringUtils`:
 
@@ -309,7 +309,7 @@ com.example.LeftPadderTest:SKIP:NO_CHANGE
 com.example.RightPadderTest:SKIP:NO_CHANGE
 ```
 
-### Experiment 2
+#### Experiment 2
 
 Undo the changes from the previous experiment:
 ```
@@ -385,7 +385,7 @@ While we plan to implement more granular change detection in the future, we curr
 is robustness and simplicity while providing a significant reduction in useless testing for applications that contain
 large quantities of source files and tests.
 
-### Experiment 3
+#### Experiment 3
 
 Undo the changes from the previous experiment:
 ```
@@ -447,7 +447,7 @@ com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
 com.example.RightPadderTest:SKIP:NO_CHANGE
 ```
 
-### Experiment 4
+#### Experiment 4
 
 Undo the changes from the previous experiment:
 ```

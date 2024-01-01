@@ -16,6 +16,13 @@ __What You Need__
 - Java 17 or later
 - Maven 3.9+
 
+## Table Of Contents
+
+- [Setting Up Your Environment](#setting-up-your-environment)
+- [Exploring The Codebase](#exploring-the-codebase)
+- [Run The Tests](#run-the-tests)
+- [Skippy’s Test Impact Analysis](#skippys-test-impact-analysis)
+- [Skippy's Predictive Test Selection In Action](#skippys-predictive-test-selection-in-action)
 
 ## Setting Up Your Environment
 
