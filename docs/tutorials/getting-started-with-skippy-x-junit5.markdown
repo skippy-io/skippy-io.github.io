@@ -114,27 +114,21 @@ mvn test
 ```
 {% endif %}
 
-You should see something like this:
+Output:
 
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
-INFO [..] com.example.LeftPadderTest: No coverage data found: Execution required
 LeftPadderTest > testPadLeft() PASSED
-
-INFO [..] com.example.RightPadderTest: No coverage data found: Execution required
 RightPadderTest > testPadRight() PASSED
-
 StringUtilsTest > testPadLeft() PASSED
 StringUtilsTest > testPadRight() PASSED
 ```
 {% else %}
 ```
 [INFO] Running com.example.LeftPadderTest
-INFO [..] com.example.LeftPadderTest: No coverage data found: Execution required
 [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 [INFO] Running com.example.RightPadderTest
-INFO [..] com.example.RightPadderTest: No coverage data found: Execution required
 [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 [INFO] Running com.example.StringUtilsTest
@@ -142,15 +136,21 @@ INFO [..] com.example.RightPadderTest: No coverage data found: Execution require
 ```
 {% endif %}
 
+Let's inspect Skippy's `decision.log`:
+
+```
+com.example.LeftPadderTest:EXECUTE:NO_COVERAGE_DATA_FOR_TEST
+com.example.RightPadderTest:EXECUTE:NO_COVERAGE_DATA_FOR_TEST
+```
+
 Skippy did not find data in the skippy folder to make a skip-or-execute decision for `LeftPadderTest` and
-`RightPadderTest`. In this case, Skippy will always execute skippified tests.
+`RightPadderTest`. In this case, Skippy will always execute skippified tests. Also note that there is no log entry for
+`StringUtilsTest`: It's a non-skippified test. We will omit the output for non-skippified tests during the remainder of
+the tutorial.
 
-Also note that there is no Skippy-specific logging for `StringUtilsTest`: It's a non-skippified test. We will omit the
-output for non-skippified tests during the remainder of the tutorial.
+## Perform A Skippy Analysis
 
-## Run a Skippy Analysis
-
-Run a Skippy analysis:
+Perform a Skippy analysis:
 
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
@@ -162,29 +162,19 @@ mvn test -DskippyAnalyze=true
 ```
 {% endif %}
 
-You should see something like this:
+The Skippy Analysis creates a bunch of files in the `skippy` folder:
+
 ```
-Writing skippy/com.example.LeftPadderTest.cov
-Writing skippy/com.example.RightPadderTest.cov
-Writing skippy/classes.md5
+classes.md5
+com.example.LeftPadderTest.cov
+com.example.RightPadderTest.cov
+decisions.log 
 ```
 
 __Note__: You can skip to the next section if you don't care about how Skippy works under the hood.
 
-The Skippy Analysis generates a bunch of files in the `skippy` folder:
-
-```
-ls -l skippy
-
-classes.md5
-com.example.LeftPadderTest.cov
-com.example.RightPadderTest.cov
-```
-
 Let's take a look at `com.example.LeftPadderTest.cov`:
 ```
-cat skippy/com.example.LeftPadderTest.cov
-
 com.example.LeftPadder
 com.example.LeftPadderTest
 com.example.StringUtils
@@ -200,8 +190,6 @@ Don't worry - Skippy has you covered! Skippy combines JaCoCo's dynamic bytecode 
 analysis to detect relevant changes. To do this, it needs additional information that is stored in  `classes.md5`:
 
 ```
-cat skippy/classes.md5
-
 build/classes/java/main:com/example/LeftPadder.class:9U3+WYit7uiiNqA9jplN2A==
 build/classes/java/main:com/example/RightPadder.class:ZT0GoiWG8Az5TevH9/JwBg==
 build/classes/java/main:com/example/StringUtils.class:4VP9fWGFUJHKIBG47OXZTQ==
@@ -228,30 +216,32 @@ mvn test
 ```
 {% endif %}
 
-You should see something like this:
+Output:
 
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
-INFO [..] com.example.LeftPadderTest: No changes in test or covered classes detected: Execution skipped
 LeftPadderTest > testPadLeft() SKIPPED
-
-INFO [..] com.example.RightPadderTest: No changes in test or covered classes detected: Execution skipped
 RightPadderTest > testPadRight() SKIPPED
 ```
 {% else %}
 ```
 [INFO] Running com.example.LeftPadderTest
-INFO   [..] com.example.LeftPadderTest: No changes in test or covered classes detected: Execution skipped
 [WARNING] Tests run: 1, Failures: 0, Errors: 0, Skipped: 1
 
 [INFO] Running com.example.RightPadderTest
-INFO   [..] com.example.RightPadderTest: No changes in test or covered classes detected: Execution skipped
 [WARNING] Tests run: 1, Failures: 0, Errors: 0, Skipped: 1
 ```
 {% endif %}
 
+Skippy’s `decision.log`:
+
+```
+com.example.LeftPadderTest:SKIP:NO_CHANGE
+com.example.RightPadderTest:SKIP:NO_CHANGE
+```
+
 Skippy compares the current state of the project with the analysis in the `skippy` folder. It detects that both
-`LeftPadderTest` and `RightPadderTest` can be skipped:
+`LeftPadderTest` and `RightPadderTest` can be skipped (hence the `SKIP` decision in `decision.log`):
 
 - There was no change in either `LeftPadderTest` or `RightPadderTest`.
 - There was no change in any of the covered classes.
@@ -297,23 +287,25 @@ Skippy detects that the newly added comment can not break any of the existing te
 
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
-INFO [..] com.example.LeftPadderTest: No changes in test or covered classes detected: Execution skipped
 LeftPadderTest > testPadLeft() SKIPPED
-
-INFO [..] com.example.RightPadderTest: No changes in test or covered classes detected: Execution skipped
 RightPadderTest > testPadRight() SKIPPED
 ```
 {% else %}
 ```
 [INFO] Running com.example.LeftPadderTest
-INFO   [..] com.example.LeftPadderTest: No changes in test or covered classes detected: Execution skipped
 [WARNING] Tests run: 1, Failures: 0, Errors: 0, Skipped: 1
 
 [INFO] Running com.example.RightPadderTest
-INFO   [..] com.example.RightPadderTest: No changes in test or covered classes detected: Execution skipped
 [WARNING] Tests run: 1, Failures: 0, Errors: 0, Skipped: 1
 ```
 {% endif %}
+
+Skippy’s `decision.log`:
+
+```
+com.example.LeftPadderTest:SKIP:NO_CHANGE
+com.example.RightPadderTest:SKIP:NO_CHANGE
+```
 
 ### Experiment 2
 
@@ -360,29 +352,30 @@ Skippy detects the change and runs the skippified tests again:
 
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
-INFO [..] com.example.LeftPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected: Execution required
 LeftPadderTest > testPadLeft() FAILED
     org.opentest4j.AssertionFailedError: expected: < hello> but was: <hello>
 
-INFO [..] com.example.RightPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected: Execution required
 RightPadderTest > testPadRight() PASSED
 ```
 {% else %}
 ```
 [INFO] Running com.example.LeftPadderTest
-INFO   [..] com.example.LeftPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected: Execution required
-[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
+[ERROR] com.example.LeftPadderTest.testPadLeft <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: < hello> but was: <hello>       
 
 [INFO] Running com.example.RightPadderTest
-INFO   [..] com.example.RightPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected: Execution required
 [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
-
-[ERROR] Failures: 
-[ERROR]   LeftPadderTest.testPadLeft:14 expected: < hello> but was: <hello>
 ```
 {% endif %}
 
-Note that at this point in time, Skippy executes a test if the covered class contains a significant bytecode change
+Skippy’s `decision.log`:
+
+```
+com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_COVERED_CLASS
+com.example.RightPadderTest:EXECUTE:BYTECODE_CHANGE_IN_COVERED_CLASS
+```
+
+At this point in time, Skippy executes a test if the covered class contains a significant bytecode change
 (e.g., new or updated instructions). The test itself may or may not depend on this change. In the above example,
 `RightPadderTest` could be skipped as well.
 
@@ -429,29 +422,28 @@ Skippy detects the change and runs `LeftPadderTest` again:
 
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
-INFO [..] com.example.LeftPadderTest: Bytecode change detected: Execution required
-expected: < HELLO> but was: < hello>
 LeftPadderTest > testPadLeft() FAILED
-
-INFO [..] com.example.RightPadderTest:  No changes in test or covered classes detected: Execution skipped
+    org.opentest4j.AssertionFailedError: expected: < HELLO> but was: < hello>
+    
 RightPadderTest > testPadRight() SKIPPED
-
-...
 ```
 {% else %}
 ```
 [INFO] Running com.example.LeftPadderTest
-INFO   [..] com.example.LeftPadderTest: Bytecode change detected: Execution required
-[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
+[ERROR] com.example.LeftPadderTest.testPadLeft <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: < HELLO> but was: < hello>
 
 [INFO] Running com.example.RightPadderTest
-INFO   [..] com.example.RightPadderTest: No changes in test or covered classes detected: Execution skipped
 [WARNING] Tests run: 1, Failures: 0, Errors: 0, Skipped: 1
-
-[ERROR] Failures: 
-[ERROR]   LeftPadderTest.testPadLeft:14 expected: < HELLO> but was: < hello>
 ```
 {% endif %}
+
+Skippy’s `decision.log`:
+
+```
+com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
+com.example.RightPadderTest:SKIP:NO_CHANGE
+```
 
 ### Experiment 4
 
@@ -487,29 +479,30 @@ Skippy detects the change and runs both skippified tests:
 
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
-INFO [..] com.example.LeftPadderTest: Bytecode change detected: Execution required
-expected: < hello> but was: <bonjour>
 LeftPadderTest > testPadLeft() FAILED
-
-INFO [..] com.example.RightPadderTest:  Bytecode change detected: Execution required
-expected: <hello > but was: <bonjour>
+    org.opentest4j.AssertionFailedError: expected: < hello> but was: <bonjour>
+       
 RightPadderTest > testPadRight() FAILED
+    org.opentest4j.AssertionFailedError: expected: <hello > but was: <bonjour>
 ```
 {% else %}
 ```
 [INFO] Running com.example.LeftPadderTest
-INFO   [..] com.example.LeftPadderTest: Bytecode change detected: Execution required
-[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
+[ERROR] com.example.LeftPadderTest.testPadLeft <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: < hello> but was: <bonjour>
 
 [INFO] Running com.example.RightPadderTest
-INFO   [..] com.example.RightPadderTest: Bytecode change detected: Execution required
-[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
-
-[ERROR] Failures: 
-[ERROR]   LeftPadderTest.testPadLeft:14 expected: < hello> but was: <bonjour>
-[ERROR]   RightPadderTest.testPadRight:14 expected: <hello > but was: <bonjour>
+[ERROR] com.example.RightPadderTest.testPadRight <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <hello > but was: <bonjour>
 ```
 {% endif %}
+
+Skippy’s `decision.log`:
+
+```
+com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
+com.example.RightPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
+```
 
 Congratulations! You've successfully integrated Skippy into your project, ensuring that only necessary tests are run,
 saving you time and resources.

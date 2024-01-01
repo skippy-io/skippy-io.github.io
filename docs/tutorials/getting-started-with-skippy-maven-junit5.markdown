@@ -4,7 +4,7 @@ title: Tutorial
 permalink: /tutorials/skippy-maven-junit5
 ---
 
-Documentation for Skippy version `0.0.9`.
+Documentation for Skippy version `0.0.11`.
 
 ## Getting Started with Skippy, Maven & JUnit 5
 
@@ -57,7 +57,7 @@ Let's take a quick look at the codebase.
 <dependency>
     <groupId>io.skippy</groupId>
     <artifactId>skippy-junit5</artifactId>
-    <version>0.0.9</version>
+    <version>0.0.11</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -67,7 +67,7 @@ It also adds the Skippy plugin:
 <plugin>
     <groupId>io.skippy</groupId>
     <artifactId>skippy-maven</artifactId>
-    <version>0.0.9</version>
+    <version>0.0.11</version>
     <executions>
         <execution>
             <goals>
