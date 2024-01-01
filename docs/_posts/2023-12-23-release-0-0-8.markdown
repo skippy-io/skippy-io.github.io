@@ -43,5 +43,6 @@ public class FooTest {
 }
 ```
 
-Other noteworthy changes:
-- A failed execution of `skippyAnalyze` will now clear the skippy folder.
+# Other noteworthy changes 
+
+A failed execution of `skippyAnalyze` will now clear the skippy folder.
