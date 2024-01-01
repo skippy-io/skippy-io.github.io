@@ -7,7 +7,7 @@ permalink: /tutorials/how-skippy-works
 Documentation for Skippy version `0.0.11`.
 
 Skippy consists of two pillars:
-- Build Plugins for [Gradle](https://github.com/skippy-io/skippy/tree/main/skippy-gradle) and [Maven](https://github.com/skippy-io/skippy/tree/main/skippy-gradle) that implement Skippy's Test Impact Analysis
+- Build Plugins for [Gradle](https://github.com/skippy-io/skippy/tree/main/skippy-gradle) and [Maven](https://github.com/skippy-io/skippy/tree/main/skippy-maven) that implement Skippy's Test Impact Analysis
 - JUnit libraries for [JUnit 4](https://github.com/skippy-io/skippy/tree/main/skippy-junit4) & [JUnit 5](https://github.com/skippy-io/skippy/tree/main/skippy-junit5) that implement Skippy's Predictive Test Selection
 
 In the following sections, we'll explore how these components interact and function together. We focus on Gradle & JUnit 5,
@@ -68,9 +68,9 @@ class SkippyAnalyzeTask extends DefaultTask {
 
     public SkippyAnalyzeTask(...) {
         ...
-            getProject().getTasks().withType(Test.class,
-                test -> test.environment(SkippyConstants.SKIPPY_ANALYZE_MARKER, true)
-            );
+        getProject().getTasks().withType(Test.class,
+            test -> test.environment(SkippyConstants.SKIPPY_ANALYZE_MARKER, true)
+        );
         ...
     }
     
@@ -161,8 +161,8 @@ com.example.StringUtils
 
 #### Generation Of The `classes.md5` File
 
-Skippy also creates a hash for each class file in the build's output folders. These hashes are stored in the 
-`classes.md5` file in the `skippy` folder.
+The `skippyAnalyze` task also creates a hash for each class file in any of the output folders of the build. Those hashes
+are stored in the `classes.md5` file in the `skippy` folder.
 
 Example:
 ```
@@ -291,5 +291,9 @@ class SkippyAnalysis {
 ```
 
 Code: [SkippyAnalysis.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-junit-common/src/main/java/io/skippy/junit/SkippyAnalysis.java#L93)
+
+The purpose of most indirections in Skippy's codebase (e.g., the call from `SkippyExecutionCondition` to `SkippyTestApi`) 
+is the ability to support multiple build tools (e.g., Gradle & Maven) and multiple unit testing frameworks 
+(e.g., JUnit 4 & JUnit 5) while keeping the maintenance effort in check.
 
 And voila - that's how Skippy works.
