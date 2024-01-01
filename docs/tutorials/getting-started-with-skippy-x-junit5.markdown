@@ -136,7 +136,7 @@ StringUtilsTest > testPadRight() PASSED
 ```
 {% endif %}
 
-Let's inspect Skippy's `decision.log`:
+Let's inspecSkippy's decision (`skippy/decision.log`):
 
 ```
 com.example.LeftPadderTest:EXECUTE:NO_COVERAGE_DATA_FOR_TEST
@@ -233,7 +233,7 @@ RightPadderTest > testPadRight() SKIPPED
 ```
 {% endif %}
 
-Skippy’s `decision.log`:
+Content of `skippy/decision.log`:
 
 ```
 com.example.LeftPadderTest:SKIP:NO_CHANGE
@@ -241,10 +241,12 @@ com.example.RightPadderTest:SKIP:NO_CHANGE
 ```
 
 Skippy compares the current state of the project with the analysis in the `skippy` folder. It detects that both
-`LeftPadderTest` and `RightPadderTest` can be skipped (hence the `SKIP` decision in `decision.log`):
+`LeftPadderTest` and `RightPadderTest` can be skipped:
 
 - There was no change in either `LeftPadderTest` or `RightPadderTest`.
 - There was no change in any of the covered classes.
+
+Hence, the `SKIP` decision in `skippy/decision.log`.
 
 ## Testing After Modifications
 
@@ -300,7 +302,7 @@ RightPadderTest > testPadRight() SKIPPED
 ```
 {% endif %}
 
-Skippy’s `decision.log`:
+Content of `skippy/decision.log`:
 
 ```
 com.example.LeftPadderTest:SKIP:NO_CHANGE
@@ -368,7 +370,7 @@ org.opentest4j.AssertionFailedError: expected: < hello> but was: <hello>
 ```
 {% endif %}
 
-Skippy’s `decision.log`:
+Content of `skippy/decision.log`:
 
 ```
 com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_COVERED_CLASS
@@ -438,7 +440,7 @@ org.opentest4j.AssertionFailedError: expected: < HELLO> but was: < hello>
 ```
 {% endif %}
 
-Skippy’s `decision.log`:
+Content of `skippy/decision.log`:
 
 ```
 com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
@@ -497,7 +499,7 @@ org.opentest4j.AssertionFailedError: expected: <hello > but was: <bonjour>
 ```
 {% endif %}
 
-Skippy’s `decision.log`:
+Content of `skippy/decision.log`:
 
 ```
 com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
