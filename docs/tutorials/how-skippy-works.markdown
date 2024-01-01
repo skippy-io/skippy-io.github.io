@@ -6,7 +6,7 @@ permalink: /tutorials/how-skippy-works
 
 Documentation for Skippy version `0.0.11`.
 
-Skippy consists oftwo pillars:
+Skippy consists of two pillars:
 - Build Plugins for [Gradle](https://github.com/skippy-io/skippy/tree/main/skippy-gradle) and [Maven](https://github.com/skippy-io/skippy/tree/main/skippy-gradle) that implement Skippy's Test Impact Analysis
 - JUnit libraries for [JUnit 4](https://github.com/skippy-io/skippy/tree/main/skippy-junit4) & [JUnit 5](https://github.com/skippy-io/skippy/tree/main/skippy-junit5) that implement Skippy's Predictive Test Selection
 
