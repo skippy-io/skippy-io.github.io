@@ -10,11 +10,11 @@ permalink: /posts/release-0-0-9
 I'm please to announce that Skippy 0.0.9 has been released and is now available in Gradle's Plugin Portal and Maven
 Central.
 
-# Release Notes
+## Release Notes
 
 [https://github.com/skippy-io/skippy/releases/tag/v0.0.9](https://github.com/skippy-io/skippy/releases/tag/v0.0.9)
 
-# Highlights
+## Highlights
 
 This version introduces Maven support for Skippy: [Getting Started with Skippy, Maven & JUnit 5](../tutorials/skippy-maven-junit5)
 

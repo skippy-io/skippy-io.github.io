@@ -1,0 +1,22 @@
+---
+layout: post
+title:  "Skippy 0.0.12 available now"
+date:   2024-01-02 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-12
+---
+
+I'm please to announce that Skippy 0.0.12 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+## Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.12](https://github.com/skippy-io/skippy/releases/tag/v0.0.12)
+
+## Highlights
+
+This release fixes an issue in `skippy-junit5` that caused 3rd party extensions to be evaluated even though Skippy already made a skip prediction. This **significantly** speeds up the execution of skippable tests in projects that make use
+- `@ExtendsWith(SpringExtension.class)`,
+- `@Testcontainers` and
+- other extensions that perform time consuming setup work.

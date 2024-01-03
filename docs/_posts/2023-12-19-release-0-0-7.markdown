@@ -10,11 +10,11 @@ permalink: /posts/release-0-0-7
 I'm please to announce that Skippy 0.0.7 has been released and is now available in Gradle's Plugin Portal and Maven
 Central.
 
-# Release Notes
+## Release Notes
 
 [https://github.com/skippy-io/skippy/releases/tag/v0.0.7](https://github.com/skippy-io/skippy/releases/tag/v0.0.7)
 
-# Highlights
+## Highlights
 
 Earlier versions generated coverage data by initiating a separate build for each skippified test,
 utilizing [Gradle’s Tooling API](https://docs.gradle.org/current/userguide/third_party_integration.html#embedding).

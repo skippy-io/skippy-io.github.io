@@ -10,11 +10,11 @@ permalink: /posts/release-0-0-8
 I'm please to announce that Skippy 0.0.8 has been released and is now available in Gradle's Plugin Portal and Maven
 Central.
 
-# Release Notes
+## Release Notes
 
 [https://github.com/skippy-io/skippy/releases/tag/v0.0.8](https://github.com/skippy-io/skippy/releases/tag/v0.0.8)
 
-# Highlights
+## Highlights
 
 This version introduces the `skippy-junit4` module:
 
@@ -43,6 +43,6 @@ public class FooTest {
 }
 ```
 
-# Other noteworthy changes 
+## Other noteworthy changes 
 
 A failed execution of `skippyAnalyze` will now clear the skippy folder.

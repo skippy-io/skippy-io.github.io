@@ -10,17 +10,17 @@ permalink: /posts/release-0-0-10
 I'm please to announce that Skippy 0.0.10 has been released and is now available in Gradle's Plugin Portal and Maven
 Central.
 
-# Release Notes
+## Release Notes
 
 [https://github.com/skippy-io/skippy/releases/tag/v0.0.10](https://github.com/skippy-io/skippy/releases/tag/v0.0.10)
 
-### Highlights
+## Highlights
 
 This release contains smaller bug fixes that add support for
 [Spring Boot](https://github.com/spring-projects/spring-boot)'s build. Support for Spring Boot's massive multi-module
 build marks another milestone from proof-of-concept to practical solution for complex real-world builds.
 
-### Other noteworthy changes
+## Other noteworthy changes
 
 Skippy now creates two new files in the skippy folder:
 - `decisions.log`
