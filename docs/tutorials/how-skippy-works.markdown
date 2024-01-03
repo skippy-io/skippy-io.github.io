@@ -216,13 +216,13 @@ public class FooTest {
 }
 ```
 
-This meta annotation applies two extensions: `SkippyExecutionCondition` and `SkippyCoverageFileGenerator`.
+This meta annotation applies two extensions: `SkipOrExecuteCondition` and `CoverageFileCallbacks`.
 
 ```
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@ExtendWith(SkippyExecutionCondition.class)
-@ExtendWith(SkippyCoverageFileGenerator.class)
+@ExtendWith(SkipOrExecuteCondition.class)
+@ExtendWith(CoverageFileCallbacks.class)
 public @interface Skippified {
 }
 ```
@@ -230,11 +230,9 @@ public @interface Skippified {
 Code: [Skippyfied.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-junit5/src/main/java/io/skippy/junit5/Skippified.java#L53)
 
 
-The `SkippyExecutionCondition` extension is used at runtime to make a skip-or-execute decision:
+The `SkipOrExecuteCondition` extension is used at runtime to make a skip-or-execute decision:
 
 ```
-final class SkippyExecutionCondition implements ExecutionCondition {
-
 public final class SkipOrExecuteCondition implements ExecutionCondition {
 
     private final SkippyTestApi skippyTestApi;
