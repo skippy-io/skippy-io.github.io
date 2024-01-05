@@ -4,7 +4,7 @@ title: Tutorial
 permalink: /tutorials/skippy-gradle-junit5
 ---
 
-Documentation for Skippy version `0.0.11`.
+Documentation for Skippy version `{% include_relative version.markdown %}`.
 
 ## Getting Started with Skippy, Gradle & JUnit 5
 
@@ -56,11 +56,11 @@ Let's take a quick look at the codebase.
 
 ```groovy
 plugins {
-    id 'io.skippy' version '0.0.11'
+    id 'io.skippy' version '{% include_relative version.markdown %}'
 }
 
 dependencies {
-    testImplementation 'io.skippy:skippy-junit5:0.0.11'
+    testImplementation 'io.skippy:skippy-junit5:{% include_relative version.markdown %}'
 }
 ```
 

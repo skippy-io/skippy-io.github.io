@@ -136,21 +136,21 @@ StringUtilsTest > testPadRight() PASSED
 ```
 {% endif %}
 
-Skippy captures skip-or-execute decision in `skippy/decision.log`:
+Skippy captures skip-or-execute predictions in `skippy/predictions.log`:
 
 ```
 com.example.LeftPadderTest:EXECUTE:NO_COVERAGE_DATA_FOR_TEST
 com.example.RightPadderTest:EXECUTE:NO_COVERAGE_DATA_FOR_TEST
 ```
 
-Skippy did not find data in the skippy folder to make a skip-or-execute decision for `LeftPadderTest` and
+Skippy did not find data in the skippy folder to make a skip-or-execute prediction for `LeftPadderTest` and
 `RightPadderTest`. In this case, Skippy will always execute skippified tests. Also note that there is no log entry for
 `StringUtilsTest`: It's a non-skippified test. We will omit the output for non-skippified tests during the remainder of
 the tutorial.
 
 ## Skippy's Test Impact Analysis
 
-Execute the following command to trigger Skippy's Test Impact Analysis:
+Run the following command to trigger Skippy's Test Impact Analysis:
 
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
@@ -168,7 +168,7 @@ The Skippy Analysis creates a bunch of files in the `skippy` folder:
 classes.md5
 com.example.LeftPadderTest.cov
 com.example.RightPadderTest.cov
-decisions.log 
+predictions.log
 ```
 
 __Note__: You can skip to the next section if you don't care about how Skippy works under the hood.
@@ -233,7 +233,7 @@ RightPadderTest > testPadRight() SKIPPED
 ```
 {% endif %}
 
-Content of `skippy/decision.log`:
+Content of `skippy/predictions.log`:
 
 ```
 com.example.LeftPadderTest:SKIP:NO_CHANGE
@@ -246,7 +246,7 @@ Skippy compares the current state of the project with the analysis in the `skipp
 - There was no change in either `LeftPadderTest` or `RightPadderTest`.
 - There was no change in any of the covered classes.
 
-Hence, the `SKIP` decisions in `skippy/decision.log`.
+Hence, the `SKIP` prediction in `skippy/predictions.log`.
 
 ### Testing After Modifications
 
@@ -302,7 +302,7 @@ RightPadderTest > testPadRight() SKIPPED
 ```
 {% endif %}
 
-Content of `skippy/decision.log`:
+Content of `skippy/predictions.log`:
 
 ```
 com.example.LeftPadderTest:SKIP:NO_CHANGE
@@ -370,7 +370,7 @@ org.opentest4j.AssertionFailedError: expected: < hello> but was: <hello>
 ```
 {% endif %}
 
-Content of `skippy/decision.log`:
+Content of `skippy/predictions.log`:
 
 ```
 com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_COVERED_CLASS
@@ -440,7 +440,7 @@ org.opentest4j.AssertionFailedError: expected: < HELLO> but was: < hello>
 ```
 {% endif %}
 
-Content of `skippy/decision.log`:
+Content of `skippy/predictions.log`:
 
 ```
 com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
@@ -499,7 +499,7 @@ org.opentest4j.AssertionFailedError: expected: <hello > but was: <bonjour>
 ```
 {% endif %}
 
-Content of `skippy/decision.log`:
+Content of `skippy/predictions.log`:
 
 ```
 com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST

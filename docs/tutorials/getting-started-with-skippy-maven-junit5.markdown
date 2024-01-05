@@ -4,7 +4,7 @@ title: Tutorial
 permalink: /tutorials/skippy-maven-junit5
 ---
 
-Documentation for Skippy version `0.0.11`.
+Documentation for Skippy version `{% include_relative version.markdown %}`.
 
 ## Getting Started with Skippy, Maven & JUnit 5
 
@@ -46,7 +46,7 @@ A successful build will display:
 [INFO] BUILD SUCCESS
 ```
 
-Execute the `clean` task before proceeding with the rest of the tutorial:
+Run the `clean` task before proceeding with the rest of the tutorial:
 
 ```
 mvn clean
@@ -64,7 +64,7 @@ Let's take a quick look at the codebase.
 <dependency>
     <groupId>io.skippy</groupId>
     <artifactId>skippy-junit5</artifactId>
-    <version>0.0.11</version>
+    <version>{% include_relative version.markdown %}</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -74,7 +74,7 @@ It also adds the Skippy plugin:
 <plugin>
     <groupId>io.skippy</groupId>
     <artifactId>skippy-maven</artifactId>
-    <version>0.0.11</version>
+    <version>{% include_relative version.markdown %}</version>
     <executions>
         <execution>
             <goals>
