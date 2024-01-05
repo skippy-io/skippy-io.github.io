@@ -4,7 +4,7 @@ title: Documentation
 permalink: /docs/
 ---
 
-Documentation for Skippy version `0.0.11`.
+Documentation for Skippy version `0.0.13`.
 
 Skippy is designed for the modern pace of software development, where Continuous Integration (CI) should be a boon, not
 a burden. Unlike traditional CI tools that run all tests regardless of necessity, Skippy's intelligent test impact
@@ -49,10 +49,11 @@ mentioned here might work, but there is no guarantee.
 
 ### JUnit 4 / JUnit 5
 
-| Skippy  | JUnit 4      | JUnit 5      |
-|---------|--------------|--------------|
-| ≥ 0.0.8 | 4.9 or later | 5.9 or later |
-| ≤ 0.0.7 | ❌           | 5.9 or later |
+| Skippy  | JUnit 4       | JUnit 5      |
+|---------|---------------|--------------|
+| ≥ 0.0.13 | 4.10 or later | 5.0 or later |
+| ≥ 0.0.8 | 4.10 or later | 5.9 or later |
+| ≤ 0.0.7 | ❌            | 5.9 or later |
 
 ### Gradle / Maven
 
