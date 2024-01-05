@@ -291,7 +291,6 @@ predictions.log
 The generated files are consumed by Skippy's [testing libraries](#junit) to make skip-or-execute predictions.
 
 Note: If your project does not contain skippified tests (more on that later), then only `classed.md5` will be generated.
-time.
 
 #### skippy:clean
 
