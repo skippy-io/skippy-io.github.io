@@ -246,7 +246,7 @@ Skippy compares the current state of the project with the analysis in the skippy
 - There was no change in either `LeftPadderTest` or `RightPadderTest`.
 - There was no change in any of the covered classes.
 
-Hence, the `SKIP` prediction in skippy/predictions.log.
+Hence, the skip prediction in skippy/predictions.log.
 
 ### Testing After Modifications
 
