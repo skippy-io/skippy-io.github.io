@@ -4,118 +4,117 @@ title: How Skippy Works
 permalink: /tutorials/how-skippy-works
 ---
 
-Documentation for Skippy version `0.0.11`.
+Documentation for Skippy version `0.0.13`.
 
-Skippy consists of two pillars:
+Skippy is built on top of three pillars:
 - Build Plugins for [Gradle](https://github.com/skippy-io/skippy/tree/main/skippy-gradle) and [Maven](https://github.com/skippy-io/skippy/tree/main/skippy-maven) that implement Skippy's Test Impact Analysis
 - JUnit libraries for [JUnit 4](https://github.com/skippy-io/skippy/tree/main/skippy-junit4) & [JUnit 5](https://github.com/skippy-io/skippy/tree/main/skippy-junit5) that implement Skippy's Predictive Test Selection
+- [JaCoCo](https://github.com/jacoco/jacoco)'s dynamic bytecode analysis to capture per-test coverage data
 
-In the next sections, we'll look at how Skippy, Gradle and JUnit 5 work together. Although we focus on these tools, the
-concepts are similar for Maven and JUnit 4.
+In the next sections, we'll take a technical deep-dive to learn how Skippy, JaCoCo, Gradle and JUnit 5 work together. The
+concepts are similar for Maven and JUnit 4. The code snippets on this page have been simplified for the sake of clarity.
+GitHub links to the actual implementations are provided.
 
 ## The Skippy Gradle Plugin
 
-Skippy's Gradle plugin adds the `skippyClean` and `skippyAnalyze` tasks to a project. We will discuss `skippyAnalyze`
-in detail since it triggers Skippy's Test Impact Analysis. The plugin additionally applies the JaCoCo plugin, which 
-Skippy leverages internally to collect coverage data:
-
+Skippy's Gradle plugin adds the `skippyClean` and `skippyAnalyze` tasks:
 ```
-public final class SkippyPlugin implements org.gradle.api.Plugin<Project> {
+class SkippyPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        project.getPlugins().apply(JacocoPlugin.class);
         project.getTasks().register("skippyClean", SkippyCleanTask.class);
         project.getTasks().register("skippyAnalyze", SkippyAnalyzeTask.class);
-        ...
     }
 
 }
 ```
+GitHub: [SkippyPlugin.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java#L33)
 
-Code: [SkippyPlugin.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java#L34)
+`skippyAnalyze` triggers Skippy's Test Impact Analysis. `skippyClean` is the corresponding clean-up task.
 
-### The skippyAnalyze Task  
+### skippyAnalyze
 
 `skippyAnalyze` executes in two steps:
-1. Generation of `.cov` files
-2. Generation of the `classes.md5` file
+1. Generation of .cov files
+2. Generation of the classes.md5 file
 
 We will discuss each step in the following sections.
 
-#### Step 1: Generation of `.cov` Files
+#### Step 1: Generation of .cov Files
 
-The `skippyAnalyze` task depends on the `check` lifecycle task to execute all tests in your project:
+Let's take a look at the implementation of `skippyAnalyze`:
 
 ```
 class SkippyAnalyzeTask extends DefaultTask {
 
-    public SkippyAnalyzeTask(...) {
-        ...
-        dependsOn(..., "check");
-        ...
+    @Inject
+    public SkippyAnalyzeTask() {
+        dependsOn("check");
+        getProject().getPlugins().apply(JacocoPlugin.class);
+        getProject().getTasks().withType(Test.class,
+            test -> test.environment(SkippyConstants.TEST_IMPACT_ANALYSIS_RUNNING, true)
+        );
+        doLast((task) -> skippyBuildApi.writeClassesMd5FileAndCompactCoverageFiles());
     }
     
 }
 ```
 
-Code: [AnalyzeTask.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-gradle/src/main/java/io/skippy/gradle/SkippyAnalyzeTask.java#L49)
+GitHub: [SkippyAnalyzeTask.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-gradle/src/main/java/io/skippy/gradle/SkippyAnalyzeTask.java#L43)
 
-`skippyAnalysis` wouldn't be particularly useful if the only thing it did was to run tests. After all, its main purpose
-is to perform a Test Impact Analysis. To accomplish this, it sets the `SKIPPY_ANALYZE_MARKER` environment variable for
+The task declares a dependency to Gradle's `check` lifecycle task:
+
+```
+dependsOn("check")
+```
+
+This dependency triggers the test suites every time `skippyAnalyze` is invoked. `skippyAnalysis` wouldn't be
+particularly useful if the only thing it did was to run tests. After all, its main purpose is to perform a Test Impact
+Analysis. To accomplish this, it applies the `JacocoPlugin` and sets the `TEST_IMPACT_ANALYSIS_RUNNING` environment variable for
 all test tasks:
 
 ```
-class SkippyAnalyzeTask extends DefaultTask {
-
-    public SkippyAnalyzeTask(...) {
-        ...
-        getProject().getTasks().withType(Test.class,
-            test -> test.environment(SkippyConstants.SKIPPY_ANALYZE_MARKER, true)
-        );
-        ...
-    }
-    
-}
+getProject().getPlugins().apply(JacocoPlugin.class);
+getProject().getTasks().withType(Test.class,
+        test -> test.environment(SkippyConstants.TEST_IMPACT_ANALYSIS_RUNNING, true)
+);
 ```
 
-Code: [AnalyzeTask.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-gradle/src/main/java/io/skippy/gradle/SkippyAnalyzeTask.java#L58)
-
-This is a signal for Skippy's JUnit libraries to emit coverages files during the execution of the test suite:
+The environment variable is a signal for Skippy's JUnit libraries to emit coverages files during the execution of the test suite:
 
 ```
 import org.jacoco.agent.rt.IAgent;
 import org.jacoco.agent.rt.RT;
 
-public final class SkippyTestApi {
+class SkippyTestApi {
 
     public static void prepareCoverageDataCaptureFor(Class<?> testClass) {
-        if (isSkippyCoverageBuild()) {
-            ...
-            IAgent agent = RT.getAgent();        
-            agent.reset();
-            ...
+        if ( ! testImpactAnalysisIsRunning()) {
+            return;
         }
+        IAgent agent = RT.getAgent();
+        agent.reset();
     }
 
     public static void captureCoverageDataFor(Class<?> testClass) {
-        if (isSkippyCoverageBuild()) {
-            IAgent agent = RT.getAgent();
-            byte[] executionData = agent.getExecutionData(true);
-            ...
-            // write coverage data to file
+        if ( ! testImpactAnalysisIsRunning()) {
+            return;
         }
+        IAgent agent = RT.getAgent();
+        byte[] executionData = agent.getExecutionData(true);
+        // write .cov file
     }
 
-    private static boolean isSkippyCoverageBuild() {
-        return Boolean.valueOf(System.getProperty(SKIPPY_ANALYZE_MARKER)) 
-            || Boolean.valueOf(System.getenv().get(SKIPPY_ANALYZE_MARKER));
+    private static boolean testImpactAnalysisIsRunning() {
+        return Boolean.valueOf(System.getProperty(TEST_IMPACT_ANALYSIS_RUNNING)) ||
+                Boolean.valueOf(System.getenv().get(TEST_IMPACT_ANALYSIS_RUNNING));
     }
 
 }
 ```
 
-Code: [SkippyTestApi.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-junit-common/src/main/java/io/skippy/junit/SkippyTestApi.java#L92)
+GitHub: [SkippyTestApi.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-junit-common/src/main/java/io/skippy/junit/SkippyTestApi.java#L93)
 
 Skippy uses JUnit 5's extension mechanism to invoke 
 
@@ -125,24 +124,23 @@ Skippy uses JUnit 5's extension mechanism to invoke
 the execution of a test class:
 
 ```
-public final class CoverageFileCallbacks implements TestInstancePreConstructCallback, TestInstancePreDestroyCallback {
+class CoverageFileCallbacks implements BeforeAllCallback, AfterAllCallback {
 
     @Override
-    public void preConstructTestInstance(TestInstanceFactoryContext factoryContext, ExtensionContext context) {
+    public void beforeAll(ExtensionContext context) {
         context.getTestClass().ifPresent(SkippyTestApi::prepareCoverageDataCaptureFor);
     }
 
     @Override
-    public void preDestroyTestInstance(ExtensionContext context) {
+    public void afterAll(ExtensionContext context) {
         context.getTestClass().ifPresent(SkippyTestApi::captureCoverageDataFor);
     }
-
 }
 ```
 
-Code: [CoverageFileCallbacks.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-junit5/src/main/java/io/skippy/junit5/CoverageFileCallbacks.java#L33)
+GitHub: [CoverageFileCallbacks.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-junit5/src/main/java/io/skippy/junit5/CoverageFileCallbacks.java#L27)
 
-As a result, `skippyAnalyze` generates `.cov` files that contains coverage data for each skippified test (more on that
+As a result, `skippyAnalyze` generates .cov files that contains coverage data for each skippified test (more on that
 soon):
 ```
 ls -l skippy
@@ -152,7 +150,7 @@ com.example.RightPadderTest.cov
 ...
 ```
 
-Each `.cov` file contains the list of classes that are covered by the corresponding test. 
+Each .cov file contains the list of classes that are covered by the corresponding test. 
 
 Example:
 ```
@@ -163,10 +161,25 @@ com.example.LeftPadderTest
 com.example.StringUtils
 ```
 
-#### Step 2: Generation Of The `classes.md5` File
+#### Step 2: Generation Of The classes.md5 File
 
-The `skippyAnalyze` task also creates a hash for each class file in one of the build's output folders. Those hashes
-are stored in the `classes.md5` file in the `skippy` folder.
+`skippyAnalyze` also creates a hash for each class file in one of the build's output folders:
+
+```
+class SkippyAnalyzeTask extends DefaultTask {
+
+    @Inject
+    public SkippyAnalyzeTask() {
+        ...
+        doLast((task) -> skippyBuildApi.writeClassesMd5FileAndCompactCoverageFiles());
+    }
+    
+}
+```
+
+GitHub: [SkippyAnalyzeTask.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-gradle/src/main/java/io/skippy/gradle/SkippyAnalyzeTask.java#L43) \| [ClassesMd5Writer.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-build-common/src/main/java/io/skippy/build/ClassesMd5Writer.java#L53) \| [DebugAgnosticHash.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-common/src/main/java/io/skippy/core/DebugAgnosticHash.java#L46)
+
+Those hashes are stored in the classes.md5 file in the skippy folder.
 
 Example:
 ```
@@ -192,11 +205,10 @@ This allows Skippy to treat certain changes like
 
 as 'no-ops'.
 
-Code: [ClassesMd5Writer.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-build-common/src/main/java/io/skippy/build/ClassesMd5Writer.java#L53) \| [DebugAgnosticHash.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-common/src/main/java/io/skippy/core/DebugAgnosticHash.java#L46)
-
 ## Predictive Test Selection
 
-Skippy utilizes the data that is generated by Skippy's Test Impact Analysis to predict which tests to run.
+Skippy utilizes the data that is generated by Skippy's Test Impact Analysis to predict which tests to run. Let's first
+discuss the concept of a skippified test.
 
 ### @Skippified
 
@@ -227,23 +239,18 @@ public @interface Skippified {
 }
 ```
 
-Code: [Skippyfied.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-junit5/src/main/java/io/skippy/junit5/Skippified.java#L53)
+GitHub: [Skippyfied.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-junit5/src/main/java/io/skippy/junit5/Skippified.java#L53)
 
 
-The `SkipOrExecuteCondition` extension is used at runtime to make a skip-or-execute decision:
+The `SkipOrExecuteCondition` extension is used at test time to make a skip-or-execute predictions:
 
 ```
-public final class SkipOrExecuteCondition implements ExecutionCondition {
+class SkipOrExecuteCondition implements ExecutionCondition {
 
-    private final SkippyTestApi skippyTestApi;
-
-    ...
+    SkippyTestApi skippyTestApi;
 
     @Override
     public ConditionEvaluationResult evaluateExecutionCondition(ExtensionContext context) {
-        if (context.getTestInstance().isEmpty()) {
-            return ConditionEvaluationResult.enabled("");
-        }
         if (skippyTestApi.testNeedsToBeExecuted(context.getTestClass().get())) {
             return ConditionEvaluationResult.enabled("");
         }
@@ -253,46 +260,49 @@ public final class SkipOrExecuteCondition implements ExecutionCondition {
 }
 ```
 
-Code: [SkipOrExecuteCondition.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-junit5/src/main/java/io/skippy/junit5/SkipOrExecuteCondition.java#L29)
+GitHub: [SkipOrExecuteCondition.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-junit5/src/main/java/io/skippy/junit5/SkipOrExecuteCondition.java#L29)
 
-`SkippyExecutionCondition` internally delegates the skip-or-execute decision to an instance of `SkippyTestApi`.
-`SkippyTestApi` passes the call through to an instance of `SkippyAnalysis`, which is the programmatic representation
-of Skippy's Test Impact Analysis:
+`SkippyExecutionCondition` internally delegates the skip-or-execute prediction to an instance of `SkippyTestApi`.
+`SkippyTestApi` passes the call through to an instance of `SkippyAnalysis`:
 
 ```
 class SkippyAnalysis {
 
-    ...
+    HashedClasses hashedClasses;
+    CoverageData coverageData;
 
-    DecisionWithReason decide(FullyQualifiedClassName testFqn) {
+    PredictionWithReason predict(FullyQualifiedClassName testFqn) {
         if (coverageData.noDataAvailableFor(testFqn)) {
-            return DecisionWithReason.executeTest(NO_COVERAGE_DATA_FOR_TEST);
+            return PredictionWithReason.execute(NO_COVERAGE_DATA_FOR_TEST);
         }
         if (hashedClasses.noDataFor(testFqn)) {
-            return DecisionWithReason.executeTest(NO_HASH_FOR_TEST);
+            return PredictionWithReason.execute(NO_HASH_FOR_TEST);
         }
         if (hashedClasses.hasChanged(testFqn)) {
-            return DecisionWithReason.executeTest(BYTECODE_CHANGE_IN_TEST);
+            return PredictionWithReason.execute(BYTECODE_CHANGE_IN_TEST);
         }
-        return decideBasedOnCoveredClasses(testFqn);
+        return predictBasedOnCoveredClasses(testFqn);
     }
 
-    private DecisionWithReason decideBasedOnCoveredClasses(FullyQualifiedClassName testFqn) {
-       for (var coveredClassFqn : coverageData.getCoveredClasses(testFqn)) {
+    PredictionWithReason predictBasedOnCoveredClasses(FullyQualifiedClassName testFqn) {
+        for (var coveredClassFqn : coverageData.getCoveredClasses(testFqn)) {
             if (hashedClasses.hasChanged(coveredClassFqn)) {
-                return DecisionWithReason.executeTest(BYTECODE_CHANGE_IN_COVERED_CLASS);
+                return PredictionWithReason.execute(BYTECODE_CHANGE_IN_COVERED_CLASS);
             }
             if (hashedClasses.noDataFor(coveredClassFqn)) {
-                return DecisionWithReason.executeTest(NO_HASH_FOR_COVERED_CLASS);
+                return PredictionWithReason.execute(NO_HASH_FOR_COVERED_CLASS);
             }
         }
-        return DecisionWithReason.skipTest(Reason.NO_CHANGE);
+        return PredictionWithReason.skip(Reason.NO_CHANGE);
     }
 
 }
 ```
 
-Code: [SkippyAnalysis.java](https://github.com/skippy-io/skippy/blob/2c0b7b78adf18edcaa19a397ab74619d76ad1b7e/skippy-junit-common/src/main/java/io/skippy/junit/SkippyAnalysis.java#L93)
+GitHub: [SkippyAnalysis.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-junit-common/src/main/java/io/skippy/junit/SkippyAnalysis.java#L89)
+
+The fields `hashedClasses` and `coverageData` are the programmatic representation of Skippy's Test Impact Analysis. 
+`SkippyAnalysis#predict` is the implementation of Skippy's Predictive Test Selection.
 
 You might ask: Why the complex indirections, like the `SkippyExecutionCondition -> SkippyTestApi -> SkippyAnalysis` call chain? There are two key reasons:
 

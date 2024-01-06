@@ -16,4 +16,4 @@ Central.
 
 ## Noteworthy Changes
 
-This release fixes an issue where the `test` task/goal fails if the `skippy` folder doesn't exist.
+This release fixes an issue where the `test` task/goal fails if the skippy folder doesn't exist.

@@ -136,7 +136,7 @@ StringUtilsTest > testPadRight() PASSED
 ```
 {% endif %}
 
-Skippy captures skip-or-execute predictions in `skippy/predictions.log`:
+Skippy captures skip-or-execute predictions in skippy/predictions.log:
 
 ```
 com.example.LeftPadderTest:EXECUTE:NO_COVERAGE_DATA_FOR_TEST
@@ -162,7 +162,7 @@ mvn test -DskippyAnalyze=true
 ```
 {% endif %}
 
-The Skippy Analysis creates a bunch of files in the `skippy` folder:
+The Skippy Analysis creates a bunch of files in the skippy folder:
 
 ```
 classes.md5
@@ -173,21 +173,21 @@ predictions.log
 
 __Note__: You can skip to the next section if you don't care about how Skippy works under the hood.
 
-Let's take a look at `com.example.LeftPadderTest.cov`:
+Let's take a look at com.example.LeftPadderTest.cov:
 ```
 com.example.LeftPadder
 com.example.LeftPadderTest
 com.example.StringUtils
 ```
 
-The `.cov` file contains a list of classes that are covered by `com.example.LeftPadderTest`. This data was captured
+The .cov file contains a list of classes that are covered by `com.example.LeftPadderTest`. This data was captured
 from [JaCoCo](https://www.jacoco.org/) during Skippy's analysis. You might wonder: Shouldn't there be
 coverage for `com.example.TestConstants`? Yes. But: JaCoCo's analysis is based on the execution of instrumented
 bytecode. Since the Java compiler inlines the value of `TestConstants.HELLO` into`LeftPadderTest`'s class file, JaCoCo
 has no way to detect this.
 
 Don't worry - Skippy has you covered! Skippy combines JaCoCo's dynamic bytecode analysis with a custom, static bytecode
-analysis to detect relevant changes. To do this, it needs additional information that is stored in  `classes.md5`:
+analysis to detect relevant changes. To do this, it needs additional information that is stored in  classes.md5:
 
 ```
 build/classes/java/main:com/example/LeftPadder.class:9U3+WYit7uiiNqA9jplN2A==
@@ -233,20 +233,20 @@ RightPadderTest > testPadRight() SKIPPED
 ```
 {% endif %}
 
-Content of `skippy/predictions.log`:
+Content of skippy/predictions.log:
 
 ```
 com.example.LeftPadderTest:SKIP:NO_CHANGE
 com.example.RightPadderTest:SKIP:NO_CHANGE
 ```
 
-Skippy compares the current state of the project with the analysis in the `skippy` folder. It detects that both
+Skippy compares the current state of the project with the analysis in the skippy folder. It detects that both
 `LeftPadderTest` and `RightPadderTest` can be skipped:
 
 - There was no change in either `LeftPadderTest` or `RightPadderTest`.
 - There was no change in any of the covered classes.
 
-Hence, the `SKIP` prediction in `skippy/predictions.log`.
+Hence, the `SKIP` prediction in skippy/predictions.log.
 
 ### Testing After Modifications
 
@@ -302,7 +302,7 @@ RightPadderTest > testPadRight() SKIPPED
 ```
 {% endif %}
 
-Content of `skippy/predictions.log`:
+Content of skippy/predictions.log:
 
 ```
 com.example.LeftPadderTest:SKIP:NO_CHANGE
@@ -370,7 +370,7 @@ org.opentest4j.AssertionFailedError: expected: < hello> but was: <hello>
 ```
 {% endif %}
 
-Content of `skippy/predictions.log`:
+Content of skippy/predictions.log:
 
 ```
 com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_COVERED_CLASS
@@ -440,7 +440,7 @@ org.opentest4j.AssertionFailedError: expected: < HELLO> but was: < hello>
 ```
 {% endif %}
 
-Content of `skippy/predictions.log`:
+Content of skippy/predictions.log:
 
 ```
 com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
@@ -499,7 +499,7 @@ org.opentest4j.AssertionFailedError: expected: <hello > but was: <bonjour>
 ```
 {% endif %}
 
-Content of `skippy/predictions.log`:
+Content of skippy/predictions.log:
 
 ```
 com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
