@@ -8,7 +8,7 @@ Documentation for Skippy version `{% include_relative version.markdown %}`.
 
 ## Getting Started with Skippy, Maven & JUnit 5
 
-A quick tour how to use Skippy with Grade and JUnit 5.
+A quick tour how to use Skippy with Maven and JUnit 5.
 
 __What You Need__
 - About 15 minutes
