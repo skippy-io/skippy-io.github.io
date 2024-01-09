@@ -14,7 +14,7 @@ The scale and complexity of Spring Boot’s build make it a great choice to put 
 ### Highlights
 
 - 5 lines of configuration changes is all it takes.
-- Skippy's Test Impact Analysis is shown to be highly efficient for large projects. It handles over 4000 tests and more
+- Skippy's Test Impact Analysis is shown to be highly efficient for large projects. It analyzes over 4000 tests and more
   than 2500 classes with minimal overhead, adding only 23 seconds (or 13%) to the total time compared to `./gradlew check`.
 - Skippy’s Predictive Test Selection demonstrates its effectiveness in identifying all regressions that are caught when
   running all tests. This feature reduces the number of tests that need to be executed by 90% to 100% and

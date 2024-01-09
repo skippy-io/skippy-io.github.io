@@ -33,7 +33,7 @@ skippifies the tests
 ### Change Set
 
 Let's walk through the change set of [a16530](https://github.com/skippy-io/spring-boot-skippified/commit/a16530d85f54fd34b66b5fef1dff70a97b3ddc07).
-This commit skippifies the build with 5 lines of configuration changes. There was no need to modify any files in src/main or src/test.
+This commit skippifies the build with 5 lines of configuration changes. There is no need to modify any files in src/main or src/test.
 
 #### build.gradle
 
@@ -69,7 +69,7 @@ in src/test:
 ```
 
 This file, together with the newly added JVM argument in build.gradle, is equivalent to adding `@Skippified` to every
-test class in src/test. Thanks to Skippy's non-invasive design, 5 lines of configuration changes were all it took 
+test class in src/test. Thanks to Skippy's non-invasive design, 5 lines of configuration changes is all it takes
 to skippify more than 4000 tests.
 
 ## Baseline: Test Execution Without Skippy
@@ -93,7 +93,7 @@ Over 10 runs, `check` averages 2 minutes and 55 seconds, with 2 minutes and 7 se
 
 ## Test Impact Analysis
 
-Checkout the skippified version of the build:
+Checkout the skippified revision [a16530](https://github.com/skippy-io/spring-boot-skippified/commit/a16530d85f54fd34b66b5fef1dff70a97b3ddc07) of the build:
 
 ```
 git checkout a16530
@@ -104,15 +104,9 @@ Run the `skippyAnalyze` task:
 ../../gradlew skippyAnalyze --no-build-cache --rerun-tasks --no-daemon
 ```
 
-
 Over 10 runs, `skippyAnalyze` averages 3 minutes and 18 seconds, with 2 minutes and 27 seconds dedicated to test execution.
-
-Skippy's Test Impact Analysis for 
-
-- more than 4000 tests and 
-- more than 2500 classes 
-
-introduces an overhead of only 23 seconds (or 13%) compared to `./gradlew check`.
+It analyzes over 4000 tests and more than 2500 classes with minimal overhead, adding only 23 seconds (or 13%) to the total
+time compared to `./gradlew check`.
 
 ## Predictive Test Selection
 
@@ -314,7 +308,7 @@ Comparison:
 
 ## Summary
 
-- Skippy's Test Impact Analysis is shown to be highly efficient for large projects. It handles over 4000 tests and more
+- Skippy's Test Impact Analysis is shown to be highly efficient for large projects. It analyzes over 4000 tests and more
   than 2500 classes with minimal overhead, adding only 23 seconds (or 13%) to the total time compared to `./gradlew check`.
 - Skippy’s Predictive Test Selection demonstrates its effectiveness in identifying all regressions that are caught when
   running all tests. This feature reduces the number of tests that need to be executed by 90% to 100% and
