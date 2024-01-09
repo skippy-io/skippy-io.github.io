@@ -7,9 +7,9 @@ permalink: /docs/
 Documentation for Skippy version `{% include_relative version.markdown %}`.
 
 Skippy is designed for the modern pace of software development, where Continuous Integration (CI) should be a boon, not
-a burden. Unlike traditional CI tools that run all tests regardless of necessity, Skippy's intelligent test impact
-analysis cuts down on unnecessary testing and flakiness, slashing build times to improve developer productivity and
-happiness.
+a burden. Unlike traditional CI tools that run all tests regardless of necessity, Skippy's intelligent Test Impact
+Analysis and Predictive Test Selection cuts down on unnecessary testing and flakiness, slashing build times to
+improve developer productivity and happiness.
 
 Harnessing both dynamic and static bytecode analysis, Skippy lets you iterate faster without compromising the integrity
 of your builds. It’s about working smarter, not harder—let Skippy streamline your builds, so you can get back to what CI
