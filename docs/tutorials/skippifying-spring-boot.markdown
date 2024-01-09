@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "POC: Skippifying Spring Boot"
+title: "Skippifying Spring Boot"
 permalink: /tutorials/skippifying-spring-boot
 ---
 
@@ -112,7 +112,7 @@ Skippy's Test Impact Analysis for
 - more than 4000 tests and 
 - more than 2500 classes 
 
-increases the average build time by only 23 seconds (or 13%).
+introduces an overhead of only 23 seconds (or 13%) compared to `./gradlew check`.
 
 ## Predictive Test Selection
 
@@ -145,7 +145,7 @@ predictions for every test.
 
 Let's introduce some bugs and see what happens.
 
-### Experiment 1
+### Bug 1
 
 `org.springframework.boot.admin` is the first package in alphabetical order. The package contains one class - 
 let's introduce a bug in the constructor:
@@ -160,6 +160,8 @@ let's introduce a bug in the constructor:
         ...
     }
 ```
+
+PR: [https://github.com/skippy-io/spring-boot-skippified/pull/3/files](https://github.com/skippy-io/spring-boot-skippified/pull/3/files)
 
 Re-run the tests against the baseline build:
 ```
@@ -211,10 +213,10 @@ Task timings:
 
 Comparison:
 - ✅ Both the baseline and the skippified build prevent the regression
-- ⬇️️ Skippy reduces the number of executed tests from 4365 to 4 (99.9% reduction)
+- ⬇️️ Skippy reduces the number of executed tests from 4365 to 4 (99% reduction)
 - 🚀 Skippy reduces the test time from 2 minutes and 2 seconds to 6 seconds (95% reduction)
 
-### Experiment 2
+### Bug 2
 
 The next bug is introduced in `org.springframework.boot.flyway.FlywayDatabaseInitializerDetector`: 
 
@@ -230,12 +232,14 @@ The next bug is introduced in `org.springframework.boot.flyway.FlywayDatabaseIni
     }
 ```
 
-Comparison:
-- ⚠️ Neither the baseline nor the skippified build detect the regression
-- ⬇️️ Skippy reduces the number of executed tests from 4365 to 0 (100% reduction)
-- 🚀 Skippy reduces the test time from 2 minutes and 2 seconds to 3 seconds (97.5% reduction)
+PR: [https://github.com/skippy-io/spring-boot-skippified/pull/4/files](https://github.com/skippy-io/spring-boot-skippified/pull/4/files)
 
-### Experiment 3
+Comparison:
+- ❎️ Neither the baseline nor the skippified build detect the regression - Skippy is as good as the baseline
+- ⬇️️ Skippy reduces the number of executed tests from 4365 to 0 (100% reduction)
+- 🚀 Skippy reduces the test time from 2 minutes and 2 seconds to 3 seconds (98% reduction)
+
+### Bug 3
 
 The next bug is introduced in `org.springframework.boot.r2dbc.init.R2dbcScriptDatabaseInitializer`:
 
@@ -253,13 +257,74 @@ The next bug is introduced in `org.springframework.boot.r2dbc.init.R2dbcScriptDa
     }
 ```
 
+PR: [https://github.com/skippy-io/spring-boot-skippified/pull/5/files](https://github.com/skippy-io/spring-boot-skippified/pull/5/files)
+
 Comparison:
 - ✅ Both the baseline and the skippified build prevent the regression
-- ⬇️️ Skippy reduces the number of executed tests from 4365 to 14 (99.7% reduction)
+- ⬇️️ Skippy reduces the number of executed tests from 4365 to 14 (99% reduction)
 - 🚀 Skippy reduces the test time from 2 minutes and 2 seconds to 6 seconds (95% reduction)
 
-### Experiment 4
+### Bug 4
 
-### Experiment 5
+The next bug is introduced in `org.springframework.boot.security.reactive.ApplicationContextServerWebExchangeMatcher`:
+
+```
+    public abstract class ApplicationContextServerWebExchangeMatcher<C> ... {  
+        ...
+        protected Supplier<C> getContext(ServerWebExchange exchange) {
++           if (true) {
++               return null;
++           }
+            ...
+        }
+        ...
+    }
+```
+
+PR: [https://github.com/skippy-io/spring-boot-skippified/pull/6/files](https://github.com/skippy-io/spring-boot-skippified/pull/6/files)
+
+Comparison:
+- ✅ Both the baseline and the skippified build prevent the regression
+- ⬇️️ Skippy reduces the number of executed tests from 4365 to 5 (99% reduction)
+- 🚀 Skippy reduces the test time from 2 minutes and 2 seconds to 5 seconds (96% reduction)
+
+### Bug 5
+
+The last bug is introduced in `org.springframework.boot.SpringApplication`:
+
+```
+    public class SpringApplication {
+        ...
+        public static ConfigurableApplicationContext run(Class<?>[] primarySources, String[] args) {
++           if (true) {
++               return null;
++           }
+            return new SpringApplication(primarySources).run(args);
+        }
+        ...
+    }
+```
+
+PR: [https://github.com/skippy-io/spring-boot-skippified/pull/7/files](https://github.com/skippy-io/spring-boot-skippified/pull/7/files)
+
+Comparison:
+- ✅ Both the baseline and the skippified build prevent the regression
+- ⬇️️ Skippy reduces the number of executed tests from 4365 to 430 (90% reduction)
+- 🚀 Skippy reduces the test time from 2 minutes and 2 seconds to 20 seconds (84% reduction)
 
 ## Summary
+
+- Skippy's Test Impact Analysis is shown to be highly efficient for large projects. It handles over 4000 tests and more
+  than 2500 classes with minimal overhead, adding only about 23 seconds (or 13%) compared to `./gradlew check`.
+- Skippy’s Predictive Test Selection demonstrates its effectiveness in identifying all regressions that are caught when
+  running all tests. This feature reduces the number of tests that need to be executed by 90% to 100% and
+  cuts down the time required for test execution by 84% to 98%.
+
+| Bug                                                                    | Detected<br />Baseline | Detected<br/>Skippy | Tests run<br/>Baseline | Tests run<br/>Skippy | Test time<br/>Baseline | Test time<br/>Skippy |
+|------------------------------------------------------------------------|------------------------|---------------------|------------------------|----------------------|------------------------|----------------------|
+| [#1](https://github.com/skippy-io/spring-boot-skippified/pull/3/files) | ✅                     | ✅                  | 4365                   | 4 (-99%)             | 2m 2s                  | 6s (-95%)            |
+| [#2](https://github.com/skippy-io/spring-boot-skippified/pull/4/files) | ❌                     | ❌                  | 4365                   | 0 (-100%)            | 2m 2s                  | 3s (-98%)            |
+| [#3](https://github.com/skippy-io/spring-boot-skippified/pull/5/files) | ✅                     | ✅                  | 4365                   | 14 (-99%)            | 2m 2s                  | 6s (-95%)            |
+| [#4](https://github.com/skippy-io/spring-boot-skippified/pull/6/files) | ✅                     | ✅                  | 4365                   | 5 (-99%)             | 2m 2s                  | 5s (-96%)            |
+| [#5](https://github.com/skippy-io/spring-boot-skippified/pull/7/files) | ✅                     | ✅                  | 4365                   | 430 (-90%)           | 2m 2s                  | 20s (-84%)           |
+
