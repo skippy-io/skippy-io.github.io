@@ -310,3 +310,5 @@ You might ask: Why the complex indirections, like the `SkippyExecutionCondition 
 - It ensures information hiding between subprojects. For instance, `SkippyExecutionCondition` only knows about `SkippyTestApi`, not any other classes in `skippy-junit-common`.
 
 And voila - that's how Skippy works.
+
+{% include_relative comments.markdown %}

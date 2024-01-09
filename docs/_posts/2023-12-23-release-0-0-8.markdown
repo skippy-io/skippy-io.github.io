@@ -46,3 +46,5 @@ public class FooTest {
 ## Other noteworthy changes 
 
 A failed execution of `skippyAnalyze` will now clear the skippy folder.
+
+{% include_relative comments.markdown %}

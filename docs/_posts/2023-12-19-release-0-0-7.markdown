@@ -27,3 +27,5 @@ that utilizes JUnit 5 extensions to capture per-test coverage.
 The overhaul, which moves responsibilities from the Gradle plugin into the core Java libraries, paves the way to add
 Maven support in the future. It also marks a significant milestone in Skippy’s evolution from  proof-of-concept into
 practical solution to the challenges faced by developers in complex build environments.
+
+{% include_relative comments.markdown %}

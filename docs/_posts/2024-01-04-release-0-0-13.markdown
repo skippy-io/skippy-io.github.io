@@ -20,3 +20,5 @@ Central.
 - Bugfix for `skippy-junit5` that prevents the generation of incomplete .cov files
 - The functional test suite in [skippy-functional-tests](https://github.com/skippy-io/skippy-functional-tests) has been re-designed to simplify the writing and maintenance of functional tests
 - The number of functional tests has been increased from 9 to 30+
+
+{% include_relative comments.markdown %}

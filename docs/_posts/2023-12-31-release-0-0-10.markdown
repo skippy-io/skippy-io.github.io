@@ -38,3 +38,5 @@ com.example.RightPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
 ```
 
 `profiling.log` contains profiling information to analyze Skippy's performance.
+
+{% include_relative comments.markdown %}

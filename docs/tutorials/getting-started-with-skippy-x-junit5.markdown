@@ -508,3 +508,5 @@ com.example.RightPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
 
 Congratulations! You've successfully integrated Skippy into your project, ensuring that only necessary tests are run,
 saving you time and resources.
+
+{% include_relative comments.markdown %}

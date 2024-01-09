@@ -45,3 +45,5 @@ The `clean` goal clears the skippy folder:
 ```
 mvn skippy:clean
 ```
+
+{% include_relative comments.markdown %}

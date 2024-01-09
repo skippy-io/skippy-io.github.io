@@ -504,3 +504,5 @@ predictions based on
 - Support to generate accurate coverage reports despite skipped tests (to support CI pipelines with strict coverage requirements)
 - Support for reasoning based on changes in the classpath
 - Support for reasoning based on changes in resources (e.g., a change in `application.properties`)
+
+{% include_relative comments.markdown %}

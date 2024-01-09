@@ -322,3 +322,4 @@ Comparison:
 | [#4](https://github.com/skippy-io/spring-boot-skippified/pull/6/files) | ✅                     | ✅                  | 4365                   | 5 (-99%)             | 2m 2s                  | 5s (-96%)            |
 | [#5](https://github.com/skippy-io/spring-boot-skippified/pull/7/files) | ✅                     | ✅                  | 4365                   | 430 (-90%)           | 2m 2s                  | 20s (-84%)           |
 
+{% include_relative comments.markdown %}

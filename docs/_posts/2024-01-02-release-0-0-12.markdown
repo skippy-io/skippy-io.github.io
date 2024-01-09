@@ -20,3 +20,5 @@ This release fixes an issue in `skippy-junit5` that caused 3rd party extensions 
 - `@ExtendsWith(SpringExtension.class)`,
 - `@Testcontainers` and
 - other extensions that perform time consuming setup work.
+
+{% include_relative comments.markdown %}

@@ -19,3 +19,5 @@ The scale and complexity of Spring Boot’s build make it a great choice to put 
 - Skippy’s Predictive Test Selection demonstrates its effectiveness in identifying all regressions that are caught when
   running all tests. This feature reduces the number of tests that need to be executed by 90% to 100% and
   cuts down the time required for test execution by 84% to 98%.
+
+{% include_relative comments.markdown %}
