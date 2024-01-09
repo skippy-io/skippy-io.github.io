@@ -89,7 +89,7 @@ Run the `check` task:
 The purpose of the command-line arguments `--no-build-cache`, `--rerun-tasks` and `--no-daemon` is to have a consistent
 baseline to measure the builds in isolation.
 
-Over 10 runs, `check` averages 2 minutes and 55 seconds, with 2 minutes and 7 seconds dedicated to test execution.
+Over 10 runs, `check` averages 2 minutes and 55 seconds, with 2 minutes and 2 seconds dedicated to test execution.
 
 ## Test Impact Analysis
 
