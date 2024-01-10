@@ -314,12 +314,12 @@ Comparison:
   running all tests. This feature reduces the number of tests that need to be executed by 90% to 100% and
   cuts down the time required for test execution by 84% to 98%.
 
-| Bug                                                                    | Detected<br />Baseline | Detected<br/>Skippy | Tests run<br/>Baseline | Tests run<br/>Skippy | Test time<br/>Baseline | Test time<br/>Skippy |
-|------------------------------------------------------------------------|------------------------|---------------------|------------------------|----------------------|------------------------|----------------------|
-| [#1](https://github.com/skippy-io/spring-boot-skippified/pull/3/files) | ✅                     | ✅                  | 4365                   | 4 (-99%)             | 2m 2s                  | 6s (-95%)            |
-| [#2](https://github.com/skippy-io/spring-boot-skippified/pull/4/files) | ❌                     | ❌                  | 4365                   | 0 (-100%)            | 2m 2s                  | 3s (-98%)            |
-| [#3](https://github.com/skippy-io/spring-boot-skippified/pull/5/files) | ✅                     | ✅                  | 4365                   | 14 (-99%)            | 2m 2s                  | 6s (-95%)            |
-| [#4](https://github.com/skippy-io/spring-boot-skippified/pull/6/files) | ✅                     | ✅                  | 4365                   | 5 (-99%)             | 2m 2s                  | 5s (-96%)            |
-| [#5](https://github.com/skippy-io/spring-boot-skippified/pull/7/files) | ✅                     | ✅                  | 4365                   | 430 (-90%)           | 2m 2s                  | 20s (-84%)           |
+| Bug                                                                    | Detected<br />Baseline | Detected<br/>Skippy | Test count<br/>Baseline | Test count<br/>Skippy | Test time<br/>Baseline | Test time<br/>Skippy |
+|------------------------------------------------------------------------|------------------------|---------------------|-------------------------|-----------------------|------------------------|----------------------|
+| [#1](https://github.com/skippy-io/spring-boot-skippified/pull/3/files) | ✅                     | ✅                  | 4365                    | 4 (-99%)              | 2m 2s                  | 6s (-95%)            |
+| [#2](https://github.com/skippy-io/spring-boot-skippified/pull/4/files) | ❌                     | ❌                  | 4365                    | 0 (-100%)             | 2m 2s                  | 3s (-98%)            |
+| [#3](https://github.com/skippy-io/spring-boot-skippified/pull/5/files) | ✅                     | ✅                  | 4365                    | 14 (-99%)             | 2m 2s                  | 6s (-95%)            |
+| [#4](https://github.com/skippy-io/spring-boot-skippified/pull/6/files) | ✅                     | ✅                  | 4365                    | 5 (-99%)              | 2m 2s                  | 5s (-96%)            |
+| [#5](https://github.com/skippy-io/spring-boot-skippified/pull/7/files) | ✅                     | ✅                  | 4365                    | 430 (-90%)            | 2m 2s                  | 20s (-84%)           |
 
 {% include_relative comments.markdown %}
