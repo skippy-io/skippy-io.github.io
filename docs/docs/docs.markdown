@@ -476,6 +476,12 @@ Maven:
 
 #### Skippify Your Tests
 
+You have two options to skippify your JUnit 5 tests:
+- Annotation Based Skippification
+- Automatic Skippification
+
+#### Annotation Based Skippification
+
 Annotate the tests you want to skippify with `@Skippified`:
 
 ```groovy
@@ -489,6 +495,42 @@ public class FooTest {
         assertEquals("hello", Foo.hello());
     }
 }
+```
+
+#### Automatic Skippification
+
+Automatic Skippification is based on JUnit 5's [Automatic Extension Registration](https://junit.org/junit5/docs/current/user-guide/#extensions-registration-automatic).
+Add a file named `org.junit.jupiter.api.extension.Extension` in
+`src/test/resources/META-INF/services` (adjust according to the location of your test resources). The file must have
+the following content:
+```
+io.skippy.junit5.SkipOrExecuteCondition
+io.skippy.junit5.CoverageFileCallbacks
+```
+
+Start your tests with the JVM argument `-Djunit.jupiter.extensions.autodetection.enabled=true` to automatically
+skippify all tests.
+
+Gradle example:
+
+```
+test {
+  jvmArgs += "-Djunit.jupiter.extensions.autodetection.enabled=true"
+}
+```
+
+Maven example:
+
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <configuration>
+        <systemPropertyVariables>
+            <junit.jupiter.extensions.autodetection.enabled>true</junit.jupiter.extensions.autodetection.enabled>
+        <systemPropertyVariables>
+    </configuration>
+</plugin>
 ```
 
 #### Run Your Tests
