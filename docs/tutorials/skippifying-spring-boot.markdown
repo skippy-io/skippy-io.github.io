@@ -7,12 +7,25 @@ permalink: /tutorials/skippifying-spring-boot
 This tutorial goes over how to skippify [Spring Boot](https://github.com/spring-projects/spring-boot).
 The scale and complexity of Spring Boot's build make it a great choice to put Skippy to the test.
 
+### TL;DR
+
+- Spring Boot can be skippified using 5 lines of configuration changes
+- Skippy's Test Impact Analysis
+  - Analyzes over 4000 tests and more than 2500 classes with minimal overhead
+  - Adds only 23 seconds (or 13%) to the total time compared to `./gradlew check`
+- Skippy’s Predictive Test Selection
+  - Catches all regressions that are caught when running all tests
+  - Reduces the number of tests that need to be executed by 90% to 100%
+  - Cuts down the time required for test execution by 84% to 98%
+
+### My Setup
+
 All experiments for this article were performed with the following setup:
 - MacBook Air M2, 2022
 - 8 GB RAM
-- Java 17 
+- Java 17
 
-All changes are made in the fork [skippy-io/spring-boot-skippified](https://github.com/skippy-io/spring-boot-skippified).
+All changes were committed in the fork [skippy-io/spring-boot-skippified](https://github.com/skippy-io/spring-boot-skippified).
 
 ## Table Of Contents
 
@@ -308,11 +321,7 @@ Comparison:
 
 ## Summary
 
-- Skippy's Test Impact Analysis is shown to be highly efficient for large projects. It analyzes over 4000 tests and more
-  than 2500 classes with minimal overhead, adding only 23 seconds (or 13%) to the total time compared to `./gradlew check`.
-- Skippy’s Predictive Test Selection demonstrates its effectiveness in identifying all regressions that are caught when
-  running all tests. This feature reduces the number of tests that need to be executed by 90% to 100% and
-  cuts down the time required for test execution by 84% to 98%.
+The following table shows a summary for all bugs that have been introduced:
 
 | Bug                                                                    | Detected<br />Baseline | Detected<br/>Skippy | Test count<br/>Baseline | Test count<br/>Skippy | Test time<br/>Baseline | Test time<br/>Skippy |
 |------------------------------------------------------------------------|------------------------|---------------------|-------------------------|-----------------------|------------------------|----------------------|
