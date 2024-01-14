@@ -1,10 +1,10 @@
 ---
 layout: page
-title: "Skippifying Spring Boot"
+title: "Case Study: Skippifying Spring Boot"
 permalink: /tutorials/skippifying-spring-boot
 ---
 
-This tutorial goes over how to skippify [Spring Boot](https://github.com/spring-projects/spring-boot).
+This case study goes over how to skippify [Spring Boot](https://github.com/spring-projects/spring-boot).
 The scale and complexity of Spring Boot's build make it a great choice to put Skippy to the test.
 
 ### TL;DR

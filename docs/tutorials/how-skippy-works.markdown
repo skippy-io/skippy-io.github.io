@@ -1,6 +1,6 @@
 ---
 layout: page
-title: How Skippy Works
+title: How Skippy Works -  A Deep Dive
 permalink: /tutorials/how-skippy-works
 ---
 
@@ -11,7 +11,7 @@ Skippy is built on top of three pillars:
 - JUnit libraries for [JUnit 4](https://github.com/skippy-io/skippy/tree/main/skippy-junit4) & [JUnit 5](https://github.com/skippy-io/skippy/tree/main/skippy-junit5) that implement Skippy's Predictive Test Selection
 - [JaCoCo](https://github.com/jacoco/jacoco)'s dynamic bytecode analysis to capture per-test coverage data
 
-In the next sections, we'll take a technical deep-dive to learn how Skippy, JaCoCo, Gradle and JUnit 5 work together. The
+In the next sections, we'll take a technical deep dive to learn how Skippy, JaCoCo, Gradle and JUnit 5 work together. The
 concepts are similar for Maven and JUnit 4. The code snippets on this page have been simplified for the sake of clarity.
 GitHub links to the actual implementations are provided.
 
