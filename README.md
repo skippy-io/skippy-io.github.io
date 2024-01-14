@@ -34,4 +34,4 @@ Run in verbose mode to see all warnings.
 
 ## Publishing updates
 
-Any merge to `main` triggers the publication of the site.
+A merge to `main` triggers the publication of the site.
