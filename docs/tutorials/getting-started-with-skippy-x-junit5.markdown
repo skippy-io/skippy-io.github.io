@@ -187,8 +187,9 @@ bytecode. Since the Java compiler inlines the value of `TestConstants.HELLO` int
 has no way to detect this.
 
 Don't worry - Skippy has you covered! Skippy combines JaCoCo's dynamic bytecode analysis with a custom, static bytecode
-analysis to detect relevant changes. To do this, it needs additional information that is stored in  classes.md5:
+analysis to detect relevant changes. To do this, it needs additional information that is stored in .skippy/classes.md5:
 
+{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
 build/classes/java/main:com/example/LeftPadder.class:9U3+WYit7uiiNqA9jplN2A==
 build/classes/java/main:com/example/RightPadder.class:ZT0GoiWG8Az5TevH9/JwBg==
@@ -198,6 +199,18 @@ build/classes/java/test:com/example/RightPadderTest.class:E/ObvuQTODFFqU6gxjbxTQ
 build/classes/java/test:com/example/StringUtilsTest.class:p+N8biKVOm6BltcZkKcC/g==
 build/classes/java/test:com/example/TestConstants.class:3qNbG+sSd1S1OGe0EZ9GPA==
 ```
+{% else %}
+```
+target/classes:com/example/LeftPadder.class:9U3+WYit7uiiNqA9jplN2A==
+target/classes:com/example/RightPadder.class:ZT0GoiWG8Az5TevH9/JwBg==
+target/classes:com/example/StringUtils.class:4VP9fWGFUJHKIBG47OXZTQ==
+target/test-classes:com/example/LeftPadderTest.class:sGLJTZJw4beE9m2Kg6chUg==
+target/test-classes:com/example/RightPadderTest.class:E/ObvuQTODFFqU6gxjbxTQ==
+target/test-classes:com/example/StringUtilsTest.class:p+N8biKVOm6BltcZkKcC/g==
+target/test-classes:com/example/TestConstants.class:3qNbG+sSd1S1OGe0EZ9GPA==
+```
+{% endif %}
+
 The file contains hashes for all classes in the project.
 
 Now, let's see what Skippy can do with this data.
