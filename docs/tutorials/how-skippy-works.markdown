@@ -4,7 +4,7 @@ title: How Skippy Works -  A Deep Dive
 permalink: /tutorials/how-skippy-works
 ---
 
-Documentation for Skippy version `0.0.13`.
+Documentation for Skippy version `0.0.14`.
 
 Skippy is built on top of three pillars:
 - Build Plugins for [Gradle](https://github.com/skippy-io/skippy/tree/main/skippy-gradle) and [Maven](https://github.com/skippy-io/skippy/tree/main/skippy-maven) that implement Skippy's Test Impact Analysis
@@ -39,7 +39,7 @@ GitHub: [SkippyPlugin.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e65
 1. Generation of .cov files
 2. Generation of the classes.md5 file
 
-We will discuss each step in the following sections.
+The impact data (the .cov and classes.md5 files) are stored in the .skippy folder. We will discuss each step in the following sections.
 
 #### Step 1: Generation of .cov Files
 
@@ -179,11 +179,11 @@ class SkippyAnalyzeTask extends DefaultTask {
 
 GitHub: [SkippyAnalyzeTask.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-gradle/src/main/java/io/skippy/gradle/SkippyAnalyzeTask.java#L43) \| [ClassesMd5Writer.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-build-common/src/main/java/io/skippy/build/ClassesMd5Writer.java#L53) \| [DebugAgnosticHash.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-common/src/main/java/io/skippy/core/DebugAgnosticHash.java#L46)
 
-Those hashes are stored in the classes.md5 file in the skippy folder.
+Those hashes are stored in the classes.md5 file in the .skippy folder.
 
 Example:
 ```
-cat skippy/classes.md5
+cat .skippy/classes.md5
  
 build/classes/java/main:com/example/LeftPadder.class:9U3+WYit7uiiNqA9jplN2A==
 build/classes/java/main:com/example/RightPadder.class:ZT0GoiWG8Az5TevH9/JwBg==
@@ -301,7 +301,7 @@ class SkippyAnalysis {
 
 GitHub: [SkippyAnalysis.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e659f2d00b34ff7797db5ed1558c78ad/skippy-junit-common/src/main/java/io/skippy/junit/SkippyAnalysis.java#L89)
 
-The fields `hashedClasses` and `coverageData` are the programmatic representation of Skippy's Test Impact Analysis. 
+The fields `hashedClasses` and `coverageData` are the programmatic representation of Skippy's impact data in the .skippy folder.
 `SkippyAnalysis#predict` is the implementation of Skippy's Predictive Test Selection.
 
 You might ask: Why the complex indirections, like the `SkippyExecutionCondition -> SkippyTestApi -> SkippyAnalysis` call chain? There are two key reasons:
