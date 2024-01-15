@@ -1,0 +1,24 @@
+---
+layout: post
+title:  "Skippy 0.0.14 available now"
+date:   2024-01-15 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-14
+---
+
+I'm pleased to announce that Skippy 0.0.14 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+## Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.14](https://github.com/skippy-io/skippy/releases/tag/v0.0.14)
+
+## Highlights
+
+- Contributors can now build and publish Skippy locally without requiring signing keys
+- Renaming of the Skippy folder from `skippy` to `.skippy`
+- Minor bug fixes related to creation and deletion of the Skippy folder
+- Skippy's Maven plugin is now covered by functional tests in [https://github.com/skippy-io/skippy-regression-suite](https://github.com/skippy-io/skippy-regression-suite)
+
+{% include_relative comments.markdown %}
