@@ -561,7 +561,7 @@ predictions based on
 
 It's safe to add the skippy folder to version control. This will automatically enable Skippy's Predictive Test
 Selection when your pipeline runs. Support to store a Test Impact Analysis outside the filesystem (e.g., a
-database) is on the roadmap: https://github.com/skippy-io/skippy/issues/104
+database) is on the roadmap: [#104](https://github.com/skippy-io/skippy/issues/104)
 
 ## Roadmap
 
