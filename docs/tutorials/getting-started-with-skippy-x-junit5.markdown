@@ -136,7 +136,7 @@ StringUtilsTest > testPadRight() PASSED
 ```
 {% endif %}
 
-Skippy captures skip-or-execute predictions in skippy/predictions.log:
+Skippy captures skip-or-execute predictions in .skippy/predictions.log:
 
 ```
 com.example.LeftPadderTest:EXECUTE:NO_COVERAGE_DATA_FOR_TEST
