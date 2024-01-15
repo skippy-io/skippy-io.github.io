@@ -39,7 +39,8 @@ GitHub: [SkippyPlugin.java](https://github.com/skippy-io/skippy/blob/3eb9b9d4e65
 1. Generation of .cov files
 2. Generation of the classes.md5 file
 
-The impact data (the .cov and classes.md5 files) are stored in the .skippy folder. We will discuss each step in the following sections.
+The impact data (the .cov and classes.md5 files) is stored in the .skippy folder. We will discuss each step in the 
+following sections.
 
 #### Step 1: Generation of .cov Files
 
