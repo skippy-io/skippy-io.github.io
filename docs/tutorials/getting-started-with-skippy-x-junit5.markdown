@@ -143,7 +143,7 @@ com.example.LeftPadderTest:EXECUTE:NO_COVERAGE_DATA_FOR_TEST
 com.example.RightPadderTest:EXECUTE:NO_COVERAGE_DATA_FOR_TEST
 ```
 
-Skippy did not find data in the skippy folder to make a skip-or-execute prediction for `LeftPadderTest` and
+Skippy did not find impact data in the .skippy folder to make a skip-or-execute prediction for `LeftPadderTest` and
 `RightPadderTest`. In this case, Skippy will always execute skippified tests. Also note that there is no log entry for
 `StringUtilsTest`: It's a non-skippified test. We will omit the output for non-skippified tests during the remainder of
 the tutorial.
@@ -162,7 +162,7 @@ mvn test -DskippyAnalyze=true
 ```
 {% endif %}
 
-The Skippy Analysis creates a bunch of files in the skippy folder:
+`skippyAnalyze` stores impact data for skippified tests and a bunch of other files the .skippy folder:
 
 ```
 classes.md5
@@ -233,14 +233,14 @@ RightPadderTest > testPadRight() SKIPPED
 ```
 {% endif %}
 
-Content of skippy/predictions.log:
+Content of .skippy/predictions.log:
 
 ```
 com.example.LeftPadderTest:SKIP:NO_CHANGE
 com.example.RightPadderTest:SKIP:NO_CHANGE
 ```
 
-Skippy compares the current state of the project with the analysis in the skippy folder. It detects that both
+Skippy compares the current state of the project with the impact data in the .skippy folder. It detects that both
 `LeftPadderTest` and `RightPadderTest` can be skipped:
 
 - There was no change in either `LeftPadderTest` or `RightPadderTest`.
@@ -302,7 +302,7 @@ RightPadderTest > testPadRight() SKIPPED
 ```
 {% endif %}
 
-Content of skippy/predictions.log:
+Content of .skippy/predictions.log:
 
 ```
 com.example.LeftPadderTest:SKIP:NO_CHANGE
@@ -370,7 +370,7 @@ org.opentest4j.AssertionFailedError: expected: < hello> but was: <hello>
 ```
 {% endif %}
 
-Content of skippy/predictions.log:
+Content of .skippy/predictions.log:
 
 ```
 com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_COVERED_CLASS
@@ -440,7 +440,7 @@ org.opentest4j.AssertionFailedError: expected: < HELLO> but was: < hello>
 ```
 {% endif %}
 
-Content of skippy/predictions.log:
+Content of .skippy/predictions.log:
 
 ```
 com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
@@ -499,7 +499,7 @@ org.opentest4j.AssertionFailedError: expected: <hello > but was: <bonjour>
 ```
 {% endif %}
 
-Content of skippy/predictions.log:
+Content of .skippy/predictions.log:
 
 ```
 com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
