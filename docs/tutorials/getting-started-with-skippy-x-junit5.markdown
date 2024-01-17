@@ -259,7 +259,7 @@ Skippy compares the current state of the project with the impact data in the .sk
 - There was no change in either `LeftPadderTest` or `RightPadderTest`.
 - There was no change in any of the covered classes.
 
-Hence, the skip prediction in skippy/predictions.log.
+Hence, the skip prediction in .skippy/predictions.log.
 
 ### Testing After Modifications
 
@@ -519,7 +519,7 @@ com.example.LeftPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
 com.example.RightPadderTest:EXECUTE:BYTECODE_CHANGE_IN_TEST
 ```
 
-Congratulations! You've successfully integrated Skippy into your project, ensuring that only necessary tests are run,
-saving you time and resources.
+Congratulations - You've completed the tutorial! By now, you should have a solid idea how Skippy works and the value
+it provides.
 
 {% include_relative comments.markdown %}
