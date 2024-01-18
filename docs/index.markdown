@@ -9,7 +9,7 @@ permalink: /
 ---
 
 <div style="margin-bottom: 20px; ">
-    <img style="border-radius: 10px; padding-right: 15px; padding-right: 15px; float: left;" alt="Skippy" src="https://avatars.githubusercontent.com/u/150977247?s=100&u=6f4eb4ad99fb667b1bfaf988d3d396bd892fdf16&v=4" />
+    <img style="border-radius: 10px; margin-right: 15px; margin-bottom: 15px; float: left;" alt="Skippy" src="https://avatars.githubusercontent.com/u/150977247?s=100&u=6f4eb4ad99fb667b1bfaf988d3d396bd892fdf16&v=4" />
     
     Skippy is a Test Impact Analysis & Predictive Test Selection framework for the JVM. It cuts down on unnecessary testing
     and flakiness without compromising the integrity of your builds. You can run it from the command line, your favorite IDE 
