@@ -26,7 +26,7 @@ __What You Need__
 
 ## Setting Up Your Environment
 
-Begin by cloning the skippy-docs repository:
+Begin by cloning the [skippy-tutorials](https://github.com/skippy-io/skippy-tutorials) repository:
 ```
 git clone git@github.com:skippy-io/skippy-tutorials.git
 ```
