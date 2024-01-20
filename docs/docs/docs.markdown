@@ -32,17 +32,15 @@ Skippy is a Test Impact Analysis & Predictive Test Selection framework for the J
 and flakiness without compromising the integrity of your builds. You can run it from the command line, your favorite IDE
 and continuous integration server. Skippy supports Gradle, Maven, JUnit 4 and JUnit 5.
 
-Skippy supports all types of tests where the tests and the code under test run in the same JVM. It provides the most
-value for test suites that are either slow or flaky, regardless of whether the suite contains unit, integration, or
-functional tests.
+Skippy is specifically designed to prevent regressions in your codebase.
+It supports all types of tests where the tests and the code under test run in the same JVM.
+It is best suited for deterministic tests, even those prone to occasional flakiness.
+It provides the most value for test suites that are either slow or flaky (regardless of whether the test suite contains unit, integration, or functional tests).
 
 ## What is it not?
 
-Skippy is specifically designed to prevent regressions in your codebase. It is best suited for deterministic tests, even
-those prone to occasional flakiness. However, if your tests rely on external service calls and you require these tests
-to fail in response to external service issues, then Skippy may not be the appropriate tool for your needs.
-
-Skippy currently does not support end-2-end tests where the tests and the code under test run in separate JVMs.
+Skippy is not designed for tests that assert the overall health of a system. Don't use it for tests you want to fail
+in response to misbehaving services, infrastructure issues, etc.
 
 ## Highlights
 
