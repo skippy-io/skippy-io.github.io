@@ -12,7 +12,7 @@ A quick tour how to use Skippy with Maven and JUnit 5.
 
 __What You Need__
 - About 15 minutes
-- A favorite text editor or IDE
+- Your favorite text editor or IDE
 - Java 17 or later
 - Maven 3.9+
 
@@ -34,22 +34,6 @@ git clone git@github.com:skippy-io/skippy-tutorials.git
 Then, move into the tutorial directory:
 ```
 cd skippy-tutorials/getting-started-with-skippy-and-junit5/
-```
-
-Ensure that the project builds successfully:
-```````
-mvn verify
-```````
-
-A successful build will display:
-```
-[INFO] BUILD SUCCESS
-```
-
-Run the `clean` task before proceeding with the rest of the tutorial:
-
-```
-mvn clean
 ```
 
 ## Exploring the Codebase
@@ -78,8 +62,8 @@ It also adds the Skippy plugin:
     <executions>
         <execution>
             <goals>
-                <goal>analyze</goal>
-                <goal>clean</goal>
+                <goal>buildFinished</goal>
+                <goal>buildStarted</goal>
             </goals>
         </execution>
     </executions>
@@ -102,9 +86,4 @@ Since Skippy internally depends on [JaCoCo](https://www.jacoco.org/), the JaCoCo
 </plugin>
 ```
 
-Note: You can play around with those tasks. If you do so, execute `clean` and `skippy:clean` before proceeding with the
-rest of the tutorial:
-```
-mvn clean skippy:clean
-```
 {% include_relative getting-started-with-skippy-x-junit5.markdown %}

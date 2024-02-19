@@ -34,13 +34,13 @@ Let's take a whirlwind tour of Skippy, Gradle & JUnit 5. The concepts are simila
 ### Step 1: Install Skippy
 
 ```groovy
-    plugins {
-+       id 'io.skippy' version '0.0.14'
-    }
+     plugins {
++        id 'io.skippy' version '0.0.15'
+     }
     
-    dependencies {
-+       testImplementation 'io.skippy:skippy-junit5:0.0.14'
-    }
+     dependencies {
++        testImplementation 'io.skippy:skippy-junit5:0.0.15'
+     }
 ```
 
 ### Step 2: Skippify Your Tests
@@ -59,45 +59,45 @@ Let's take a whirlwind tour of Skippy, Gradle & JUnit 5. The concepts are simila
      }
 ```
 
-### Step 3: Perform a Test Impact Analysis
+### Step 3: Skippy's Predictive Test Selection In Action
 
-```
-./gradlew skippyAnalyze
-```
-
-`skippyAnalyze` stores impact data for skippified tests and a bunch of other files in the .skippy folder.
-
-```
-ls -l .skippy
-
-classes.md5
-com.example.FooTest.cov
-...
-```
-
-### Step 4: Skippy's Predictive Test Selection In Action
-
+Run the tests:
 ```
 ./gradlew test
 
-FooTest > testFoo() SKIPPED
-BarTest > testBar() SKIPPED
+FooTest > testFoo() PASSED
+BarTest > testBar() PASSED
 ```
 
-Skippy compares the current state of the project with the data in the .skippy folder to make skip-or-execute 
-predictions for skippified tests. Skippy detects no changes and skips `FooTest` and `BarTest`.
+Skippy performs a Test Impact Analysis every time you run a test. The result is stored in the .skippy folder:
 
-Introduce a bug in class `Foo`:
+```
+ls -l .skippy                       
+
+test-impact-analysis.json
+```
+
+This data allows Skippy to make intelligent skip-or-execute predictions. Let's see what happens when you run the tests again:
+
+```
+./gradlew test --rerun
+
+FooTest > testFoo() SKIPPED
+BarTest > testBar() SKIPPED 
+```
+
+Skippy detects that nothing has changed and skips both tests.
+
+Next, introduce a bug in class `Foo`:
 ```java
      class Foo {
     
          static String getFoo() {
 -            return "foo";
-+            return "null";
++            return null;
          }
          
      }
-
 ```
 
 Re-run the tests:
@@ -105,12 +105,31 @@ Re-run the tests:
 ```
 ./gradlew test
 
-FooTest > testFoo() FAILED
-BarTest > testBar() SKIPPED
+LeftPadderTest > testPadLeft() FAILED
+    org.opentest4j.AssertionFailedError: expected: <foo> but was: <null>
+BarTest > testBar() SKIPPED 
 ```
 
-Skippy detects the change and makes an execute prediction for `FooTest`. The regression is caught quickly - 
-unrelated tests remain skipped.
+Skippy detects the change and executes `FooTest`. The regression is caught quickly - `BarTest` remains skipped.
+
+Fix the bug and re-run the tests:
+
+```
+./gradlew test
+
+FooTest > testFoo() PASSED
+BarTest > testBar() SKIPPED 
+```
+
+Skippy executes `FooTest` and updates the data in the .skippy folder.
+Both tests will be skipped when you run them again:
+
+```
+./gradlew test --rerun
+
+FooTest > testFoo() SKIPPED
+BarTest > testBar() SKIPPED 
+```
 
 ## Contributing
 

@@ -155,28 +155,10 @@ skippyAnalyze
 
 #### skippyAnalyze Task
 
-`skippyAnalyze` triggers Skippy's Test Impact Analysis that captures
-- a hash for each class file in the project and
-- coverage data for each skippified test.
-
-Invocation:
-```
-./gradlew skippyAnalyze
-```
-
-The task generates a bunch of files in the .skippy folder:
-```
-ls -l .skippy
-
-classes.md5
-com.example.LeftPadderTest.cov
-com.example.RightPadderTest.cov
-predictions.log
-```
-
-The generated files are consumed by Skippy's [testing libraries](#skippys-predictive-test-selection) to make skip-or-execute predictions.
-
-Note: If your project does not contain skippified tests (more on that later), then only classes.md5 will be generated.
+`skippyAnalyze` performs a Test Impact Analysis that stores a bunch of files in the .skippy folder.
+The generated files are consumed by Skippy's [testing libraries](#skippys-predictive-test-selection) 
+to make skip-or-execute predictions. `skippyAnalyze` is not meant to be invoked directly: It runs 
+automatically whenever a Test task is executed.
 
 #### skippyClean Task
 
@@ -185,6 +167,8 @@ Note: If your project does not contain skippified tests (more on that later), th
 ```
 ./gradlew skippyClean
 ```
+
+It is the Gradle counterpart to `rm -rf .skippy`.
 
 ### Maven
 
@@ -207,8 +191,8 @@ Release versions are available from Maven Central:
         <executions>
           <execution>
             <goals>
-              <goal>analyze</goal>
-              <goal>clean</goal>
+              <goal>buildFinished</goal>
+              <goal>buildStarted</goal>
             </goals>
           </execution>
         </executions>
@@ -240,8 +224,8 @@ Snapshots are available from `s01.oss.sonatype.org`:
         <executions>
           <execution>
             <goals>
-              <goal>analyze</goal>
-              <goal>clean</goal>
+              <goal>buildFinished</goal>
+              <goal>buildStarted</goal>
             </goals>
           </execution>
         </executions>
@@ -280,33 +264,19 @@ Since Skippy internally depends on JaCoCo, the JaCoCo plugin has to be added as 
 
 #### Goals
 
-The plugin adds the `skippy:analyze` and `skippy:clean` goals to your project.
+The plugin adds the 
+- `skippy:buildStarted`,
+- `skippy:buildFinished` and 
+- `skippy:clean`
+goals to your project.
 
-#### skippy:analyze
+  
+#### skippy:buildStarted & skippy:buildFinished
 
-`skippy:analyze` triggers Skippy's Test Impact Analysis that captures
-- a hash for each class file in the project and
-- coverage data for each skippified test.
-
-Note that you don't invoke `skippy:analyze` directly. The goal is bound to the `test` lifecycle phase. You trigger
-a Skippy analysis by invoking the `test` phase with the parameter `-DskippyAnalyze=true`:
-```
-mvn test -DskippyAnalyze=true
-```
-
-The goal generates a bunch of files in the .skippy folder:
-```
-ls -l .skippy
-
-classes.md5
-com.example.LeftPadderTest.cov
-com.example.RightPadderTest.cov
-predictions.log
-```
-
-The generated files are consumed by Skippy's [testing libraries](#skippys-predictive-test-selection) to make skip-or-execute predictions.
-
-Note: If your project does not contain skippified tests (more on that later), then only classes.md5 will be generated.
+`skippy:buildStarted` and `skippy:buildFinished` perform a Test Impact Analysis that stores a bunch of files 
+in the .skippy folder. The generated files are consumed by Skippy's [testing libraries](#skippys-predictive-test-selection)
+to make skip-or-execute predictions. Both goals are not meant to be invoked directly: They run automatically 
+when you execute your tests.
 
 #### skippy:clean
 
@@ -315,6 +285,8 @@ Note: If your project does not contain skippified tests (more on that later), th
 ```
 mvn skippy:clean
 ```
+
+It is the Maven counterpart to `rm -rf .skippy`.
 
 ## Skippy's Predictive Test Selection
 
@@ -543,7 +515,7 @@ Maven example:
     <configuration>
         <systemPropertyVariables>
             <junit.jupiter.extensions.autodetection.enabled>true</junit.jupiter.extensions.autodetection.enabled>
-        <systemPropertyVariables>
+        </systemPropertyVariables>
     </configuration>
 </plugin>
 ```
@@ -557,13 +529,11 @@ predictions based on
 
 ## Use Skippy In Your CI Pipeline
 
-It's safe to add the .skippy folder to version control. This will automatically enable Skippy's Predictive Test
-Selection when your pipeline runs. Support to store a Test Impact Analysis outside the filesystem (e.g., a
-database) is on the roadmap: [#104](https://github.com/skippy-io/skippy/issues/104)
+It is safe to add the .skippy folder to version control. This will automatically enable Skippy's Predictive Test
+Selection when your pipeline runs.
 
 ## Roadmap
 
-- Support for incremental analysis updates
 - Support to generate accurate coverage reports despite skipped tests (to support CI pipelines with strict coverage requirements)
 - Support for reasoning based on changes in the classpath
 - Support for reasoning based on changes in resources (e.g., a change in `application.properties`)

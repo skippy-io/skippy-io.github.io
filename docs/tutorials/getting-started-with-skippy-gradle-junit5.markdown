@@ -12,7 +12,7 @@ A quick tour how to use Skippy with Grade and JUnit 5.
 
 __What You Need__
 - About 15 minutes
-- A favorite text editor or IDE
+- Your favorite text editor or IDE
 - Java 17 or later
 - Gradle 7.3+
 
@@ -36,16 +36,6 @@ Then, move into the tutorial directory:
 cd skippy-tutorials/getting-started-with-skippy-and-junit5/
 ```
 
-Ensure that the project builds successfully:
-```````
-./gradlew check
-```````
-
-A successful build will display:
-```
-BUILD SUCCESSFUL
-```
-
 ## Exploring the Codebase
 
 Let's take a quick look at the codebase.
@@ -64,22 +54,4 @@ dependencies {
 }
 ```
 
-The plugin adds a couple of tasks that we will use throughout the tutorial:
-```
-./gradlew tasks --group=skippy
-```
-Output:
-
-```
-Skippy tasks
-------------
-skippyAnalyze
-skippyClean
-```
-
-Note: You can play around with those tasks. If you do so, execute `skippyClean` before proceeding with the
-rest of the tutorial:
-```
-./gradlew skippyClean
-```
 {% include_relative getting-started-with-skippy-x-junit5.markdown %}
