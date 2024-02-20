@@ -163,7 +163,7 @@ Skippy executed both tests because it did not find prior impact data. Also note 
 `StringUtilsTest`: It's a normal test that is not "managed" by Skippy. We will omit the output for non-skippified tests during 
 the remainder of the tutorial.
 
-## Re-run The Tests
+## Re-Run The Tests
 
 Re-run the tests:
 
