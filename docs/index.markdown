@@ -35,20 +35,20 @@ Let's take a whirlwind tour of Skippy, Gradle & JUnit 5. The concepts are simila
 
 ```groovy
      plugins {
-+        id 'io.skippy' version '0.0.15'
++        id 'io.skippy' version '0.0.16'
      }
     
      dependencies {
-+        testImplementation 'io.skippy:skippy-junit5:0.0.15'
++        testImplementation 'io.skippy:skippy-junit5:0.0.16'
      }
 ```
 
 ### Step 2: Skippify Your Tests
 
 ```java
-+    import io.skippy.junit5.Skippified;
++    import io.skippy.junit5.PredictWithSkippy;
 
-+    @Skippified
++    @PredictWithSkippy
      public class FooTest {     
 
          @Test
