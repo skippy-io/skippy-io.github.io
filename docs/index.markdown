@@ -52,7 +52,7 @@ Let's take a whirlwind tour of Skippy, Gradle & JUnit 5. The concepts are simila
      public class FooTest {     
 
          @Test
-         public void testGetFoo() {
+         public void testFoo() {
              assertEquals("foo", Foo.getFoo());
          }
 
@@ -105,7 +105,7 @@ Re-run the tests:
 ```
 ./gradlew test
 
-LeftPadderTest > testPadLeft() FAILED
+FooTest > testFoo() FAILED
     org.opentest4j.AssertionFailedError: expected: <foo> but was: <null>
 BarTest > testBar() SKIPPED 
 ```
