@@ -45,6 +45,8 @@ Let's take a whirlwind tour of Skippy, Gradle & JUnit 5. The concepts are simila
 
 ### Step 2: Enable Predictive Test Selection
 
+Annotate the test you want to optimize with `@PredictWithSkippy`:
+
 ```java
 +    import io.skippy.junit5.PredictWithSkippy;
 
