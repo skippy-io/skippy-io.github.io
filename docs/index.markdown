@@ -43,7 +43,7 @@ Let's take a whirlwind tour of Skippy, Gradle & JUnit 5. The concepts are simila
      }
 ```
 
-### Step 2: Skippify Your Tests
+### Step 2: Enable Predictive Test Selection
 
 ```java
 +    import io.skippy.junit5.PredictWithSkippy;
@@ -59,7 +59,7 @@ Let's take a whirlwind tour of Skippy, Gradle & JUnit 5. The concepts are simila
      }
 ```
 
-### Step 3: Skippy's Predictive Test Selection In Action
+### Step 3: Skippy In Action
 
 Run the tests:
 ```
