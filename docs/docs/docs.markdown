@@ -365,7 +365,7 @@ Maven:
 </project>
 ```
 
-#### Skippify Your Tests
+#### Enable Predictive Test Selection
 
 Add the Skippy class rule to your test:
 ```groovy
