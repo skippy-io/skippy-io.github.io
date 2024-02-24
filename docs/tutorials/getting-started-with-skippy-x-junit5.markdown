@@ -56,12 +56,13 @@ com
    └─ TestConstants.java
 ```
 
-`LeftPadderTest` and `RightPadderTest` are unit tests for their respective classes:
+`LeftPadderTest` and `RightPadderTest` are unit tests for their respective classes.
+Both tests are annotated with `@PredictWithSkippy` to enables Skippy's predictive test selection:
 
 ```java
-import io.skippy.junit5.Skippified;
+import io.skippy.junit5.PredictWithSkippy;
 
-@Skippified
+@PredictWithSkippy
 public class LeftPadderTest {
 
     @Test
@@ -72,9 +73,9 @@ public class LeftPadderTest {
 
 }
 ```
-Note: We will refer to tests that are annotated with `@Skippified` as skippified tests.
 
-`StringUtilsTest` tests the `StringUtil` class and is a standard (e.g., non-skippified) JUnit test:
+`StringUtilsTest` tests the `StringUtil` class and is a standard JUnit test that does not utilize
+Skippy's predictive test selection:
 ```java
 public class StringUtilsTest {
 
@@ -160,7 +161,8 @@ com.example.RightPadderTest,EXECUTE,NO_DATA_FOUND_FOR_TEST
 ```
 
 Skippy executed both tests because it did not find prior impact data. Also note that there is no log entry for 
-`StringUtilsTest`: It's a normal test that is not "managed" by Skippy. We will omit the output for non-skippified tests during 
+`StringUtilsTest`: It's a normal test that is not "managed" by Skippy. We will omit the output for 
+test that don't use Skippy's predictive test selection during 
 the remainder of the tutorial.
 
 ## Re-Run The Tests
@@ -298,7 +300,7 @@ mvn test
 ```
 {% endif %}
 
-Skippy detects the change and runs the skippified tests again:
+Skippy detects the change and runs the tests again:
 
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```
@@ -343,7 +345,7 @@ git stash
 Now, let's see what happens if you change the expected value in `LeftPadderTest` from
 `" hello"` to `" HELLO"`:
 ```java
-@Skippified
+@PredictWithSkippy
 public class LeftPadderTest {
 
     @Test
@@ -425,7 +427,7 @@ mvn test
 ```
 {% endif %}
 
-Skippy detects the change and runs both skippified tests:
+Skippy detects the change and runs both tests:
 
 {% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
 ```

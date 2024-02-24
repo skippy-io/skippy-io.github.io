@@ -21,7 +21,7 @@ __What You Need__
 - [Setting Up Your Environment](#setting-up-your-environment)
 - [Exploring The Codebase](#exploring-the-codebase)
 - [Run The Tests](#run-the-tests)
-- [Re-Run The Tests](#re-run-the-tests)
+- [Re-Run The Tests](#re-run-the-tests) 
 - [Testing After Modifications](#testing-after-modifications)
 
 ## Setting Up Your Environment
