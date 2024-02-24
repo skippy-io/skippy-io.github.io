@@ -1,0 +1,25 @@
+---
+layout: post
+title:  "Skippy 0.0.15 available now"
+date:   2024-02-18 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-15
+---
+
+I'm pleased to announce that Skippy 0.0.15 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+## Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.15](https://github.com/skippy-io/skippy/releases/tag/v0.0.15)
+
+## Highlights
+
+### Highlights
+
+- Users no longer have to invoke `./gradlew skippyAnalzye`  or `mvn skippy:analyze`: Skippy automatically runs when tests are executed
+- Skippy incrementally updates the data in the .skippy folder when it detects a change
+- The .cov & classes.md5 files have been replaced with a single JSON file
+
+{% include_relative comments.markdown %}

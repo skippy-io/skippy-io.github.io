@@ -1,0 +1,24 @@
+---
+layout: post
+title:  "Skippy 0.0.16 available now"
+date:   2024-02-23 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-16
+---
+
+I'm pleased to announce that Skippy 0.0.16 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+## Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.16 ](https://github.com/skippy-io/skippy/releases/tag/v0.0.16)
+
+## Highlights
+
+This release gets rid of the term "skippified":
+- Renaming of `io.skippy.junit5.Skippified` to `io.skippy.junit5.PredictWithSkippy`
+- Renaming of `io.skippy.junit4.Skippy.skippified()` to `io.skippy.junit4.Skippy.predictWithSkippy()`
+
+
+{% include_relative comments.markdown %}
