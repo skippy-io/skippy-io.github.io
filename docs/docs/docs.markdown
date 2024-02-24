@@ -484,11 +484,11 @@ public class FooTest {
 }
 ```
 
-The annotation based approach allows you to pick-and-chose the tests you want to enable predictive test selection for.
+The annotation based approach allows you to enable predictive test selection for a sub-set of your tests.
 
 #### Automatic Enablement
 
-Automatic enablement of predictive test selection is based on JUnit 5's [Automatic Extension Registration](https://junit.org/junit5/docs/current/user-guide/#extensions-registration-automatic).
+Automatic enablement is based on JUnit 5's [Automatic Extension Registration](https://junit.org/junit5/docs/current/user-guide/#extensions-registration-automatic).
 Add a file named `org.junit.jupiter.api.extension.Extension` in
 `src/test/resources/META-INF/services` (adjust according to the location of your test resources). The file must have
 the following content:
