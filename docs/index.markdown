@@ -7,7 +7,7 @@ permalink: /
 
 ## What is it?
 
-Skippy is a Test Impact Analysis & Predictive Test Selection framework for the JVM. It cuts down on unnecessary testing
+Skippy is a Test Impact Analysis & Predictive Test Selection framework for Java and the JVM. It cuts down on unnecessary testing
 and flakiness without compromising the integrity of your builds. You can run it from the command line, your favorite IDE
 and continuous integration server. Skippy supports Gradle, Maven, JUnit 4 and JUnit 5.
 
@@ -15,6 +15,10 @@ Skippy is specifically designed to prevent regressions in your codebase.
 It supports all types of tests where the tests and the code under test run in the same JVM.
 It is best suited for deterministic tests, even those prone to occasional flakiness.
 It provides the most value for test suites that are either slow or flaky (regardless of whether the test suite contains unit, integration, or functional tests).
+
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VZ_MmQI0mOA?si=HPYFrLmZ_pciM6jn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</center>
 
 ## What is it not?
 
