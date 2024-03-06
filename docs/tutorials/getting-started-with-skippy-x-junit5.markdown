@@ -165,6 +165,16 @@ Skippy executed both tests because it did not find prior impact data. Also note 
 test that don't use Skippy's predictive test selection during 
 the remainder of the tutorial.
 
+## Commit the Skippy Folder
+
+Add the .skippy folder to Git: 
+
+```
+git add .skippy && git commit -m 'add skippy folder'
+```
+
+This allows us to revert back to this state of the repository throughout the rest tutorial. 
+
 ## Re-Run The Tests
 
 Re-run the tests:
