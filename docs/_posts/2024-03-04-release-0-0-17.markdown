@@ -16,7 +16,7 @@ Central.
 
 ## Highlights
 
-This release adds support for incremental updates of the Skippy folder for Gradle-based builds, even if the build fails due to failing test cases.
+This release adds support for incremental updates of the Skippy folder for Gradle-based builds in cases where the build fails due to a failing test case.
 
 Old behavior:
 
