@@ -12,7 +12,7 @@ Central.
 
 ## Release Notes
 
-[https://github.com/skippy-io/skippy/releases/tag/v0.0.16 ](https://github.com/skippy-io/skippy/releases/tag/v0.0.16)
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.16](https://github.com/skippy-io/skippy/releases/tag/v0.0.16)
 
 ## Highlights
 

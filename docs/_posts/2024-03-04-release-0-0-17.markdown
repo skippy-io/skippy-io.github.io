@@ -1,0 +1,50 @@
+---
+layout: post
+title:  "Skippy 0.0.17 available now"
+date:   2024-03-04 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-17
+---
+
+I'm pleased to announce that Skippy 0.0.17 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+## Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.17](https://github.com/skippy-io/skippy/releases/tag/v0.0.17)
+
+## Highlights
+
+This release adds support for incremental updates of the Skippy folder for Gradle-based builds, even if the build fails due to failing test cases.
+
+Old behavior:
+
+```
+./gradlew test
+
+FooTest > testFoo() PASSED   ─┐
+BarTest > testBar() FAILED    │
+                              │ a tests that previously passed
+./gradlew test                │ is executed again in a subsequent build
+                              │
+FooTest > testFoo() PASSED   ←┘  
+BarTest > testBar() FAILED   
+```
+
+New behavior:
+
+```
+./gradlew test
+
+FooTest > testFoo() PASSED   ─┐
+BarTest > testBar() FAILED    │
+                              │ a tests that previously passed
+./gradlew test                │ is skipped in a subsequent build
+                              │
+FooTest > testFoo() SKIPPED  ←┘  
+BarTest > testBar() FAILED  
+```
+
+
+{% include_relative comments.markdown %}
