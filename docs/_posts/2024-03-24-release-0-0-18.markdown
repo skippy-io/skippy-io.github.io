@@ -1,0 +1,55 @@
+---
+layout: post
+title:  "Skippy 0.0.18 available now"
+date:   2024-03-24 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-18
+---
+
+I'm pleased to announce that Skippy 0.0.18 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+## Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.18](https://github.com/skippy-io/skippy/releases/tag/v0.0.18)
+
+## Highlights
+
+This release introduces support for generating coverage reports that include coverage for skipped tests. This feature is particularly useful for corporate CI pipelines with strict code coverage requirements.
+
+### Gradle Configuration
+
+To enable this feature in Gradle, add the following to your `build.gradle` file:
+
+```groovy
+skippy {
+    saveExecutionData = true
+}
+```
+
+### Maven Configuration
+
+To enable this feature in Maven, add the following to your `pom.xml` file:
+
+```
+<plugin>
+        <groupId>io.skippy</groupId>
+        <artifactId>skippy-maven</artifactId>
+        ...
+        <configuration>
+          <saveExecutionData>true</saveExecutionData>
+        </configuration>
+        ...   
+</plugin>
+```
+
+### skippy.exec
+
+Skippy will automatically generate a JaCoCo execution data file named skippy.exec if the feature is enabled and there is at least a single skipped test. This file is placed within the build directory, typically found under build/ for Gradle projects or target/ for Maven projects.
+
+skippy.exec aggregates the execution data for all skipped tests. It can be merged with JaCoCo's standard execution data file to generate a combined report that contains coverage for executed and skipped tests:
+- https://www.eclemma.org/jacoco/trunk/doc/merge-mojo.html
+- https://docs.gradle.org/current/dsl/org.gradle.testing.jacoco.tasks.JacocoReport.html
+
+{% include_relative comments.markdown %}
