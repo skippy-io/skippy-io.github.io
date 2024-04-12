@@ -1,0 +1,111 @@
+---
+layout: post
+title:  "Skippy 0.0.19 available now"
+date:   2024-04-11 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-19
+---
+
+I'm pleased to announce that Skippy 0.0.19 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+## Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.19](https://github.com/skippy-io/skippy/releases/tag/v0.0.19)
+
+## Highlights
+
+This release introduces the [SkippyRepositoryExtension](https://github.com/skippy-io/skippy/blob/55c194327f425705e8f8e5b46ef9dab78f60d337/skippy-core/src/main/java/io/skippy/core/SkippyRepositoryExtension.java#L40) interface.  It allows projects to customize the way Skippy reads and writes data.
+
+Skippy's default behavior:
+
+- It stores and retrieves all data in / from the .skippy folder.
+- It only retains the latest Test Impact Analysis and.
+- It only retains the JaCoCo execution data files that are referenced by the latest Test Impact Analysis.
+
+The default settings are designed for small projects that do not require code coverage reports, and thus, do not store JaCoCo execution data files. Those projects will typically disable the `coverageForSkippedTests` setting. While these defaults support projects of any size and allow for the storage of JaCoCo data files for experimental purposes, they are not recommended for large projects or those needing to store such files long-term. Doing so could significantly increase the size of your Git repository.
+
+Large projects aiming to store and permanently retain Test Impact Analysis instances and JaCoCo execution data files can register a custom `SkippyRepositoryExtension`. This extension enables the storage of these artifacts outside the project’s repository using systems such as databases, network file systems, or blob storage solutions like AWS S3.
+
+Example for a custom `SkippyRepositoryExtension`: [FileSystemBackedRepositoryExtension](https://github.com/skippy-io/skippy/blob/55c194327f425705e8f8e5b46ef9dab78f60d337/skippy-extensions/skippy-repository-filesystem/src/main/java/io/skippy/extension/FileSystemBackedRepositoryExtension.java#L26)
+
+### Gradle Configuration
+
+To enable this feature in Gradle, add the following to your `build.gradle` file:
+
+```groovy
+buildscript {    
+    dependencies {
+        classpath 'com.example:my-repository-extension:1.0.0'
+    }
+}
+
+skippy {
+    repository = 'com.example.MyRepositoryExtension'
+}
+
+dependencies {
+    testImplementation 'com.example:my-repository-extension:1.0.0'
+}
+```
+
+### Maven Configuration
+
+To enable this feature in Maven, add the following to your `pom.xml` file:
+
+```xml
+  ...
+  <dependencies>
+    <dependency>
+      <groupId>com.example</groupId>
+      <artifactId>my-repository-extension</artifactId>
+      <version>1.0.0</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  ...
+  <plugin>
+    <groupId>io.skippy</groupId>
+    <artifactId>skippy-maven</artifactId>
+    <dependencies>
+      <dependency>
+        <groupId>com.example</groupId>
+        <artifactId>my-repository-extension</artifactId>
+        <version>1.0.0</version>
+      </dependency>
+    </dependencies>
+    <configuration>
+      <repository>com.example.MyRepositoryExtension</repository>
+    </configuration>
+  </plugin>
+  ...
+```
+
+## Other noteworthy changes
+
+The setting `saveExecutionData` has been renamed to `coverageForSkippedTest` to highlight the purpose instead of the implementation details.
+
+Gradle example:
+
+```groovy
+skippy {
+    coverageForSkippedTests = true
+}
+```
+
+Maven example:
+
+```xml
+<plugin>
+  <groupId>io.skippy</groupId>  
+  <artifactId>skippy-maven</artifactId>
+  ...
+  <configuration>
+    <coverageForSkippedTest>true</coverageForSkippedTest>
+  </configuration>
+  ...   
+</plugin>
+```
+
+{% include_relative comments.markdown %}

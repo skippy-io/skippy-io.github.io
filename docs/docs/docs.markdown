@@ -65,18 +65,18 @@ mentioned here might work, but there is no guarantee.
 
 ### JUnit 4 / JUnit 5
 
-| Skippy  | JUnit 4       | JUnit 5      |
-|---------|---------------|--------------|
-| ≥ 0.0.13 | 4.10 or later | 5.0 or later |
-| ≥ 0.0.8 | 4.10 or later | 5.9 or later |
-| ≤ 0.0.7 | ❌            | 5.9 or later |
+| Skippy   | JUnit 4       | JUnit 5      |
+|----------|---------------|--------------|
+| ≥ 0.0.18 | 4.10 or later | 5.0 or later |
+| ≥ 0.0.8  | 4.10 or later | 5.9 or later |
+| ≤ 0.0.7  | ❌            | 5.9 or later |
 
 ### Gradle / Maven
 
-| Skippy  | Gradle                         | Maven        |
-|---------|--------------------------------|--------------|
-| ≥ 0.0.9 | 7.3 or later<br/> 8.0 or later | 3.9 or later |
-| ≤ 0.0.8 | 7.3 or later<br/> 8.0 or later | ❌           |
+| Skippy   | Gradle                         | Maven          |
+|----------|--------------------------------|----------------|
+| ≥ 0.0.9  | 7.3 or later<br/> 8.0 or later | 3.2.3 or later |
+| ≤ 0.0.8  | 7.3 or later<br/> 8.0 or later | ❌             |
 
 ### JaCoCo
 
