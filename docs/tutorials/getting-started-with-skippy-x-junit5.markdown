@@ -143,8 +143,9 @@ Test Impact Analysis and stores the result as bunch of files in the .skippy fold
 ```
 ls -l .skippy
 
-predictions.log
 test-impact-analysis.json
+predictions.log
+...
 ```
 
 test-impact-analysis.json contains  
@@ -156,8 +157,8 @@ predictions.log gives you insights into Skippy's skip-or-execute decisions:
 ```
 cat .skippy/predictions.log
 
-com.example.LeftPadderTest,EXECUTE,NO_DATA_FOUND_FOR_TEST
-com.example.RightPadderTest,EXECUTE,NO_DATA_FOUND_FOR_TEST
+com.example.LeftPadderTest,EXECUTE,TEST_IMPACT_ANALYSIS_NOT_FOUND
+com.example.RightPadderTest,EXECUTE,TEST_IMPACT_ANALYSIS_NOT_FOUND
 ```
 
 Skippy executed both tests because it did not find prior impact data. Also note that there is no log entry for 

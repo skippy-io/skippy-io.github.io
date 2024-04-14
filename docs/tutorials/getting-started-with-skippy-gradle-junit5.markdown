@@ -6,7 +6,7 @@ permalink: /tutorials/skippy-gradle-junit5
 
 Documentation for Skippy version `{% include_relative version.markdown %}`.
 
-## Getting Started with Skippy, Gradle & JUnit 5
+## Getting started with Skippy, Gradle & JUnit 5
 
 A quick tour how to use Skippy with Grade and JUnit 5.
 

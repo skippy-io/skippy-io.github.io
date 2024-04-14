@@ -6,7 +6,7 @@ permalink: /tutorials/skippy-maven-junit5
 
 Documentation for Skippy version `{% include_relative version.markdown %}`.
 
-## Getting Started with Skippy, Maven & JUnit 5
+## Getting started with Skippy, Maven & JUnit 5
 
 A quick tour how to use Skippy with Maven and JUnit 5.
 
@@ -14,7 +14,7 @@ __What You Need__
 - About 15 minutes
 - Your favorite text editor or IDE
 - Java 17 or later
-- Maven 3.9+
+- Maven 3.2.3+
 
 ## Table Of Contents
 

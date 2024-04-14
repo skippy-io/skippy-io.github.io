@@ -584,7 +584,6 @@ To enable this feature in Maven, add the following to your `pom.xml` file:
 
 Skippy's [SkippyRepositoryExtension](https://github.com/skippy-io/skippy/blob/55c194327f425705e8f8e5b46ef9dab78f60d337/skippy-core/src/main/java/io/skippy/core/SkippyRepositoryExtension.java#L40) 
 allows projects to customize the way Skippy reads and writes data.
-
 Skippy's default behavior:
 
 - It stores and retrieves all data in / from the .skippy folder.
@@ -656,7 +655,7 @@ Note that your extension must be provided as dependency to Skippy's Maven plugin
 ## Skippy in your CI pipeline
 
 Skippy supports execution in CI environments out of the box. It has actually been designed for this purpose. 
-The only thing you need to do is to commit the .skippy folder to version control. This will automatically enable 
+The only thing you need to do is to add the .skippy folder to version control. This will automatically enable
 Skippy's Predictive Test Selection when your pipeline runs.
 
 ## Roadmap
