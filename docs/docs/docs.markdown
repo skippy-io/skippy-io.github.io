@@ -540,12 +540,12 @@ predictions based on
 
 ## Coverage for skipped tests
 
-Skippy supports the creation of a JaCoCo execution data file that contains the combined execution data for all skipped 
+Skippy supports the creation of a JaCoCo execution data file that contains the combined execution data for skippedq
 tests. This feature can be enabled via the boolean setting `coverageForSkippedTests` which defaults to `false`.
 
 When enabled, Skippy will store individual execution data files for all executed tests. At the end a build, it 
 will generate a file named skippy.exec within the build directory, typically found under build/ for 
-Gradle projects or target/ for Maven projects. skippy.exec aggregates the execution data for all skipped tests. It can 
+Gradle projects or target/ for Maven projects. skippy.exec aggregates the execution data for skipped tests. It can
 be merged with JaCoCo’s standard execution data file to generate a combined report with coverage for executed 
 and skipped tests:
 
