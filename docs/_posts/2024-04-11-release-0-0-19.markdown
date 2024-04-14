@@ -21,7 +21,7 @@ This release introduces the [SkippyRepositoryExtension](https://github.com/skipp
 Skippy's default behavior:
 
 - It stores and retrieves all data in / from the .skippy folder.
-- It only retains the latest Test Impact Analysis and.
+- It only retains the latest Test Impact Analysis.
 - It only retains the JaCoCo execution data files that are referenced by the latest Test Impact Analysis.
 
 The default settings are designed for small projects that do not require code coverage reports, and thus, do not store JaCoCo execution data files. Those projects will typically disable the `coverageForSkippedTests` setting. While these defaults support projects of any size and allow for the storage of JaCoCo data files for experimental purposes, they are not recommended for large projects or those needing to store such files long-term. Doing so could significantly increase the size of your Git repository.
