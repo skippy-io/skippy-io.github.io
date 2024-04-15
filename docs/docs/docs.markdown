@@ -660,15 +660,18 @@ To enable this feature in Gradle, add the following to your `build.gradle` file:
 ```groovy
 buildscript {    
     dependencies {
+        // provide your extension to Skippy's Gradle plugin
         classpath 'com.example:my-repository-extension:1.0.0'
     }
 }
 
 skippy {
+    // register your extension
     repository = 'com.example.MyRepositoryExtension'
 }
 
 dependencies {
+    // provide your extension to your tests
     testImplementation 'com.example:my-repository-extension:1.0.0'
 }
 ```
@@ -682,6 +685,7 @@ To enable this feature in Maven, add the following to your `pom.xml` file:
 ```xml
   ...
   <dependencies>
+    <!-- provide your extension to your tests -->
     <dependency>
       <groupId>com.example</groupId>
       <artifactId>my-repository-extension</artifactId>
@@ -694,6 +698,7 @@ To enable this feature in Maven, add the following to your `pom.xml` file:
     <groupId>io.skippy</groupId>
     <artifactId>skippy-maven</artifactId>
     <dependencies>
+      <!-- provide your extension to Skippy's Maven plugin -->
       <dependency>
         <groupId>com.example</groupId>
         <artifactId>my-repository-extension</artifactId>
@@ -701,6 +706,7 @@ To enable this feature in Maven, add the following to your `pom.xml` file:
       </dependency>
     </dependencies>
     <configuration>
+      <!-- register your extension -->
       <repository>com.example.MyRepositoryExtension</repository>
     </configuration>
   </plugin>
