@@ -26,7 +26,7 @@ New to Skippy? The best way to get started are the introductory tutorials:
 * [Coverage for skipped tests](#coverage-for-skipped-tests)
   * [Gradle](#gradle-1)
   * [Maven](#maven-1)
-* [Customize storage and retrieval of Skippy artifacts](#customize-storage-and-retrieval-of-skippy-artifacts)
+* [Customize how Skippy reads and writes data](#customize-how-skippy-reads-and-writes-data)
   * [Gradle](#gradle-2)
   * [Maven](#maven-2)
 * [Skippy in your CI pipeline](#skippy-in-your-ci-pipeline)
@@ -540,14 +540,65 @@ predictions based on
 
 ## Coverage for skipped tests
 
-Skippy supports the creation of a JaCoCo execution data file that contains the combined execution data for skippedq
-tests. This feature can be enabled via the boolean setting `coverageForSkippedTests` which defaults to `false`.
+Skippy supports the creation of code coverage reports that include coverage for skipped tests. This feature can be
+enabled using the setting `coverageForSkippedTests` which defaults to `false`.
 
-When enabled, Skippy will store individual execution data files for all executed tests. At the end a build, it 
-will generate a file named skippy.exec within the build directory, typically found under build/ for 
-Gradle projects or target/ for Maven projects. skippy.exec aggregates the execution data for skipped tests. It can
-be merged with JaCoCo’s standard execution data file to generate a combined report with coverage for executed 
-and skipped tests:
+When enabled, Skippy stores an execution data files for each test that is executed:
+```
+./gradlew test
+
+LeftPadderTest > testPadLeft() PASSED
+RightPadderTest > testPadRight() PASSED
+```
+
+The execution data files are stored in the .skippy folder:
+```
+ls -l .skippy                   
+
+A4C4B20204923316E28BF16B20811F3C.exec
+D16D8B65CE4D3DDCC1217644BA0C1DFF.exec
+```
+The `executionId` property in the test-impact-analysis.json file connects the dots between the execution of a test and
+the corresponding execution data file:
+```json
+{
+  "classes": {
+    "0": {
+      "name": "com.example.LeftPadderTest",
+      ...
+      "hash": "D6954047"
+    },
+    "1": {
+      "name": "com.example.RightPadderTest",
+      ...
+    }
+  },
+  "tests": [
+    {
+      "class": 0,
+      ...
+      "executionId": "A4C4B20204923316E28BF16B20811F3C"
+    },
+    {
+      "class": 1,
+      ...
+      "executionId": "D16D8B65CE4D3DDCC1217644BA0C1DFF"
+    }
+  ]
+}
+```
+
+At the end a build, Skippy will generate a file named skippy.exec within the build directory. It is typically found 
+under build/ for Gradle projects or target/ for Maven projects:
+
+```
+ls -l build
+
+skippy.exec
+```
+
+skippy.exec aggregates the execution data for all tests that have been skipped in the current build. It can be merged
+with JaCoCo’s standard execution data file to generate a combined report with coverage for executed and skipped tests:
 
 - [jacoco:merge](https://www.eclemma.org/jacoco/trunk/doc/merge-mojo.html)
 - [JacocoReport](https://docs.gradle.org/current/dsl/org.gradle.testing.jacoco.tasks.JacocoReport.html)
@@ -580,7 +631,7 @@ To enable this feature in Maven, add the following to your `pom.xml` file:
   </plugin>
 ```
 
-## Customize storage and retrieval of Skippy artifacts
+## Customize how Skippy reads and writes data
 
 Skippy's [SkippyRepositoryExtension](https://github.com/skippy-io/skippy/blob/55c194327f425705e8f8e5b46ef9dab78f60d337/skippy-core/src/main/java/io/skippy/core/SkippyRepositoryExtension.java#L40) 
 allows projects to customize the way Skippy reads and writes data.
@@ -590,9 +641,15 @@ Skippy's default behavior:
 - It only retains the latest Test Impact Analysis.
 - It only retains the JaCoCo execution data files that are referenced by the latest Test Impact Analysis.
 
-The default settings are designed for small projects that do not require code coverage reports, and thus, do not store JaCoCo execution data files. Those projects will typically disable the `coverageForSkippedTests` setting. While these defaults support projects of any size and allow for the storage of JaCoCo data files for experimental purposes, they are not recommended for large projects or those needing to store such files long-term. Doing so could significantly increase the size of your Git repository.
+The default settings are designed for small projects that do not require code coverage reports, and thus, do not store
+JaCoCo execution data files. Those projects will typically disable the `coverageForSkippedTests` setting. While these
+defaults support projects of any size and allow for the storage of JaCoCo data files for experimental purposes, they are
+not recommended for large projects or those needing to store such files long-term. Doing so could significantly increase
+the size of a project's history in a version control system.
 
-Large projects aiming to store and permanently retain Test Impact Analysis instances and JaCoCo execution data files can register a custom `SkippyRepositoryExtension`. This extension enables the storage of these artifacts outside the project’s repository using systems such as databases, network file systems, or blob storage solutions like AWS S3.
+Large projects aiming to store and permanently retain Test Impact Analysis instances and JaCoCo execution data files can
+register a custom `SkippyRepositoryExtension`. This extension enables the storage of these artifacts outside the
+project’s repository using systems such as databases, network file systems, or blob storage solutions like AWS S3.
 
 Example for a custom `SkippyRepositoryExtension`: [FileSystemBackedRepositoryExtension](https://github.com/skippy-io/skippy/blob/55c194327f425705e8f8e5b46ef9dab78f60d337/skippy-extensions/skippy-repository-filesystem/src/main/java/io/skippy/extension/FileSystemBackedRepositoryExtension.java#L26)
 
@@ -616,7 +673,7 @@ dependencies {
 }
 ```
 
-Note that your extension must be provided as dependency to the build script and your tests.
+Your extension must be provided as dependency to the build script and your tests.
 
 ### Maven
 
@@ -650,7 +707,7 @@ To enable this feature in Maven, add the following to your `pom.xml` file:
   ...
 ```
 
-Note that your extension must be provided as dependency to Skippy's Maven plugin and your tests.
+Your extension must be provided as dependency to Skippy's Maven plugin and your tests.
 
 ## Skippy in your CI pipeline
 
