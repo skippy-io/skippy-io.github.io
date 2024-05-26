@@ -1,0 +1,24 @@
+---
+layout: post
+title:  "Skippy 0.0.20 available now"
+date:   2024-05-25 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-20
+---
+
+I'm pleased to announce that Skippy 0.0.20 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+## Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.20](https://github.com/skippy-io/skippy/releases/tag/v0.0.20)
+
+## What's Changed
+
+* Fix for [https://github.com/skippy-io/skippy/issues/153](#153): JSON deserialization changes the id of a Test Impact Analysis 
+* Fix for [https://github.com/skippy-io/skippy/issues/156](#156): skippy-gradle: Tasks access extension before it is initialized
+
+**Full Changelog**: https://github.com/skippy-io/skippy/compare/v0.0.19...v0.0.20
+
+{% include_relative comments.markdown %}
