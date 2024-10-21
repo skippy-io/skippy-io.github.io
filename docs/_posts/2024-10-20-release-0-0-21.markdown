@@ -1,0 +1,23 @@
+---
+layout: post
+title:  "Skippy 0.0.21 available now"
+date:   2024-10-20 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-21
+---
+
+I'm pleased to announce that Skippy 0.0.21 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+## Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.21](https://github.com/skippy-io/skippy/releases/tag/v0.0.21)
+
+## What's Changed
+
+* Fix for [#163](https://github.com/skippy-io/skippy/issues/163): Support for JUnit 5's `@Nested` test classes
+
+**Full Changelog**: https://github.com/skippy-io/skippy/compare/v0.0.20...v0.0.21
+
+{% include_relative comments.markdown %}
