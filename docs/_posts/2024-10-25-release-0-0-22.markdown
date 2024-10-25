@@ -1,0 +1,28 @@
+---
+layout: post
+title:  "Skippy 0.0.22 available now"
+date:   2024-10-25 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-22
+---
+
+I'm pleased to announce that Skippy 0.0.22 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+
+## Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.22](https://github.com/skippy-io/skippy/releases/tag/v0.0.22)
+
+## Highlights
+
+This release introduces support for Gradle's Configuration Cache.
+
+## What's Changed
+
+* Fix for [#159](https://github.com/skippy-io/skippy/issues/159): Support Gradle configuration cache
+
+**Full Changelog**: https://github.com/skippy-io/skippy/compare/v0.0.21...v0.0.22
+
+{% include_relative comments.markdown %}
