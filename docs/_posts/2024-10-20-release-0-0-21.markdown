@@ -18,6 +18,6 @@ Central.
 
 * Fix for [#163](https://github.com/skippy-io/skippy/issues/163): Support for JUnit 5's `@Nested` test classes
 
-**Full Changelog**: https://github.com/skippy-io/skippy/compare/v0.0.20...v0.0.21
+**Full Changelog**: [https://github.com/skippy-io/skippy/compare/v0.0.20...v0.0.21](https://github.com/skippy-io/skippy/compare/v0.0.20...v0.0.21)
 
 {% include_relative comments.markdown %}

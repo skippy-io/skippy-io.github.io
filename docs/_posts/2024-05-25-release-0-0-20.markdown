@@ -19,6 +19,6 @@ Central.
 * Fix for [#153](https://github.com/skippy-io/skippy/issues/153): JSON deserialization changes the id of a Test Impact Analysis 
 * Fix for [#156](https://github.com/skippy-io/skippy/issues/156): skippy-gradle: Tasks access extension before it is initialized
 
-**Full Changelog**: https://github.com/skippy-io/skippy/compare/v0.0.19...v0.0.20
+**Full Changelog**: [https://github.com/skippy-io/skippy/compare/v0.0.19...v0.0.20](https://github.com/skippy-io/skippy/compare/v0.0.19...v0.0.20)
 
 {% include_relative comments.markdown %}

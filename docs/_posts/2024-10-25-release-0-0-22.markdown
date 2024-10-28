@@ -23,6 +23,6 @@ This release introduces support for Gradle's Configuration Cache.
 
 * Fix for [#159](https://github.com/skippy-io/skippy/issues/159): Support Gradle configuration cache
 
-**Full Changelog**: https://github.com/skippy-io/skippy/compare/v0.0.21...v0.0.22
+**Full Changelog**: [https://github.com/skippy-io/skippy/compare/v0.0.21...v0.0.22](https://github.com/skippy-io/skippy/compare/v0.0.21...v0.0.22)
 
 {% include_relative comments.markdown %}
