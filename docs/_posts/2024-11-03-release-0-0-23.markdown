@@ -1,0 +1,54 @@
+---
+layout: post
+title:  "Skippy 0.0.23 available now"
+date:   2024-11-03 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-23
+---
+
+I'm pleased to announce that Skippy 0.0.23 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+
+## Release Notes
+
+[https://github.com/skippy-io/skippy/releases/tag/v0.0.23](https://github.com/skippy-io/skippy/releases/tag/v0.0.23)
+
+## Highlights
+
+This release introduces the [Opt-Out Mechanism](https://www.skippy.io/docs/#opt-out-mechanism) to bypass Skippy's
+skip-or-execute logic for tests annotated with `@AlwaysRun`:
+
+```java
+@PredictWithSkippy
+public class NestedTestsTest {
+
+    @Nested
+    class FooTest {
+        
+        @Test
+        void testSomething() {
+            // this test can be skipped by Skippy
+        }
+        
+    }
+
+    @AlwaysRun
+    @Nested
+    class BarTest {
+        
+        @Test
+        void testSomething() {
+            // this test will always run
+        }
+        
+    }
+
+}
+```
+
+
+**Full Changelog**: [https://github.com/skippy-io/skippy/compare/v0.0.22...v0.0.23](https://github.com/skippy-io/skippy/compare/v0.0.21...v0.0.22)
+
+{% include_relative comments.markdown %}

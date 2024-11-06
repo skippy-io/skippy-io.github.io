@@ -594,14 +594,15 @@ public class NestedTestsTest {
 #### Custom PredictionModifier
 
 Skippy’s [PredictionModifier](https://github.com/skippy-io/skippy/blob/13403b0e700aba29887ca5759a880f90e1215f1b/skippy-core/src/main/java/io/skippy/core/PredictionModifier.java#L42)
-extension controls this behavior, with the [DefaultPredictionModifier](https://github.com/skippy-io/skippy/blob/13403b0e700aba29887ca5759a880f90e1215f1b/skippy-core/src/main/java/io/skippy/core/DefaultPredictionModifier.java#L27)
-automatically excluding `@AlwaysRun` tests. 
+extension point controls this behavior. The default implementation [DefaultPredictionModifier](https://github.com/skippy-io/skippy/blob/13403b0e700aba29887ca5759a880f90e1215f1b/skippy-core/src/main/java/io/skippy/core/DefaultPredictionModifier.java#L27)
+bypasses Skippy's skip-or-execute logic for tests annotated with `@AlwaysRun`. 
 
-If you need custom logic, register a custom `PredictionModifier` in your build configuration. This gives you the flexibility to opt-out of Skippy based on  
+You can register your own `PredictionModifier` in the build configuration to override the default behavior. 
+This allows you to selectively disable Skippy based on criteria such as:
 
-- class name,
-- package name or 
-- any other information you can derive from a `Class<?>` object.
+- Class name
+- Package name
+- Any other information available from a `Class<?>` object
 
 #### Gradle
 
