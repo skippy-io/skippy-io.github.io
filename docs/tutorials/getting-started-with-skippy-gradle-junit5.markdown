@@ -1,12 +1,12 @@
 ---
 layout: page
-title: Tutorial
+title: "Tutorial: Getting started with Skippy, Gradle & JUnit 5"
 permalink: /tutorials/skippy-gradle-junit5
 ---
 
 Documentation for Skippy version `{% include_relative version.markdown %}`.
 
-## Getting started with Skippy, Gradle & JUnit 5
+## Overview
 
 A quick tour how to use Skippy with Grade and JUnit 5.
 
