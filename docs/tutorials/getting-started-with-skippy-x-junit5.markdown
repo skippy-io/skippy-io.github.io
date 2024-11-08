@@ -334,8 +334,8 @@ org.opentest4j.AssertionFailedError: expected: < hello> but was: <hello>
 Content of .skippy/predictions.log:
 
 ```
-com.example.LeftPadderTest,EXECUTE,BYTECODE_CHANGE_IN_COVERED_CLASS,com.example.StringUtils
-com.example.RightPadderTest,EXECUTE,BYTECODE_CHANGE_IN_COVERED_CLASS,com.example.StringUtils
+com.example.LeftPadderTest,EXECUTE,BYTECODE_CHANGE_IN_COVERED_CLASS,"covered class: com.example.StringUtils"
+com.example.RightPadderTest,EXECUTE,BYTECODE_CHANGE_IN_COVERED_CLASS,"covered class: com.example.StringUtils"
 ```
 
 At this point in time, Skippy executes a test if the covered class contains a significant bytecode change
