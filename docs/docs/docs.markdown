@@ -549,7 +549,7 @@ predictions based on
 The following JUnit 5 features are currently not supported:
 - [Parallel Execution](https://junit.org/junit5/docs/snapshot/user-guide/#writing-tests-parallel-execution): Test cases 
 that run concurrently within the same JVM prevent Skippy to capture accurate coverage data. This will result in incorrect 
-skip-or-execute predictions.
+skip-or-execute predictions. You have to disable parallel execution if you want to use Skippy.
 
 ### Opt-Out Mechanism
 
