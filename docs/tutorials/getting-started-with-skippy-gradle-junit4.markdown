@@ -1,7 +1,7 @@
 ---
 layout: page
-title: "Tutorial: Getting started with Skippy, Gradle & JUnit 5"
-permalink: /tutorials/skippy-gradle-junit5
+title: "Tutorial: Getting started with Skippy, Gradle & JUnit 4"
+permalink: /tutorials/skippy-gradle-junit4
 ---
 
 {% include_relative overview-and-toc.markdown %}
@@ -15,7 +15,7 @@ git clone git@github.com:skippy-io/skippy-tutorials.git
 
 Then, move into the tutorial directory:
 ```
-cd skippy-tutorials/getting-started-with-skippy-and-junit5/
+cd skippy-tutorials/getting-started-with-skippy-and-junit4/
 ```
 
 ## Exploring the Codebase
@@ -24,7 +24,7 @@ Let's take a quick look at the codebase.
 
 ### The build.gradle File
 
-`build.gradle` applies the `io.skippy` plugin and adds a dependency to `skippy-junit5`:
+`build.gradle` applies the `io.skippy` plugin and adds a dependency to `skippy-junit4`:
 
 ```groovy
 plugins {
@@ -32,7 +32,7 @@ plugins {
 }
 
 dependencies {
-    testImplementation 'io.skippy:skippy-junit5:{% include_relative version.markdown %}'
+    testImplementation 'io.skippy:skippy-junit4:{% include_relative version.markdown %}'
 }
 ```
 

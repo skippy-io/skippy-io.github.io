@@ -52,13 +52,13 @@ com
 └─ example
    ├─ LeftPadderTest.java
    ├─ RightPadderTest.java
-   ├─ StringUtilsTest.java
    └─ TestConstants.java
 ```
 
 `LeftPadderTest` and `RightPadderTest` are unit tests for their respective classes.
-Both tests are annotated with `@PredictWithSkippy` to enables Skippy's predictive test selection:
 
+{% if page.permalink contains "junit5" %}
+Both tests are annotated with `@PredictWithSkippy` to enable Skippy's predictive test selection:
 ```java
 import io.skippy.junit5.PredictWithSkippy;
 
@@ -73,26 +73,28 @@ public class LeftPadderTest {
 
 }
 ```
-
-`StringUtilsTest` tests the `StringUtil` class and is a standard JUnit test that does not utilize
-Skippy's predictive test selection:
+{% else %}
+Both tests use the `Skippy.predictWithSkippy()` rule to enable Skippy's predictive test selection:
 ```java
-public class StringUtilsTest {
+import org.junit.*;
+import org.junit.rules.TestRule;
+
+import io.skippy.junit4.Skippy;
+
+public class LeftPadderTest {
+
+    @Rule
+    public TestRule skippyRule = Skippy.predictWithSkippy();
 
     @Test
-    void testPadLeft() {
+    public void testPadLeft() {
         var input = TestConstants.HELLO;
-        assertEquals(" hello", StringUtils.padLeft(input, 6));
-    }
-
-    @Test
-    void testPadRight() {
-        var input = TestConstants.HELLO;
-        assertEquals("hello ", StringUtils.padRight(input, 6));
+        assertEquals(" hello", LeftPadder.padLeft(input, 6));
     }
 
 }
 ```
+{% endif %}
 
 `TestConstants` declares a string constant:
 ```java
@@ -105,7 +107,7 @@ class TestConstants {
 
 Run the tests:
 
-{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
+{% if page.permalink contains "gradle" %}
 ```
 ./gradlew test --rerun
 ```
@@ -117,12 +119,10 @@ mvn test
 
 Output:
 
-{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
+{% if page.permalink contains "gradle" %}
 ```
 LeftPadderTest > testPadLeft() PASSED
 RightPadderTest > testPadRight() PASSED
-StringUtilsTest > testPadLeft() PASSED
-StringUtilsTest > testPadRight() PASSED
 ```
 {% else %}
 ```
@@ -131,9 +131,6 @@ StringUtilsTest > testPadRight() PASSED
 
 [INFO] Running com.example.RightPadderTest
 [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
-
-[INFO] Running com.example.StringUtilsTest
-[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
 ```
 {% endif %}
 
@@ -157,14 +154,11 @@ predictions.log gives you insights into Skippy's skip-or-execute decisions:
 ```
 cat .skippy/predictions.log
 
-com.example.LeftPadderTest,EXECUTE,TEST_IMPACT_ANALYSIS_NOT_FOUND
-com.example.RightPadderTest,EXECUTE,TEST_IMPACT_ANALYSIS_NOT_FOUND
+...,com.example.LeftPadderTest,EXECUTE,TEST_IMPACT_ANALYSIS_NOT_FOUND
+...,com.example.RightPadderTest,EXECUTE,TEST_IMPACT_ANALYSIS_NOT_FOUND
 ```
 
-Skippy executed both tests because it did not find prior impact data. Also note that there is no log entry for 
-`StringUtilsTest`: It's a normal test that is not "managed" by Skippy. We will omit the output for 
-test that don't use Skippy's predictive test selection during 
-the remainder of the tutorial.
+Skippy executed both tests because it did not find prior impact data. 
 
 ## Commit the Skippy Folder
 
@@ -180,7 +174,7 @@ This allows us to revert back to this state of the repository throughout the res
 
 Re-run the tests:
 
-{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
+{% if page.permalink contains "gradle" %}
 ```
 ./gradlew test --rerun
 ```
@@ -192,7 +186,7 @@ mvn test
 
 Output:
 
-{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
+{% if page.permalink contains "gradle" %}
 ```
 LeftPadderTest > testPadLeft() SKIPPED
 RightPadderTest > testPadRight() SKIPPED
@@ -212,8 +206,8 @@ Skippy detects that nothing has changed and skips both tests:
 ```
 cat .skippy/predictions.log
 
-com.example.LeftPadderTest,SKIP,NO_CHANGE
-com.example.RightPadderTest,SKIP,NO_CHANGE
+...,com.example.LeftPadderTest,SKIP,NO_CHANGE
+...,com.example.RightPadderTest,SKIP,NO_CHANGE
 ```
 
 ### Testing After Modifications
@@ -242,7 +236,7 @@ class StringUtils {
 
 Re-run the tests:
 
-{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
+{% if page.permalink contains "gradle" %}
 ```
 ./gradlew test --rerun
 ```
@@ -255,7 +249,7 @@ mvn test
 Skippy detects that the newly added comment can not break any of the existing tests. `LeftPadderTest` and
 `RightPadderTest` will be skipped:
 
-{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
+{% if page.permalink contains "gradle" %}
 ```
 LeftPadderTest > testPadLeft() SKIPPED
 RightPadderTest > testPadRight() SKIPPED
@@ -301,7 +295,7 @@ class StringUtils {
 
 Re-run the tests:
 
-{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
+{% if page.permalink contains "gradle" %}
 ```
 ./gradlew test --rerun
 ```
@@ -313,7 +307,7 @@ mvn test
 
 Skippy detects the change and runs the tests again:
 
-{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
+{% if page.permalink contains "gradle" %}
 ```
 LeftPadderTest > testPadLeft() FAILED
     org.opentest4j.AssertionFailedError: expected: < hello> but was: <hello>
@@ -334,8 +328,8 @@ org.opentest4j.AssertionFailedError: expected: < hello> but was: <hello>
 Content of .skippy/predictions.log:
 
 ```
-com.example.LeftPadderTest,EXECUTE,BYTECODE_CHANGE_IN_COVERED_CLASS,"covered class: com.example.StringUtils"
-com.example.RightPadderTest,EXECUTE,BYTECODE_CHANGE_IN_COVERED_CLASS,"covered class: com.example.StringUtils"
+...,com.example.LeftPadderTest,EXECUTE,BYTECODE_CHANGE_IN_COVERED_CLASS,"covered class: com.example.StringUtils"
+...,com.example.RightPadderTest,EXECUTE,BYTECODE_CHANGE_IN_COVERED_CLASS,"covered class: com.example.StringUtils"
 ```
 
 At this point in time, Skippy executes a test if the covered class contains a significant bytecode change
@@ -355,6 +349,7 @@ git stash
 
 Now, let's see what happens if you change the expected value in `LeftPadderTest` from
 `" hello"` to `" HELLO"`:
+{% if page.permalink contains "junit5" %}
 ```java
 @PredictWithSkippy
 public class LeftPadderTest {
@@ -368,10 +363,27 @@ public class LeftPadderTest {
 
 }
 ```
+{% else %}
+```java
+public class LeftPadderTest {
+
+    @Rule
+    public TestRule skippyRule = Skippy.predictWithSkippy();
+
+    @Test
+    void testPadLeft() {
+        var input = TestConstants.HELLO;
+        // assertEquals(" hello", LeftPadder.padLeft(input, 6));
+        assertEquals(" HELLO", LeftPadder.padLeft(input, 6));
+    }
+
+}
+```
+{% endif %}
 
 Re-run the tests:
 
-{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
+{% if page.permalink contains "gradle" %}
 ```
 ./gradlew test --rerun
 ```
@@ -383,7 +395,7 @@ mvn test
 
 Skippy detects the change and runs `LeftPadderTest` again:
 
-{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
+{% if page.permalink contains "gradle" %}
 ```
 LeftPadderTest > testPadLeft() FAILED
     org.opentest4j.AssertionFailedError: expected: < HELLO> but was: < hello>
@@ -404,8 +416,8 @@ org.opentest4j.AssertionFailedError: expected: < HELLO> but was: < hello>
 Content of .skippy/predictions.log:
 
 ```
-com.example.LeftPadderTest,EXECUTE,BYTECODE_CHANGE_IN_TEST
-com.example.RightPadderTest,SKIP,NO_CHANGE
+...,com.example.LeftPadderTest,EXECUTE,BYTECODE_CHANGE_IN_TEST
+...,com.example.RightPadderTest,SKIP,NO_CHANGE
 ```
 
 #### Experiment 4
@@ -428,7 +440,7 @@ class TestConstants {
 
 Re-run the tests:
 
-{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
+{% if page.permalink contains "gradle" %}
 ```
 ./gradlew test --rerun
 ```
@@ -440,7 +452,7 @@ mvn test
 
 Skippy detects the change and runs both tests:
 
-{% if page.permalink == "/tutorials/skippy-gradle-junit5" %}
+{% if page.permalink contains "gradle" %}
 ```
 LeftPadderTest > testPadLeft() FAILED
     org.opentest4j.AssertionFailedError: expected: < hello> but was: <bonjour>
@@ -463,8 +475,8 @@ org.opentest4j.AssertionFailedError: expected: <hello > but was: <bonjour>
 Content of .skippy/predictions.log:
 
 ```
-com.example.LeftPadderTest,EXECUTE,BYTECODE_CHANGE_IN_TEST
-com.example.RightPadderTest,EXECUTE,BYTECODE_CHANGE_IN_TEST
+...,com.example.LeftPadderTest,EXECUTE,BYTECODE_CHANGE_IN_TEST
+...,com.example.RightPadderTest,EXECUTE,BYTECODE_CHANGE_IN_TEST
 ```
 
 Congratulations - You've completed the tutorial! By now, you should have a solid idea how Skippy works.

@@ -1,11 +1,11 @@
 ---
 layout: page
-title: "Tutorial: Getting started with Skippy, Maven & JUnit 5"
-permalink: /tutorials/skippy-maven-junit5
+title: "Tutorial: Getting started with Skippy, Maven & JUnit 4"
+permalink: /tutorials/skippy-maven-junit4
 ---
 
 {% include_relative overview-and-toc.markdown %}
- 
+
 ## Setting Up Your Environment
 
 Begin by cloning the [skippy-tutorials](https://github.com/skippy-io/skippy-tutorials) repository:
@@ -15,7 +15,7 @@ git clone git@github.com:skippy-io/skippy-tutorials.git
 
 Then, move into the tutorial directory:
 ```
-cd skippy-tutorials/getting-started-with-skippy-and-junit5/
+cd skippy-tutorials/getting-started-with-skippy-and-junit4/
 ```
 
 ## Exploring the Codebase
@@ -24,12 +24,12 @@ Let's take a quick look at the codebase.
 
 ### The pom.xml File
 
-`pom.xml` declares a dependency to `skippy-junit5`:
+`pom.xml` declares a dependency to `skippy-junit4`:
 
 ```xml
 <dependency>
     <groupId>io.skippy</groupId>
-    <artifactId>skippy-junit5</artifactId>
+    <artifactId>skippy-junit4</artifactId>
     <version>{% include_relative version.markdown %}</version>
     <scope>test</scope>
 </dependency>
