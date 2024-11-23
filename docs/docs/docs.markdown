@@ -19,6 +19,7 @@ New to Skippy? The best way to get started are the introductory tutorials:
 * [Compatibility](#compatibility)
 * [Skippy's Test Impact Analysis](#skippys-test-impact-analysis)
   * [Gradle](#gradle)
+  * [Gradle & Android](#gradle--android) 
   * [Maven](#maven)
 * [Skippy's Predictive Test Selection](#skippys-predictive-test-selection)
   * [JUnit 4](#junit-4)
@@ -185,6 +186,57 @@ automatically whenever a Test task is executed.
 ```
 
 It is the Gradle counterpart to `rm -rf .skippy`.
+
+### Gradle & Android
+
+The [skippy-gradle-android](https://github.com/skippy-io/skippy/tree/main/skippy-gradle-android) sub-project contains the Skippy
+plugin for Gradle & Android.
+
+#### Install
+
+Release versions are available from Gradle's Plugin Portal using the
+[plugins DSL](https://docs.gradle.org/current/userguide/plugins.html#sec:plugins_block):
+
+```groovy
+plugins {
+    id("io.skippy.android") version '{% include_relative version.markdown %}'
+}
+```
+
+Release versions are also available from Maven Central using the
+[legacy plugin application](https://docs.gradle.org/current/userguide/plugins.html#sec:old_plugin_application):
+```groovy
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'io.skippy:skippy-gradle-android:{% include_relative version.markdown %}'
+    }
+}
+
+apply plugin: io.skippy.gradle.android.SkippyPlugin
+```
+
+Snapshots are available from `s01.oss.sonatype.org` using the
+[legacy plugin application](https://docs.gradle.org/current/userguide/plugins.html#sec:old_plugin_application):
+
+```groovy
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    }
+    dependencies {
+        classpath 'io.skippy:skippy-gradle-android:{% include_relative snapshotversion.markdown %}'
+    }
+}
+
+apply plugin: io.skippy.gradle.android.SkippyPlugin
+```
+
+The tasks that are added by Skippy's Android plugin are equivalent to those of [Skippy's Gradle Plugin](#gradle)
+
 
 ### Maven
 

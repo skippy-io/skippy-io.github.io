@@ -1,0 +1,31 @@
+---
+layout: post
+title:  "Skippy 0.0.24 available now"
+date:   2024-11-22 00:00:00 -0600
+author: Florian McKee
+categories: release
+permalink: /posts/release-0-0-24
+---
+
+I'm pleased to announce that Skippy 0.0.24 has been released and is now available in Gradle's Plugin Portal and Maven
+Central.
+
+## Highlights
+
+- [#162](https://github.com/skippy-io/skippy/issues/162): Support for Android
+- [#133](https://github.com/skippy-io/skippy/issues/133): Support for duplicate class names across output folders
+
+## Other Noteworthy Changes
+
+- JUnit 5 versions `5.0`, `5.1`, `5.2` and `5.3` are no longer supported
+- JUnit 4 versions `4.10` and `4.11` are no longer supported
+- Support for JUnit 4 is now provided as `@Rule` instead of `@ClassRule`
+
+## Full Release Notes & Changelog
+
+- [https://github.com/skippy-io/skippy/releases/tag/v0.0.24](https://github.com/skippy-io/skippy/releases/tag/v0.0.24)
+- [https://github.com/skippy-io/skippy/compare/v0.0.23...v0.0.24](https://github.com/skippy-io/skippy/compare/v0.0.23...v0.0.24)
+
+
+
+{% include_relative comments.markdown %}
