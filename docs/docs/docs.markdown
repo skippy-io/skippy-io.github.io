@@ -7,8 +7,11 @@ permalink: /docs/
 Reference documentation for Skippy version `{% include_relative version.markdown %}`.
 
 New to Skippy? The best way to get started are the introductory tutorials:
-- [Getting started with Skippy, Gradle & JUnit 5](https://www.skippy.io/tutorials/skippy-gradle-junit5)
-- [Getting started with Skippy, Maven & JUnit 5](https://www.skippy.io/tutorials/skippy-maven-junit5)
+
+- [Getting Started with Skippy, Gradle & JUnit 4](https://www.skippy.io/tutorials/skippy-gradle-junit4)
+- [Getting Started with Skippy, Maven & JUnit 4](https://www.skippy.io/tutorials/skippy-maven-junit4)
+- [Getting Started with Skippy, Gradle & JUnit 5](https://www.skippy.io/tutorials/skippy-gradle-junit5)
+- [Getting Started with Skippy, Maven & JUnit 5](https://www.skippy.io/tutorials/skippy-maven-junit5)
 
 ## Table of Contents
 
