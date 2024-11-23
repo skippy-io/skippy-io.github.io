@@ -28,6 +28,8 @@ in response to misbehaving services, infrastructure issues, etc.
 ## Getting Started
 
 New to Skippy? The best way to get started are the introductory tutorials:
+- [Getting Started with Skippy, Gradle & JUnit 4](https://www.skippy.io/tutorials/skippy-gradle-junit4)
+- [Getting Started with Skippy, Maven & JUnit 4](https://www.skippy.io/tutorials/skippy-maven-junit4)
 - [Getting Started with Skippy, Gradle & JUnit 5](https://www.skippy.io/tutorials/skippy-gradle-junit5)
 - [Getting Started with Skippy, Maven & JUnit 5](https://www.skippy.io/tutorials/skippy-maven-junit5)
 
@@ -39,11 +41,11 @@ Let's take a whirlwind tour of Skippy, Gradle & JUnit 5. The concepts are simila
 
 ```groovy
      plugins {
-+        id 'io.skippy' version '0.0.23'
++        id 'io.skippy' version '0.0.24'
      }
     
      dependencies {
-+        testImplementation 'io.skippy:skippy-junit5:0.0.23'
++        testImplementation 'io.skippy:skippy-junit5:0.0.24'
      }
 ```
 
