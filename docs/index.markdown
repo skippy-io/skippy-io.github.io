@@ -27,7 +27,7 @@ in response to misbehaving services, infrastructure issues, etc.
 
 ## Getting Started
 
-New to Skippy? The best way to get started are the [introductory tutorials](tutorials).
+New to Skippy? The best way to get started are the [Introductory Tutorials](tutorials).
 
 ## Teaser
 
