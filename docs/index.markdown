@@ -5,6 +5,11 @@ list_title: News
 permalink: /
 ---
 
+## ⚠️ Project Status: No Longer Actively Maintained
+
+This project is no longer being actively maintained due to lack of available time.
+Feel free to fork, modify, and use the code as you see fit. Issues and pull requests may not receive responses.
+
 ## What is it?
 
 Skippy is a Test Impact Analysis & Predictive Test Selection framework for Java and the JVM. It cuts down on unnecessary testing
@@ -15,10 +20,6 @@ Skippy is specifically designed to prevent regressions in your codebase.
 It supports all types of tests where the tests and the code under test run in the same JVM.
 It is best suited for deterministic tests, even those prone to occasional flakiness.
 It provides the most value for test suites that are either slow or flaky (regardless of whether the test suite contains unit, integration, or functional tests).
-
-<center>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/VZ_MmQI0mOA?si=HPYFrLmZ_pciM6jn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</center>
 
 ## What is it not?
 
